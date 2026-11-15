@@ -1,0 +1,1647 @@
+{
+  "version": "0.1.0",
+  "items": {
+    "accordion": {
+      "type": "component",
+      "files": [
+        "components/ui/accordion/Accordion.tsx",
+        "components/ui/accordion/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "divider",
+        "z/accordion"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "alert": {
+      "type": "component",
+      "files": [
+        "components/ui/alert/Alert.tsx",
+        "components/ui/alert/index.tsx"
+      ],
+      "registryDependencies": [
+        "heading",
+        "icon",
+        "pressable",
+        "vstack",
+        "z/alert"
+      ],
+      "dependencies": {
+        "tailwind-merge": "^1.14.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "alert-dialog": {
+      "type": "component",
+      "files": [
+        "components/ui/alert-dialog/AlertDialog.tsx",
+        "components/ui/alert-dialog/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "dropdown",
+        "z/alert-dialog"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "autocomplete": {
+      "type": "component",
+      "files": [
+        "components/ui/autocomplete/Autocomplete.tsx",
+        "components/ui/autocomplete/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "form",
+        "pressable"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "avatar": {
+      "type": "component",
+      "files": [
+        "components/ui/avatar/Avatar.tsx",
+        "components/ui/avatar/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/avatar"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "badge": {
+      "type": "component",
+      "files": [
+        "components/ui/badge/Badge.tsx",
+        "components/ui/badge/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "box",
+        "icon",
+        "z/badge"
+      ],
+      "dependencies": {
+        "react-native-svg": "15.16.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-svg"
+      ]
+    },
+    "base": {
+      "type": "base",
+      "files": [
+        "components/cn.ts",
+        "components/hooks/useClientOnlyValue.ts",
+        "components/hooks/useClientOnlyValue.web.ts",
+        "components/hooks/useColorScheme.ts",
+        "components/hooks/useColorScheme.web.ts",
+        "components/hooks/useMounted.ts",
+        "components/lib/formatBytes.ts",
+        "components/ui/accessibility/accessibleName.ts",
+        "components/ui/accessibility/convert.ts",
+        "components/ui/accessibility/convert.web.ts",
+        "components/ui/accessibility/index.ts",
+        "components/ui/dom-view-props.tsx",
+        "components/ui/dom-view-props.web.tsx",
+        "components/ui/primitive.ts"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "clsx": "^2.1.1",
+        "tailwind-merge": "^1.14.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "base64-file-input": {
+      "type": "component",
+      "files": [
+        "components/ui/base64-file-input/Base64FileInput.tsx",
+        "components/ui/base64-file-input/index.tsx"
+      ],
+      "registryDependencies": [
+        "box",
+        "hstack",
+        "pressable",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {
+        "expo-document-picker": "~58.0.4",
+        "expo-file-system": "~58.0.13",
+        "lucide-react-native": "^0.510.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "expo-document-picker",
+        "expo-file-system"
+      ]
+    },
+    "box": {
+      "type": "component",
+      "files": [
+        "components/ui/box/index.tsx",
+        "components/ui/box/types.ts",
+        "components/ui/box/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/box"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "button": {
+      "type": "component",
+      "files": [
+        "components/ui/button/Button.tsx",
+        "components/ui/button/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/button"
+      ],
+      "dependencies": {
+        "react-native-svg": "15.16.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-svg"
+      ]
+    },
+    "button-group": {
+      "type": "component",
+      "files": [
+        "components/ui/button-group/ButtonGroup.tsx",
+        "components/ui/button-group/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/hstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "card": {
+      "type": "component",
+      "files": [
+        "components/ui/card/Card.tsx",
+        "components/ui/card/index.tsx",
+        "components/ui/card/types.ts",
+        "components/ui/card/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "heading",
+        "hstack",
+        "vstack",
+        "z/image"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "center": {
+      "type": "component",
+      "files": [
+        "components/ui/center/index.tsx",
+        "components/ui/center/types.ts",
+        "components/ui/center/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/center"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "checkbox": {
+      "type": "component",
+      "files": [
+        "components/ui/checkbox/index.tsx"
+      ],
+      "registryDependencies": [
+        "form"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "confirm": {
+      "type": "component",
+      "files": [
+        "components/ui/confirm/Confirm.tsx",
+        "components/ui/confirm/index.tsx"
+      ],
+      "registryDependencies": [
+        "alert-dialog",
+        "button",
+        "heading",
+        "scroll-view",
+        "text"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "datatable": {
+      "type": "component",
+      "files": [
+        "components/ui/datatable/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "button",
+        "checkbox",
+        "hstack",
+        "scroll-view",
+        "text",
+        "vstack",
+        "z/table"
+      ],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6",
+        "lucide-react-native": "^0.510.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "divider": {
+      "type": "component",
+      "files": [
+        "components/ui/divider/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/divider"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "drawer": {
+      "type": "component",
+      "files": [
+        "components/ui/drawer/Drawer.tsx",
+        "components/ui/drawer/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "dropdown",
+        "z/drawer"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "dropdown": {
+      "type": "component",
+      "files": [
+        "components/ui/dropdown/Dropdown.tsx",
+        "components/ui/dropdown/DropdownDivider.tsx",
+        "components/ui/dropdown/DropdownItem.tsx",
+        "components/ui/dropdown/DropdownMenu.tsx",
+        "components/ui/dropdown/DropdownToggle.tsx",
+        "components/ui/dropdown/MenuLayer.tsx",
+        "components/ui/dropdown/MenuLayer.web.tsx",
+        "components/ui/dropdown/index.tsx",
+        "components/ui/dropdown/menuLayerContext.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "button",
+        "z/menu"
+      ],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "react-aria": "^3.53.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "editable": {
+      "type": "component",
+      "files": [
+        "components/ui/editable/Editable.tsx",
+        "components/ui/editable/index.tsx"
+      ],
+      "registryDependencies": [
+        "button",
+        "form",
+        "form-control",
+        "hstack",
+        "pressable",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {
+        "lucide-react-native": "^0.510.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "empty-state": {
+      "type": "component",
+      "files": [
+        "components/ui/empty-state/EmptyState.tsx",
+        "components/ui/empty-state/index.tsx",
+        "components/ui/empty-state/list-empty.png"
+      ],
+      "registryDependencies": [
+        "base",
+        "button",
+        "image",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "file-uploader": {
+      "type": "component",
+      "files": [
+        "components/ui/file-uploader/UploadFileList.tsx",
+        "components/ui/file-uploader/index.tsx"
+      ],
+      "registryDependencies": [
+        "badge",
+        "base",
+        "box",
+        "button",
+        "hstack",
+        "pressable",
+        "scroll-view",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {
+        "lucide-react-native": "^0.510.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "flat-list": {
+      "type": "component",
+      "files": [
+        "components/ui/flat-list/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "form": {
+      "type": "component",
+      "files": [
+        "components/ui/form/Check.tsx",
+        "components/ui/form/Checkbox.tsx",
+        "components/ui/form/Control.tsx",
+        "components/ui/form/DateInput.tsx",
+        "components/ui/form/DateInput.types.ts",
+        "components/ui/form/Error.tsx",
+        "components/ui/form/FileInput.tsx",
+        "components/ui/form/FixedAutocomplete.tsx",
+        "components/ui/form/Group.tsx",
+        "components/ui/form/HelperText.tsx",
+        "components/ui/form/Input.tsx",
+        "components/ui/form/InputRoot.tsx",
+        "components/ui/form/InputWrapper.tsx",
+        "components/ui/form/Label.tsx",
+        "components/ui/form/Radio.tsx",
+        "components/ui/form/SearchBox.tsx",
+        "components/ui/form/Select.tsx",
+        "components/ui/form/Text.tsx",
+        "components/ui/form/Textarea.tsx",
+        "components/ui/form/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "box",
+        "button",
+        "hstack",
+        "icon",
+        "modal",
+        "pressable",
+        "scroll-view",
+        "text",
+        "vstack",
+        "z/box",
+        "z/checkbox",
+        "z/form-control",
+        "z/icon",
+        "z/input",
+        "z/popover",
+        "z/portal",
+        "z/pressable",
+        "z/radio",
+        "z/scroll-view",
+        "z/select",
+        "z/text",
+        "z/textarea"
+      ],
+      "dependencies": {
+        "@marceloterreiro/flash-calendar": "^2.0.0",
+        "expo-document-picker": "~58.0.4",
+        "lucide-react-native": "^0.510.0",
+        "tailwind-merge": "^1.14.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "expo-document-picker"
+      ]
+    },
+    "form-control": {
+      "type": "component",
+      "files": [
+        "components/ui/form-control/FormControl.tsx",
+        "components/ui/form-control/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "form",
+        "icon",
+        "z/input"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "grid": {
+      "type": "component",
+      "files": [
+        "components/ui/grid/Col.tsx",
+        "components/ui/grid/Grid.tsx",
+        "components/ui/grid/Row.tsx",
+        "components/ui/grid/index.tsx",
+        "components/ui/grid/types.ts",
+        "components/ui/grid/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/grid",
+        "z/view"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "heading": {
+      "type": "component",
+      "files": [
+        "components/ui/heading/index.tsx",
+        "components/ui/heading/types.ts",
+        "components/ui/heading/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/heading"
+      ],
+      "dependencies": {
+        "@expo/html-elements": "^0.12.5"
+      },
+      "devDependencies": {},
+      "expo": [
+        "@expo/html-elements"
+      ]
+    },
+    "hstack": {
+      "type": "component",
+      "files": [
+        "components/ui/hstack/index.tsx",
+        "components/ui/hstack/types.ts",
+        "components/ui/hstack/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "vstack",
+        "z/hstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "icon": {
+      "type": "component",
+      "files": [
+        "components/ui/icon/index.tsx",
+        "components/ui/icon/svg-web.d.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/icon"
+      ],
+      "dependencies": {
+        "react-native-svg": "15.16.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-svg"
+      ]
+    },
+    "image": {
+      "type": "component",
+      "files": [
+        "components/ui/image/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/image"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "link": {
+      "type": "component",
+      "files": [
+        "components/ui/link/ExternalLink.tsx",
+        "components/ui/link/Link.tsx",
+        "components/ui/link/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/link"
+      ],
+      "dependencies": {
+        "expo-router": "~58.0.30",
+        "expo-web-browser": "~58.0.7"
+      },
+      "devDependencies": {},
+      "expo": [
+        "expo-router",
+        "expo-web-browser"
+      ]
+    },
+    "loading": {
+      "type": "component",
+      "files": [
+        "components/ui/loading/index.tsx"
+      ],
+      "registryDependencies": [
+        "box",
+        "hstack",
+        "portal",
+        "spinner"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "modal": {
+      "type": "component",
+      "files": [
+        "components/ui/modal/Modal.tsx",
+        "components/ui/modal/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "dropdown",
+        "heading",
+        "pressable",
+        "z/icon",
+        "z/modal"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "panel-options": {
+      "type": "component",
+      "files": [
+        "components/ui/panel-options/PanelOptions.tsx",
+        "components/ui/panel-options/index.tsx"
+      ],
+      "registryDependencies": [
+        "divider",
+        "heading",
+        "hstack",
+        "icon",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "portal": {
+      "type": "component",
+      "files": [
+        "components/ui/portal/index.tsx"
+      ],
+      "registryDependencies": [
+        "z/portal"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "pressable": {
+      "type": "component",
+      "files": [
+        "components/ui/pressable/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/pressable"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "preview-controls": {
+      "type": "component",
+      "files": [
+        "components/ui/preview-controls/index.tsx"
+      ],
+      "registryDependencies": [
+        "button",
+        "hstack",
+        "text"
+      ],
+      "dependencies": {
+        "lucide-react-native": "^0.510.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "quantity-stepper": {
+      "type": "component",
+      "files": [
+        "components/ui/quantity-stepper/QuantityStepper.tsx",
+        "components/ui/quantity-stepper/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "button",
+        "form-control",
+        "hstack",
+        "vstack"
+      ],
+      "dependencies": {
+        "lucide-react-native": "^0.510.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "safe-area-view": {
+      "type": "component",
+      "files": [
+        "components/ui/safe-area-view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "scroll-view": {
+      "type": "component",
+      "files": [
+        "components/ui/scroll-view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "spinner": {
+      "type": "component",
+      "files": [
+        "components/ui/spinner/index.tsx"
+      ],
+      "registryDependencies": [
+        "z/spinner"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "stats": {
+      "type": "component",
+      "files": [
+        "components/ui/stats/Stats.tsx",
+        "components/ui/stats/index.tsx"
+      ],
+      "registryDependencies": [
+        "divider",
+        "hstack",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "stepper": {
+      "type": "component",
+      "files": [
+        "components/ui/stepper/Stepper.tsx",
+        "components/ui/stepper/index.tsx",
+        "components/ui/stepper/types.ts"
+      ],
+      "registryDependencies": [
+        "box",
+        "button",
+        "hstack",
+        "pressable",
+        "text",
+        "vstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "sticky-footer": {
+      "type": "component",
+      "files": [
+        "components/ui/sticky-footer/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "hstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "switch": {
+      "type": "component",
+      "files": [
+        "components/ui/switch/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "form",
+        "hstack",
+        "z/switch"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "tabs": {
+      "type": "component",
+      "files": [
+        "components/ui/tabs/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "pressable",
+        "text",
+        "view"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "text": {
+      "type": "component",
+      "files": [
+        "components/ui/text/index.tsx",
+        "components/ui/text/types.ts",
+        "components/ui/text/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/text"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "theme": {
+      "type": "theme",
+      "files": [
+        "components/ui/theme/UIThemeProvider.tsx",
+        "components/ui/theme/UIThemeProvider.web.tsx",
+        "components/ui/theme/index.ts",
+        "components/z/gluestack-ui-provider/index.tsx",
+        "components/z/gluestack-ui-provider/index.web.tsx",
+        "components/z/gluestack-ui-provider/script.ts",
+        "nativewind-env.d.ts"
+      ],
+      "css": "global.css",
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-css": "^3.1.0-rc.1",
+        "tailwindcss": "^4.3.5"
+      },
+      "devDependencies": {
+        "@tailwindcss/postcss": "^4.3.5"
+      },
+      "expo": []
+    },
+    "toast": {
+      "type": "component",
+      "files": [
+        "components/ui/toast/index.tsx"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/toast"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "tooltip": {
+      "type": "component",
+      "files": [
+        "components/ui/tooltip/TooltipArrow.tsx",
+        "components/ui/tooltip/index.tsx",
+        "components/ui/tooltip/tooltipArrowContext.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "view",
+        "z/tooltip"
+      ],
+      "dependencies": {
+        "@legendapp/motion": "^2.4.0"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "view": {
+      "type": "component",
+      "files": [
+        "components/ui/view/index.tsx"
+      ],
+      "registryDependencies": [
+        "z/view"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "vstack": {
+      "type": "component",
+      "files": [
+        "components/ui/vstack/index.tsx",
+        "components/ui/vstack/types.ts",
+        "components/ui/vstack/types.web.ts"
+      ],
+      "registryDependencies": [
+        "base",
+        "z/vstack"
+      ],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/accordion": {
+      "type": "primitive",
+      "files": [
+        "components/z/accordion/ANIMATION_CUSTOMIZATION.md",
+        "components/z/accordion/AccordionAnimatedHeight.tsx",
+        "components/z/accordion/AccordionAnimatedIcon.tsx",
+        "components/z/accordion/AnimatedHeight.tsx",
+        "components/z/accordion/AnimatedIcon.tsx",
+        "components/z/accordion/MIGRATION_SUMMARY.md",
+        "components/z/accordion/USAGE_EXAMPLE.tsx",
+        "components/z/accordion/animation-config.ts",
+        "components/z/accordion/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@expo/html-elements": "^0.12.5",
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "lucide-react-native": "^0.510.0",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "@expo/html-elements",
+        "react-native-reanimated"
+      ]
+    },
+    "z/actionsheet": {
+      "type": "primitive",
+      "files": [
+        "components/z/actionsheet/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@expo/html-elements": "^0.12.5",
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "@legendapp/motion": "^2.4.0",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "@expo/html-elements"
+      ]
+    },
+    "z/alert": {
+      "type": "primitive",
+      "files": [
+        "components/z/alert/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/alert-dialog": {
+      "type": "primitive",
+      "files": [
+        "components/z/alert-dialog/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-reanimated"
+      ]
+    },
+    "z/avatar": {
+      "type": "primitive",
+      "files": [
+        "components/z/avatar/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/badge": {
+      "type": "primitive",
+      "files": [
+        "components/z/badge/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-svg": "15.16.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-svg"
+      ]
+    },
+    "z/bottomsheet": {
+      "type": "primitive",
+      "files": [
+        "components/z/bottomsheet/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "@gorhom/bottom-sheet": "^5.2.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-gesture-handler": "~3.3.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-gesture-handler"
+      ]
+    },
+    "z/box": {
+      "type": "primitive",
+      "files": [
+        "components/z/box/index.tsx",
+        "components/z/box/index.web.tsx",
+        "components/z/box/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/button": {
+      "type": "primitive",
+      "files": [
+        "components/z/button/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/card": {
+      "type": "primitive",
+      "files": [
+        "components/z/card/index.tsx",
+        "components/z/card/index.web.tsx",
+        "components/z/card/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/center": {
+      "type": "primitive",
+      "files": [
+        "components/z/center/index.tsx",
+        "components/z/center/index.web.tsx",
+        "components/z/center/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/checkbox": {
+      "type": "primitive",
+      "files": [
+        "components/z/checkbox/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/divider": {
+      "type": "primitive",
+      "files": [
+        "components/z/divider/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/drawer": {
+      "type": "primitive",
+      "files": [
+        "components/z/drawer/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-reanimated"
+      ]
+    },
+    "z/fab": {
+      "type": "primitive",
+      "files": [
+        "components/z/fab/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/flat-list": {
+      "type": "primitive",
+      "files": [
+        "components/z/flat-list/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/form-control": {
+      "type": "primitive",
+      "files": [
+        "components/z/form-control/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/grid": {
+      "type": "primitive",
+      "files": [
+        "components/z/grid/index.tsx",
+        "components/z/grid/index.web.tsx",
+        "components/z/grid/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/heading": {
+      "type": "primitive",
+      "files": [
+        "components/z/heading/index.tsx",
+        "components/z/heading/index.web.tsx",
+        "components/z/heading/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@expo/html-elements": "^0.12.5",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "@expo/html-elements"
+      ]
+    },
+    "z/hstack": {
+      "type": "primitive",
+      "files": [
+        "components/z/hstack/index.tsx",
+        "components/z/hstack/index.web.tsx",
+        "components/z/hstack/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/icon": {
+      "type": "primitive",
+      "files": [
+        "components/z/icon/index.tsx",
+        "components/z/icon/index.web.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-svg": "15.16.0"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-svg"
+      ]
+    },
+    "z/image": {
+      "type": "primitive",
+      "files": [
+        "components/z/image/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/image-background": {
+      "type": "primitive",
+      "files": [
+        "components/z/image-background/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/input": {
+      "type": "primitive",
+      "files": [
+        "components/z/input/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/input-accessory-view": {
+      "type": "primitive",
+      "files": [
+        "components/z/input-accessory-view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/keyboard-avoiding-view": {
+      "type": "primitive",
+      "files": [
+        "components/z/keyboard-avoiding-view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/link": {
+      "type": "primitive",
+      "files": [
+        "components/z/link/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/menu": {
+      "type": "primitive",
+      "files": [
+        "components/z/menu/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-reanimated"
+      ]
+    },
+    "z/modal": {
+      "type": "primitive",
+      "files": [
+        "components/z/modal/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-reanimated"
+      ]
+    },
+    "z/popover": {
+      "type": "primitive",
+      "files": [
+        "components/z/popover/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-reanimated"
+      ]
+    },
+    "z/portal": {
+      "type": "primitive",
+      "files": [
+        "components/z/portal/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/pressable": {
+      "type": "primitive",
+      "files": [
+        "components/z/pressable/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/progress": {
+      "type": "primitive",
+      "files": [
+        "components/z/progress/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/radio": {
+      "type": "primitive",
+      "files": [
+        "components/z/radio/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/refresh-control": {
+      "type": "primitive",
+      "files": [
+        "components/z/refresh-control/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/safe-area-view": {
+      "type": "primitive",
+      "files": [
+        "components/z/safe-area-view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "react-native-safe-area-context": "~5.11.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-safe-area-context"
+      ]
+    },
+    "z/scroll-view": {
+      "type": "primitive",
+      "files": [
+        "components/z/scroll-view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/section-list": {
+      "type": "primitive",
+      "files": [
+        "components/z/section-list/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/select": {
+      "type": "primitive",
+      "files": [
+        "components/z/select/index.tsx",
+        "components/z/select/select-actionsheet.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@expo/html-elements": "^0.12.5",
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "@legendapp/motion": "^2.4.0",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "@expo/html-elements"
+      ]
+    },
+    "z/skeleton": {
+      "type": "primitive",
+      "files": [
+        "components/z/skeleton/index.tsx",
+        "components/z/skeleton/index.web.tsx",
+        "components/z/skeleton/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/slider": {
+      "type": "primitive",
+      "files": [
+        "components/z/slider/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/spinner": {
+      "type": "primitive",
+      "files": [
+        "components/z/spinner/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/status-bar": {
+      "type": "primitive",
+      "files": [
+        "components/z/status-bar/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/switch": {
+      "type": "primitive",
+      "files": [
+        "components/z/switch/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/table": {
+      "type": "primitive",
+      "files": [
+        "components/z/table/index.tsx",
+        "components/z/table/index.web.tsx",
+        "components/z/table/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@expo/html-elements": "^0.12.5",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": [
+        "@expo/html-elements"
+      ]
+    },
+    "z/text": {
+      "type": "primitive",
+      "files": [
+        "components/z/text/index.tsx",
+        "components/z/text/index.web.tsx",
+        "components/z/text/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/textarea": {
+      "type": "primitive",
+      "files": [
+        "components/z/textarea/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/toast": {
+      "type": "primitive",
+      "files": [
+        "components/z/toast/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "nativewind": "^5.0.0-rc.1",
+        "react-native-reanimated": "4.7.1"
+      },
+      "devDependencies": {},
+      "expo": [
+        "react-native-reanimated"
+      ]
+    },
+    "z/tooltip": {
+      "type": "primitive",
+      "files": [
+        "components/z/tooltip/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/core": "^5.0.15",
+        "@gluestack-ui/utils": "^5.0.6",
+        "@legendapp/motion": "^2.4.0",
+        "nativewind": "^5.0.0-rc.1"
+      },
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/view": {
+      "type": "primitive",
+      "files": [
+        "components/z/view/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/virtualized-list": {
+      "type": "primitive",
+      "files": [
+        "components/z/virtualized-list/index.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
+      "devDependencies": {},
+      "expo": []
+    },
+    "z/vstack": {
+      "type": "primitive",
+      "files": [
+        "components/z/vstack/index.tsx",
+        "components/z/vstack/index.web.tsx",
+        "components/z/vstack/styles.tsx"
+      ],
+      "registryDependencies": [],
+      "dependencies": {
+        "@gluestack-ui/utils": "^5.0.6"
+      },
+      "devDependencies": {},
+      "expo": []
+    }
+  }
+}

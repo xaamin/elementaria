@@ -1,0 +1,71 @@
+{
+  "name": "elementaria",
+  "version": "0.1.0",
+  "description": "Componentes UI para Expo/React Native (NativeWind 5 + Gluestack v5) que se copian a tu proyecto como código fuente.",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "elementaria": "cli/index.mjs"
+  },
+  "files": [
+    "cli",
+    "!cli/**/*.test.mjs",
+    "registry",
+    "registry.json"
+  ],
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xaamin/elementaria.git"
+  },
+  "scripts": {
+    "import": "node scripts/import.mjs",
+    "build": "node scripts/build-registry.mjs",
+    "check": "node scripts/build-registry.mjs --check",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "testMatch": [
+      "<rootDir>/cli/**/*.test.mjs",
+      "<rootDir>/scripts/**/*.test.mjs"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^30.0.0"
+  },
+  "elementaria": {
+    "peer": [
+      "react",
+      "react-native"
+    ],
+    "versions": {
+      "@expo/html-elements": "^0.12.5",
+      "@gluestack-ui/core": "^5.0.15",
+      "@gluestack-ui/utils": "^5.0.6",
+      "@gorhom/bottom-sheet": "^5.2.6",
+      "@legendapp/motion": "^2.4.0",
+      "@marceloterreiro/flash-calendar": "^2.0.0",
+      "@tailwindcss/postcss": "^4.3.5",
+      "clsx": "^2.1.1",
+      "expo-document-picker": "~58.0.4",
+      "expo-file-system": "~58.0.13",
+      "expo-router": "~58.0.30",
+      "expo-web-browser": "~58.0.7",
+      "lucide-react-native": "^0.510.0",
+      "nativewind": "^5.0.0-rc.1",
+      "react-aria": "^3.53.1",
+      "react-native-css": "^3.1.0-rc.1",
+      "react-native-gesture-handler": "~3.3.0",
+      "react-native-reanimated": "4.7.1",
+      "react-native-safe-area-context": "~5.11.1",
+      "react-native-svg": "15.16.0",
+      "tailwind-merge": "^1.14.0",
+      "tailwindcss": "^4.3.5"
+    }
+  }
+}
