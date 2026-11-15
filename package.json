@@ -25,7 +25,8 @@
     "import": "node scripts/import.mjs",
     "build": "node scripts/build-registry.mjs",
     "check": "node scripts/build-registry.mjs --check",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "release": "release-it"
   },
   "jest": {
     "testEnvironment": "node",
@@ -36,7 +37,9 @@
     ]
   },
   "devDependencies": {
-    "jest": "^30.0.0"
+    "@release-it/conventional-changelog": "^12.0.2",
+    "jest": "^30.0.0",
+    "release-it": "^21.1.2"
   },
   "elementaria": {
     "peer": [

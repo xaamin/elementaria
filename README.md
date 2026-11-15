@@ -94,6 +94,20 @@ npm test
 
 ### Publicar una versión
 
-1. Actualiza `version` en `package.json` y ejecuta `npm run build`.
-2. Commit y tag con la misma versión: `git tag v0.2.0 && git push --tags`.
-3. En los proyectos: cambia el tag del script `ui` y ejecuta `npm run ui -- update`.
+Las versiones se publican con [release-it](https://github.com/release-it/release-it) desde `main`,
+con el árbol de trabajo limpio:
+
+```bash
+npm run release              # interactivo: propone la versión según los commits
+npm run release -- minor     # o indica el incremento
+npm run release -- --dry-run # muestra lo que haría
+```
+
+El proceso ejecuta `check` y `test`, sube `version` en `package.json`, regenera `registry.json`,
+actualiza `CHANGELOG.md` a partir de los commits (Conventional Commits), crea el commit
+`chore: release vX.Y.Z` y el tag `vX.Y.Z`, hace push y crea el release en GitHub. No publica en npm.
+
+Para crear el release en GitHub define `GITHUB_TOKEN` (permiso `contents: write`); sin token,
+release-it abre el formulario del release en el navegador.
+
+Después, en cada proyecto: cambia el tag del script `ui` y ejecuta `npm run ui -- update`.
