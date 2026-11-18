@@ -38,18 +38,18 @@
     --primary-900: 34 33 33;
     --primary-950: 23 12 8;
 
-    --secondary-0: 255 248 248;
-    --secondary-50: 255 241 242;
-    --secondary-100: 255 223 225;
-    --secondary-200: 255 194 199;
-    --secondary-300: 241 156 165;
-    --secondary-400: 205 127 135;
-    --secondary-500: 164 97 105;
-    --secondary-600: 126 73 79;
-    --secondary-700: 94 57 61;
-    --secondary-800: 64 45 47;
-    --secondary-900: 33 34 34;
-    --secondary-950: 6 18 18;
+    --secondary-0: 247 251 253;
+    --secondary-50: 238 247 250;
+    --secondary-100: 222 234 238;
+    --secondary-200: 199 216 222;
+    --secondary-300: 166 188 196;
+    --secondary-400: 131 157 167;
+    --secondary-500: 97 125 135;
+    --secondary-600: 70 95 105;
+    --secondary-700: 51 73 81;
+    --secondary-800: 37 54 60;
+    --secondary-900: 23 36 41;
+    --secondary-950: 9 17 20;
 
     --tertiary-0: 249 250 255;
     --tertiary-50: 243 244 255;
@@ -172,8 +172,8 @@
     --popover-foreground: 16 15 15; /* --typography-950 */
     --primary: 8 101 125; /* --primary-600 */
     --primary-foreground: 231 249 255; /* --primary-50 */
-    --secondary: 255 223 225; /* --secondary-100 */
-    --secondary-foreground: 33 34 34; /* --secondary-900 */
+    --secondary: 222 234 238; /* --secondary-100 */
+    --secondary-foreground: 23 36 41; /* --secondary-900 */
     --muted: 229 232 234; /* --background-muted */
     --muted-foreground: 117 120 121; /* --typography-500 */
     --accent: 228 230 255; /* --tertiary-100 */
@@ -200,18 +200,18 @@
       --primary-900: 231 249 255;
       --primary-950: 243 252 255;
 
-      --secondary-0: 6 18 18;
-      --secondary-50: 33 34 34;
-      --secondary-100: 64 45 47;
-      --secondary-200: 94 57 61;
-      --secondary-300: 126 73 79;
-      --secondary-400: 164 97 105;
-      --secondary-500: 205 127 135;
-      --secondary-600: 241 156 165;
-      --secondary-700: 255 194 199;
-      --secondary-800: 255 223 225;
-      --secondary-900: 255 241 242;
-      --secondary-950: 255 248 248;
+      --secondary-0: 9 17 20;
+      --secondary-50: 23 36 41;
+      --secondary-100: 37 54 60;
+      --secondary-200: 51 73 81;
+      --secondary-300: 70 95 105;
+      --secondary-400: 97 125 135;
+      --secondary-500: 131 157 167;
+      --secondary-600: 166 188 196;
+      --secondary-700: 199 216 222;
+      --secondary-800: 222 234 238;
+      --secondary-900: 238 247 250;
+      --secondary-950: 247 251 253;
 
       --tertiary-0: 17 16 5;
       --tertiary-50: 34 34 33;
@@ -334,8 +334,8 @@
       --popover-foreground: 242 246 247; /* --typography-900 */
       --primary: 17 132 163; /* --primary-400 */
       --primary-foreground: 231 249 255; /* --primary-900 */
-      --secondary: 64 45 47; /* --secondary-100 */
-      --secondary-foreground: 255 241 242; /* --secondary-900 */
+      --secondary: 37 54 60; /* --secondary-100 */
+      --secondary-foreground: 238 247 250; /* --secondary-900 */
       --muted: 50 51 51; /* --background-muted */
       --muted-foreground: 149 153 154; /* --typography-500 */
       --accent: 48 49 69; /* --tertiary-100 */
@@ -362,18 +362,18 @@
     --primary-900: 231 249 255;
     --primary-950: 243 252 255;
 
-    --secondary-0: 6 18 18;
-    --secondary-50: 33 34 34;
-    --secondary-100: 64 45 47;
-    --secondary-200: 94 57 61;
-    --secondary-300: 126 73 79;
-    --secondary-400: 164 97 105;
-    --secondary-500: 205 127 135;
-    --secondary-600: 241 156 165;
-    --secondary-700: 255 194 199;
-    --secondary-800: 255 223 225;
-    --secondary-900: 255 241 242;
-    --secondary-950: 255 248 248;
+    --secondary-0: 9 17 20;
+    --secondary-50: 23 36 41;
+    --secondary-100: 37 54 60;
+    --secondary-200: 51 73 81;
+    --secondary-300: 70 95 105;
+    --secondary-400: 97 125 135;
+    --secondary-500: 131 157 167;
+    --secondary-600: 166 188 196;
+    --secondary-700: 199 216 222;
+    --secondary-800: 222 234 238;
+    --secondary-900: 238 247 250;
+    --secondary-950: 247 251 253;
 
     --tertiary-0: 17 16 5;
     --tertiary-50: 34 34 33;
@@ -496,8 +496,8 @@
     --popover-foreground: 242 246 247; /* --typography-900 */
     --primary: 17 132 163; /* --primary-400 */
     --primary-foreground: 231 249 255; /* --primary-900 */
-    --secondary: 64 45 47; /* --secondary-100 */
-    --secondary-foreground: 255 241 242; /* --secondary-900 */
+    --secondary: 37 54 60; /* --secondary-100 */
+    --secondary-foreground: 238 247 250; /* --secondary-900 */
     --muted: 50 51 51; /* --background-muted */
     --muted-foreground: 149 153 154; /* --typography-500 */
     --accent: 48 49 69; /* --tertiary-100 */
@@ -523,18 +523,18 @@
     --primary-900: 34 33 33;
     --primary-950: 23 12 8;
 
-    --secondary-0: 255 248 248;
-    --secondary-50: 255 241 242;
-    --secondary-100: 255 223 225;
-    --secondary-200: 255 194 199;
-    --secondary-300: 241 156 165;
-    --secondary-400: 205 127 135;
-    --secondary-500: 164 97 105;
-    --secondary-600: 126 73 79;
-    --secondary-700: 94 57 61;
-    --secondary-800: 64 45 47;
-    --secondary-900: 33 34 34;
-    --secondary-950: 6 18 18;
+    --secondary-0: 247 251 253;
+    --secondary-50: 238 247 250;
+    --secondary-100: 222 234 238;
+    --secondary-200: 199 216 222;
+    --secondary-300: 166 188 196;
+    --secondary-400: 131 157 167;
+    --secondary-500: 97 125 135;
+    --secondary-600: 70 95 105;
+    --secondary-700: 51 73 81;
+    --secondary-800: 37 54 60;
+    --secondary-900: 23 36 41;
+    --secondary-950: 9 17 20;
 
     --tertiary-0: 249 250 255;
     --tertiary-50: 243 244 255;
@@ -657,8 +657,8 @@
     --popover-foreground: 16 15 15; /* --typography-950 */
     --primary: 8 101 125; /* --primary-600 */
     --primary-foreground: 231 249 255; /* --primary-50 */
-    --secondary: 255 223 225; /* --secondary-100 */
-    --secondary-foreground: 33 34 34; /* --secondary-900 */
+    --secondary: 222 234 238; /* --secondary-100 */
+    --secondary-foreground: 23 36 41; /* --secondary-900 */
     --muted: 229 232 234; /* --background-muted */
     --muted-foreground: 117 120 121; /* --typography-500 */
     --accent: 228 230 255; /* --tertiary-100 */

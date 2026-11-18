@@ -54,9 +54,12 @@ definia, asi que el texto ya heredaba la fuente.
 ## Correspondencia de tokens
 
 La paleta parte de la propuesta de shadcn: `primary` (azul petróleo),
-`secondary` (rosa), `accent` (azul lavanda, en la escala v3 `tertiary`),
-`neutral` (para `typography`, `outline` y `background`) y los estados
-`success`, `warning`, `error` e `info`. Cada escala v3 va del paso `50` al
+`accent` (azul lavanda, en la escala v3 `tertiary`), `neutral` (para
+`typography`, `outline` y `background`) y los estados `success`, `warning`,
+`error` e `info`. `secondary` es un gris pizarra propio, en lugar del rosa de
+la propuesta, que se confundia con `error`: en OKLCH usa el tono de
+`primary-500` (222.8°), la luminosidad de cada paso de `neutral` y un croma
+de 0.006 a 0.036 (maximo en `500`). Cada escala v3 va del paso `50` al
 `950` de la paleta en claro; el paso `0` es la mezcla al 50 % del paso `50`
 con blanco (`background-0` es blanco). En oscuro, cada escala se invierte
 (`0` ↔ `950`, `50` ↔ `900`, `100` ↔ `800`...), por lo que las clases v3 fijas
@@ -129,8 +132,7 @@ cambiar la apariencia:
   `rounded-lg`; el `primary` enfoca con `ring-primary-300`; el `secondary`
   solido es un tinte primario (`primary-50`, borde `primary-200`, texto
   `primary-700`) y el resto de la accion `secondary` (`dark`, por defecto) usa
-  las escalas neutras (`background-200`, borde `outline-100`), porque la
-  escala `secondary` es el rosa de la marca. `Alert` usa fondo `-50`, borde
+  las escalas neutras (`background-200`, borde `outline-100`). `Alert` usa fondo `-50`, borde
   `-200` y texto `-800`; `Badge`, fondo `-100`, borde `-200`, texto `-700` en
   negrita, y sin color usa `tertiary` (el acento). Los campos de texto
   (`InputRoot`) usan `rounded-lg`, fondo `background-0`, borde `outline-300` y

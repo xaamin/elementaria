@@ -120,8 +120,7 @@ const ButtonStyleContext = createContext<ButtonStyle | undefined>(undefined);
 
 // Palette of the v3 template (`action` x `variant`). The v5 template only has
 // a neutral `variant`, so the wrapper reapplies these classes over it. The
-// `secondary` action uses the neutral scales: the `secondary` scale is now
-// the brand's pink.
+// `secondary` action uses the neutral scales.
 const ROOT_ACTION_CLASSES: Record<ButtonColor, string> = {
   primary:
     'bg-primary-500 data-[hover=true]:bg-primary-600 data-[active=true]:bg-primary-700 border-primary-300 data-[hover=true]:border-primary-400 data-[active=true]:border-primary-500 data-[focus-visible=true]:web:ring-primary-300',
