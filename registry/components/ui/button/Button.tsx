@@ -27,6 +27,19 @@ import {
 } from '@/components/z/button';
 
 import { withFrozenProps } from '../primitive';
+import {
+  FOCUS_RING_CLASSES,
+  isToneVariant,
+  OUTLINE_CLASSES,
+  SOFT_CLASSES,
+  SOLID_CLASSES,
+} from '../variants';
+import type {
+  OutlineClasses,
+  SolidVariant,
+  ToneClasses,
+  ToneVariant,
+} from '../variants';
 
 const Variants = [
   'primary',
@@ -105,24 +118,6 @@ const ButtonIconPrimitive = withFrozenProps<ButtonIconProps, 'size'>(
   TheButtonIcon,
 );
 
-/** Variants with a palette of their own; the rest use `neutral`. */
-const ColorVariants = [
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-  'dark',
-  'neutral',
-] as const;
-
-type ButtonColorVariant = (typeof ColorVariants)[number];
-
-function isColorVariant(variant: string): variant is ButtonColorVariant {
-  return (ColorVariants as readonly string[]).includes(variant);
-}
-
 type ButtonShape = 'solid' | 'outline' | 'link';
 
 type ButtonStyle = { text: string; icon: string };
@@ -134,29 +129,100 @@ type ButtonStyle = { text: string; icon: string };
  */
 const ButtonStyleContext = createContext<ButtonStyle | undefined>(undefined);
 
-// Palette keyed by the public `variant`. The v5 template only has a neutral
-// `variant`, so the wrapper reapplies these classes over it. The solid shape
-// uses the Badge colors (`-100` background, `-700` text) with a visible
-// `-300` border, darkened one step on hover and press. `primary` keeps the
-// solid `-500` fill with `typography-0` text and a border matching the fill.
-// `neutral` uses the neutral scales (also used by the light, outline, ghost,
-// transparent and link variants) and `dark` the fixed `dark` surface, which
-// does not invert in dark mode.
-const ROOT_ACTION_CLASSES: Record<ButtonColorVariant, string> = {
+// The colors come from the shared variant recipes; this file only adds the
+// interactive states. Hover and press darken each recipe one step.
+const SOFT_STATE_CLASSES: Record<ToneVariant, ToneClasses> = {
+  primary: {
+    root: 'data-[hover=true]:bg-primary-200 data-[hover=true]:border-primary-400 data-[active=true]:bg-primary-300 data-[active=true]:border-primary-500',
+    text: 'data-[hover=true]:text-primary-800 data-[active=true]:text-primary-800',
+  },
+  secondary: {
+    root: 'data-[hover=true]:bg-secondary-200 data-[hover=true]:border-secondary-400 data-[active=true]:bg-secondary-300 data-[active=true]:border-secondary-500',
+    text: 'data-[hover=true]:text-secondary-800 data-[active=true]:text-secondary-800',
+  },
+  success: {
+    root: 'data-[hover=true]:bg-success-200 data-[hover=true]:border-success-400 data-[active=true]:bg-success-300 data-[active=true]:border-success-500',
+    text: 'data-[hover=true]:text-success-800 data-[active=true]:text-success-800',
+  },
+  danger: {
+    root: 'data-[hover=true]:bg-error-200 data-[hover=true]:border-error-400 data-[active=true]:bg-error-300 data-[active=true]:border-error-500',
+    text: 'data-[hover=true]:text-error-800 data-[active=true]:text-error-800',
+  },
+  warning: {
+    root: 'data-[hover=true]:bg-warning-200 data-[hover=true]:border-warning-400 data-[active=true]:bg-warning-300 data-[active=true]:border-warning-500',
+    text: 'data-[hover=true]:text-warning-800 data-[active=true]:text-warning-800',
+  },
+  info: {
+    root: 'data-[hover=true]:bg-info-200 data-[hover=true]:border-info-400 data-[active=true]:bg-info-300 data-[active=true]:border-info-500',
+    text: 'data-[hover=true]:text-info-800 data-[active=true]:text-info-800',
+  },
+  dark: {
+    root: 'data-[hover=true]:bg-fixed-dark-hover data-[hover=true]:border-fixed-dark-active data-[active=true]:bg-fixed-dark-active data-[active=true]:border-fixed-dark-active',
+    text: '',
+  },
+  light: {
+    root: 'data-[hover=true]:bg-fixed-light-hover data-[hover=true]:border-fixed-light-border-hover data-[active=true]:bg-fixed-light-active data-[active=true]:border-fixed-light-border-hover',
+    text: '',
+  },
+  neutral: {
+    root: 'data-[hover=true]:bg-background-200 data-[hover=true]:border-outline-400 data-[active=true]:bg-background-300 data-[active=true]:border-outline-500',
+    text: 'data-[hover=true]:text-typography-800 data-[active=true]:text-typography-800',
+  },
+};
+
+const SOLID_STATE_CLASSES: Record<SolidVariant, string> = {
   primary:
-    'bg-primary-500 border-primary-500 data-[hover=true]:bg-primary-600 data-[hover=true]:border-primary-600 data-[active=true]:bg-primary-700 data-[active=true]:border-primary-700 data-[focus-visible=true]:web:ring-primary-300',
-  secondary:
-    'bg-secondary-100 border-secondary-300 data-[hover=true]:bg-secondary-200 data-[hover=true]:border-secondary-400 data-[active=true]:bg-secondary-300 data-[active=true]:border-secondary-500 data-[focus-visible=true]:web:ring-secondary-300',
-  dark: 'bg-fixed-dark border-fixed-dark-hover data-[hover=true]:bg-fixed-dark-hover data-[hover=true]:border-fixed-dark-active data-[active=true]:bg-fixed-dark-active data-[active=true]:border-fixed-dark-active data-[focus-visible=true]:web:ring-indicator-info',
-  neutral:
-    'bg-background-100 border-outline-300 data-[hover=true]:bg-background-200 data-[hover=true]:border-outline-400 data-[active=true]:bg-background-300 data-[active=true]:border-outline-500 data-[focus-visible=true]:web:ring-indicator-info',
-  success:
-    'bg-success-100 border-success-300 data-[hover=true]:bg-success-200 data-[hover=true]:border-success-400 data-[active=true]:bg-success-300 data-[active=true]:border-success-500 data-[focus-visible=true]:web:ring-indicator-info',
+    'data-[hover=true]:bg-primary-700 data-[hover=true]:border-primary-700 data-[active=true]:bg-primary-800 data-[active=true]:border-primary-800',
   danger:
-    'bg-error-100 border-error-300 data-[hover=true]:bg-error-200 data-[hover=true]:border-error-400 data-[active=true]:bg-error-300 data-[active=true]:border-error-500 data-[focus-visible=true]:web:ring-indicator-info',
-  warning:
-    'bg-warning-100 border-warning-300 data-[hover=true]:bg-warning-200 data-[hover=true]:border-warning-400 data-[active=true]:bg-warning-300 data-[active=true]:border-warning-500 data-[focus-visible=true]:web:ring-indicator-info',
-  info: 'bg-info-100 border-info-300 data-[hover=true]:bg-info-200 data-[hover=true]:border-info-400 data-[active=true]:bg-info-300 data-[active=true]:border-info-500 data-[focus-visible=true]:web:ring-indicator-info',
+    'data-[hover=true]:bg-fixed-danger-hover data-[hover=true]:border-fixed-danger-hover data-[active=true]:bg-fixed-danger-active data-[active=true]:border-fixed-danger-active',
+};
+
+const OUTLINE_STATE_CLASSES: Record<ToneVariant, OutlineClasses> = {
+  primary: {
+    border:
+      'data-[hover=true]:border-primary-500 data-[active=true]:border-primary-600',
+    text: 'data-[hover=true]:text-primary-700 data-[active=true]:text-primary-800',
+  },
+  secondary: {
+    border:
+      'data-[hover=true]:border-secondary-500 data-[active=true]:border-secondary-600',
+    text: 'data-[hover=true]:text-secondary-700 data-[active=true]:text-secondary-800',
+  },
+  success: {
+    border:
+      'data-[hover=true]:border-success-500 data-[active=true]:border-success-600',
+    text: 'data-[hover=true]:text-success-700 data-[active=true]:text-success-800',
+  },
+  danger: {
+    border:
+      'data-[hover=true]:border-error-500 data-[active=true]:border-error-600',
+    text: 'data-[hover=true]:text-error-700 data-[active=true]:text-error-800',
+  },
+  warning: {
+    border:
+      'data-[hover=true]:border-warning-500 data-[active=true]:border-warning-600',
+    text: 'data-[hover=true]:text-warning-700 data-[active=true]:text-warning-800',
+  },
+  info: {
+    border:
+      'data-[hover=true]:border-info-500 data-[active=true]:border-info-600',
+    text: 'data-[hover=true]:text-info-700 data-[active=true]:text-info-800',
+  },
+  dark: {
+    border:
+      'data-[hover=true]:border-background-900 data-[active=true]:border-background-950',
+    text: 'data-[hover=true]:text-typography-950 data-[active=true]:text-typography-950',
+  },
+  light: {
+    border:
+      'data-[hover=true]:border-outline-300 data-[active=true]:border-outline-400',
+    text: 'data-[hover=true]:text-typography-800 data-[active=true]:text-typography-800',
+  },
+  neutral: {
+    border:
+      'data-[hover=true]:border-outline-500 data-[active=true]:border-outline-600',
+    text: 'data-[hover=true]:text-typography-900 data-[active=true]:text-typography-900',
+  },
 };
 
 const ROOT_SHAPE_CLASSES: Record<ButtonShape, string> = {
@@ -166,114 +232,52 @@ const ROOT_SHAPE_CLASSES: Record<ButtonShape, string> = {
   link: 'px-0 bg-transparent data-[hover=true]:bg-transparent data-[active=true]:bg-transparent',
 };
 
-// Stronger than v3, whose outline borders (`-300`) and text (`-500`) were
-// barely visible.
-const OUTLINE_BORDER_CLASSES: Record<ButtonColorVariant, string> = {
-  primary:
-    'border-primary-400 data-[hover=true]:border-primary-500 data-[active=true]:border-primary-600',
-  secondary:
-    'border-secondary-400 data-[hover=true]:border-secondary-500 data-[active=true]:border-secondary-600',
-  neutral:
-    'border-outline-400 data-[hover=true]:border-outline-500 data-[active=true]:border-outline-600',
-  dark: 'border-background-800 data-[hover=true]:border-background-900 data-[active=true]:border-background-950',
-  success:
-    'border-success-600 data-[hover=true]:border-success-800 data-[active=true]:border-success-800',
-  danger:
-    'border-error-500 data-[hover=true]:border-error-600 data-[active=true]:border-error-700',
-  warning:
-    'border-warning-500 data-[hover=true]:border-warning-600 data-[active=true]:border-warning-700',
-  info: 'border-info-500 data-[hover=true]:border-info-600 data-[active=true]:border-info-700',
-};
-
-const TEXT_ACTION_CLASSES: Record<ButtonColorVariant, string> = {
-  primary:
-    'text-primary-600 data-[hover=true]:text-primary-600 data-[active=true]:text-primary-700',
-  secondary:
-    'text-secondary-600 data-[hover=true]:text-secondary-600 data-[active=true]:text-secondary-700',
-  neutral:
-    'text-typography-700 data-[hover=true]:text-typography-800 data-[active=true]:text-typography-900',
-  dark: 'text-typography-900 data-[hover=true]:text-typography-900 data-[active=true]:text-typography-950',
-  success:
-    'text-success-600 data-[hover=true]:text-success-800 data-[active=true]:text-success-800',
-  danger:
-    'text-error-600 data-[hover=true]:text-error-600 data-[active=true]:text-error-700',
-  warning:
-    'text-warning-600 data-[hover=true]:text-warning-600 data-[active=true]:text-warning-700',
-  info: 'text-info-600 data-[hover=true]:text-info-600 data-[active=true]:text-info-700',
-};
-
-const SOLID_TEXT_CLASSES: Record<ButtonColorVariant, string> = {
-  primary:
-    'text-typography-0 data-[hover=true]:text-typography-0 data-[active=true]:text-typography-0',
-  secondary:
-    'text-secondary-700 data-[hover=true]:text-secondary-800 data-[active=true]:text-secondary-800',
-  neutral:
-    'text-typography-700 data-[hover=true]:text-typography-800 data-[active=true]:text-typography-800',
-  dark: 'text-fixed-dark-foreground data-[hover=true]:text-fixed-dark-foreground data-[active=true]:text-fixed-dark-foreground',
-  success:
-    'text-success-700 data-[hover=true]:text-success-800 data-[active=true]:text-success-800',
-  danger:
-    'text-error-700 data-[hover=true]:text-error-800 data-[active=true]:text-error-800',
-  warning:
-    'text-warning-700 data-[hover=true]:text-warning-800 data-[active=true]:text-warning-800',
-  info: 'text-info-700 data-[hover=true]:text-info-800 data-[active=true]:text-info-800',
-};
-
-// Outline text and icons take the color of the action (v3 used the light
-// `primary-500` for every color except secondary).
-const OUTLINE_TEXT_CLASSES: Record<ButtonColorVariant, string> = {
-  primary:
-    'text-primary-600 data-[hover=true]:text-primary-700 data-[active=true]:text-primary-800',
-  secondary:
-    'text-secondary-600 data-[hover=true]:text-secondary-700 data-[active=true]:text-secondary-800',
-  neutral:
-    'text-typography-800 data-[hover=true]:text-typography-900 data-[active=true]:text-typography-900',
-  dark: 'text-typography-900 data-[hover=true]:text-typography-950 data-[active=true]:text-typography-950',
-  success:
-    'text-success-600 data-[hover=true]:text-success-800 data-[active=true]:text-success-800',
-  danger:
-    'text-error-600 data-[hover=true]:text-error-700 data-[active=true]:text-error-800',
-  warning:
-    'text-warning-600 data-[hover=true]:text-warning-700 data-[active=true]:text-warning-800',
-  info: 'text-info-600 data-[hover=true]:text-info-700 data-[active=true]:text-info-800',
-};
-
-// `light` variant: the fixed `light` surface with a soft border; like `dark`,
-// it keeps its color in dark mode.
-const LIGHT_SOLID_ROOT_CLASSES =
-  'bg-fixed-light border border-fixed-light-border data-[hover=true]:bg-fixed-light-hover data-[hover=true]:border-fixed-light-border-hover data-[active=true]:bg-fixed-light-active data-[active=true]:border-fixed-light-border-hover';
-
-const LIGHT_SOLID_TEXT_CLASSES =
-  'text-fixed-light-foreground data-[hover=true]:text-fixed-light-foreground data-[active=true]:text-fixed-light-foreground';
-
-const LIGHT_OUTLINE_BORDER_CLASSES =
-  'border-outline-200 data-[hover=true]:border-outline-300 data-[active=true]:border-outline-400';
-
 const LINK_TEXT_CLASSES =
   'data-[hover=true]:underline data-[active=true]:underline';
 
-function buttonStyle(
-  color: ButtonColorVariant,
+function isSolidVariant(color: ToneVariant): color is SolidVariant {
+  return color === 'primary' || color === 'danger';
+}
+
+/**
+ * The highest-emphasis actions (`primary`, and `danger` for destructive
+ * actions) use the solid fill; the other variants use the soft recipe shared
+ * with Badge and Alert.
+ */
+function buttonClasses(
+  color: ToneVariant,
   shape: ButtonShape,
-): ButtonStyle {
-  if (shape === 'solid') {
+): { root: string; text: string } {
+  if (shape === 'solid' && isSolidVariant(color)) {
     return {
-      text: SOLID_TEXT_CLASSES[color],
-      icon: SOLID_TEXT_CLASSES[color],
+      root: cn(SOLID_CLASSES[color].root, SOLID_STATE_CLASSES[color]),
+      text: SOLID_CLASSES[color].text,
     };
   }
+
+  if (shape === 'solid') {
+    return {
+      root: cn(SOFT_CLASSES[color].root, SOFT_STATE_CLASSES[color].root),
+      text: cn(SOFT_CLASSES[color].text, SOFT_STATE_CLASSES[color].text),
+    };
+  }
+
+  const text = cn(
+    OUTLINE_CLASSES[color].text,
+    OUTLINE_STATE_CLASSES[color].text,
+  );
 
   if (shape === 'outline') {
     return {
-      text: OUTLINE_TEXT_CLASSES[color],
-      icon: OUTLINE_TEXT_CLASSES[color],
+      root: cn(
+        OUTLINE_CLASSES[color].border,
+        OUTLINE_STATE_CLASSES[color].border,
+      ),
+      text,
     };
   }
 
-  return {
-    text: cn(TEXT_ACTION_CLASSES[color], LINK_TEXT_CLASSES),
-    icon: cn(LINK_TEXT_CLASSES, TEXT_ACTION_CLASSES[color]),
-  };
+  return { root: '', text: cn(text, LINK_TEXT_CLASSES) };
 }
 
 const ButtonText = forwardRef<
@@ -322,9 +326,9 @@ const Button = (props: ButtonProps) => {
     ...rest
   } = props;
 
-  let color: ButtonColorVariant = 'neutral';
+  let color: ToneVariant = 'neutral';
 
-  if (isColorVariant(variant)) {
+  if (isToneVariant(variant)) {
     color = variant;
   }
 
@@ -345,23 +349,18 @@ const Button = (props: ButtonProps) => {
     newVariant = 'link';
   }
 
-  const isLightSolid = variant === 'light' && newVariant === 'solid';
+  const { root: colorClassName, text: textClassName } = buttonClasses(
+    color,
+    newVariant,
+  );
 
-  let style = buttonStyle(color, newVariant);
-
-  if (isLightSolid) {
-    style = { text: LIGHT_SOLID_TEXT_CLASSES, icon: LIGHT_SOLID_TEXT_CLASSES };
-  }
-
-  const isLight = variant === 'light';
+  const style = { text: textClassName, icon: textClassName };
 
   newClassName = cn(
     'rounded-lg',
-    ROOT_ACTION_CLASSES[color],
     ROOT_SHAPE_CLASSES[newVariant],
-    newVariant === 'outline' && OUTLINE_BORDER_CLASSES[color],
-    isLightSolid && LIGHT_SOLID_ROOT_CLASSES,
-    isLight && newVariant === 'outline' && LIGHT_OUTLINE_BORDER_CLASSES,
+    colorClassName,
+    FOCUS_RING_CLASSES,
     newClassName,
   );
 

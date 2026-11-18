@@ -843,6 +843,14 @@
   --color-fixed-light-border-hover: rgb(180 184 185); /* neutral-300 */
   --color-fixed-light-foreground: rgb(50 51 51); /* neutral-800 */
 
+  /* Relleno solido de `danger` en Button: rojo atardecer vivo, que la escala
+     `error` (desaturada) no ofrece. No se invierte; el texto blanco contrasta
+     4.8:1 en reposo y mas al pasar el cursor y pulsar. */
+  --color-fixed-danger: rgb(217 45 32);
+  --color-fixed-danger-hover: rgb(185 28 28);
+  --color-fixed-danger-active: rgb(153 27 27);
+  --color-fixed-danger-foreground: rgb(255 255 255);
+
   --font-weight-extrablack: 950;
 
   --text-2xs: 10px;

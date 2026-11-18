@@ -26,6 +26,7 @@
         "heading",
         "icon",
         "pressable",
+        "variants",
         "vstack",
         "z/alert"
       ],
@@ -89,6 +90,7 @@
         "base",
         "box",
         "icon",
+        "variants",
         "z/badge"
       ],
       "dependencies": {
@@ -175,6 +177,7 @@
       ],
       "registryDependencies": [
         "base",
+        "variants",
         "z/button"
       ],
       "dependencies": {
@@ -861,6 +864,17 @@
       "dependencies": {
         "@legendapp/motion": "^2.4.0"
       },
+      "devDependencies": {},
+      "expo": []
+    },
+    "variants": {
+      "type": "component",
+      "files": [
+        "components/ui/variants/colors.ts",
+        "components/ui/variants/index.ts"
+      ],
+      "registryDependencies": [],
+      "dependencies": {},
       "devDependencies": {},
       "expo": []
     },

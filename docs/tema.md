@@ -126,25 +126,28 @@ cambiar la apariencia:
   `components/z` ya no transporta `action`.
 - Valores por defecto de v3: `Badge` y `Alert` sin color usan `muted`; `Toast`
   usa `solid`/`muted`; `Accordion` usa `filled`.
-- Excepcion: `Button` con `outline` (y `link`/`ghost`) refuerza la paleta v3,
-  cuyos bordes `-300` y textos `-500` apenas se veian: bordes `-400`/`-500`
-  (`outline-400` en `neutral`), texto e icono del color de la accion en
-  `-600` (`typography-800` en `neutral`).
-- Recetas del tema: las clases siguen las recetas del generador de la paleta,
-  traducidas a escalas invertidas (sin `dark:`). Todos los botones usan
-  `rounded-lg`; el `primary` enfoca con `ring-primary-300`. Button solido,
-  Alert y Badge comparten los colores de Badge: fondo `-100` y texto `-700`.
-  Button solido y Alert llevan siempre borde `-300` para que se distinga
-  sobre el fondo tintado (Badge usa `-200` y solo lo muestra con `outline`);
-  Button oscurece un paso fondo, borde y texto al pasar el cursor y al pulsar.
-  Excepcion: el `primary` de los tres usa el relleno `-500` con borde del
-  mismo color y texto `typography-0` (en Button, `-600`/`-700` al pasar el
-  cursor y pulsar; en Alert, tambien el titulo). El `secondary` usa la escala
-  pizarra y la accion `neutral` (`outline`, `ghost`, `transparent`, `link` y
-  por defecto) usa las escalas neutras (`background-100`, borde `outline-300`, texto
-  `typography-700`). El texto de `Badge` va en negrita y, sin color, usa
-  `tertiary` (el acento). La variante `neutral` de los tres componentes
-  usa las escalas neutras.
+- Recetas de variantes: Button, Badge y Alert toman sus colores de
+  [variants/colors.ts](../variants/colors.ts), con clases literales indexadas
+  por la variante publica y escalas invertidas (sin `dark:`):
+  - `SOFT_CLASSES` (tintado): fondo `-100`, borde `-300` y texto `-700`
+    (mas de 7:1). `neutral` usa `background-100`, `outline-300` y
+    `typography-700`.
+  - `SOLID_CLASSES` (relleno): `primary` con fondo y borde `-600` y texto
+    `typography-0` (mas de 6:1 en ambos modos; `-500` no llega a 4.5:1 en
+    modo claro); `danger` con la superficie fija `fixed-danger`, un rojo
+    atardecer vivo (`#d92d20`, `-hover`, `-active` y texto blanco, 4.8:1) que
+    la escala `error`, desaturada, no ofrece.
+  - `OUTLINE_CLASSES`: superficie base con borde `-400` y texto `-600`
+    (`outline-400`/`typography-800` en `neutral`).
+  - `FOCUS_RING_CLASSES`: anillo de foco `indicator-primary` (mas de 6:1 con
+    la superficie base) en todas las variantes.
+- Enfasis: Button usa el relleno solido en `primary` y `danger`, las acciones
+  de mayor enfasis y las destructivas, y el tintado en las demas. Badge y
+  Alert usan el tintado, salvo `primary`, que usa el relleno (en Alert,
+  tambien en el titulo). Button agrega los estados: oscurece un paso fondo,
+  borde y texto al pasar el cursor y al pulsar. Todos los botones usan
+  `rounded-lg`. El texto de `Badge` va en negrita y, sin color, usa
+  `tertiary` (el acento); su borde solo se ve con `outline` (y en `light`).
 - Superficies fijas: las variantes `dark` y `light` de Button, Badge y Alert
   usan los colores `fixed-dark` y `fixed-light` (con `-hover`, `-active`,
   `-foreground` y, en `light`, `-border`/`-border-hover`), declarados en el

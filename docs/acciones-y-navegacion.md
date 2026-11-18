@@ -30,22 +30,22 @@ y `ButtonIconProps`.
 
 ### Variantes y tamanos reales
 
-| `variant`             | Color     | Presentacion                                                                                                      |
-| --------------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
-| `primary`             | primary   | solid relleno (`primary-500`, borde del mismo color, texto `typography-0`)                                        |
-| `secondary`           | secondary | solid con la escala pizarra (`secondary-100`, borde `-300`, texto `-700`)                                         |
-| `success`             | success   | solid                                                                                                             |
-| `danger`              | danger    | solid                                                                                                             |
-| `warning`             | warning   | solid                                                                                                             |
-| `info`                | info      | solid                                                                                                             |
-| `dark`                | dark      | solid con la superficie fija `fixed-dark`, que no se invierte en modo oscuro                                      |
-| `neutral`             | neutral   | solid con las escalas neutras (`background-100`, borde `outline-300`, texto `typography-700`)                     |
-| `light`               | neutral   | solid con la superficie fija `fixed-light` y borde suave `fixed-light-border`; con `outline`, borde `outline-200` |
-| `outline`             | neutral   | outline: borde y fondo transparente                                                                               |
-| `ghost`               | neutral   | outline sin borde (`border-0`) y fondo transparente                                                               |
-| `transparent`         | neutral   | solid sin borde (`border-0`) y fondo transparente                                                                 |
-| `link`                | neutral   | link: sin padding horizontal, subrayado al pasar el cursor/pulsar                                                 |
-| Cualquier otro string | neutral   | solid, u outline con `outline`                                                                                    |
+| `variant`             | Color     | Presentacion                                                                                         |
+| --------------------- | --------- | ---------------------------------------------------------------------------------------------------- |
+| `primary`             | primary   | relleno solido (`primary-600`, borde del mismo color, texto `typography-0`)                          |
+| `secondary`           | secondary | tintado con la escala pizarra (`secondary-100`, borde `-300`, texto `-700`)                          |
+| `success`             | success   | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
+| `danger`              | danger    | relleno solido rojo vivo `fixed-danger` (no se invierte, texto blanco) para acciones destructivas    |
+| `warning`             | warning   | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
+| `info`                | info      | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
+| `dark`                | dark      | superficie fija `fixed-dark`, que no se invierte en modo oscuro                                      |
+| `neutral`             | neutral   | tintado con las escalas neutras (`background-100`, borde `outline-300`, texto `typography-700`)      |
+| `light`               | neutral   | superficie fija `fixed-light` y borde suave `fixed-light-border`; con `outline`, borde `outline-200` |
+| `outline`             | neutral   | outline: borde y fondo transparente                                                                  |
+| `ghost`               | neutral   | outline sin borde (`border-0`) y fondo transparente                                                  |
+| `transparent`         | neutral   | solid sin borde (`border-0`) y fondo transparente                                                    |
+| `link`                | neutral   | link: sin padding horizontal, subrayado al pasar el cursor/pulsar                                    |
+| Cualquier otro string | neutral   | solid, u outline con `outline`                                                                       |
 
 El prop `outline` convierte cualquier variante, salvo `link`, a la
 presentacion outline conservando su color: por ejemplo,
