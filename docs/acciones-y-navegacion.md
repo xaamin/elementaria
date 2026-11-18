@@ -30,20 +30,20 @@ y `ButtonIconProps`.
 
 ### Variantes y tamanos reales
 
-| `variant`             | Color     | Presentacion                                                      |
-| --------------------- | --------- | ----------------------------------------------------------------- |
-| `primary`             | primary   | solid                                                             |
-| `secondary`           | secondary | solid con fondo `secondary-100` y borde `outline-300`             |
-| `success`             | positive  | solid                                                             |
-| `danger`              | negative  | solid                                                             |
-| `warning`             | warning   | solid                                                             |
-| `info`                | info      | solid                                                             |
-| `dark`                | secondary | solid                                                             |
-| `light`, `outline`    | secondary | outline: borde y fondo transparente                               |
-| `ghost`               | secondary | outline sin borde (`border-0`) y fondo transparente               |
-| `transparent`         | secondary | solid sin borde (`border-0`) y fondo transparente                 |
-| `link`                | secondary | link: sin padding horizontal, subrayado al pasar el cursor/pulsar |
-| Cualquier otro string | secondary | solid, u outline con `outline`                                    |
+| `variant`             | Color     | Presentacion                                                            |
+| --------------------- | --------- | ----------------------------------------------------------------------- |
+| `primary`             | primary   | solid                                                                   |
+| `secondary`           | secondary | solid con fondo `primary-50`, borde `primary-200` y texto `primary-700` |
+| `success`             | positive  | solid                                                                   |
+| `danger`              | negative  | solid                                                                   |
+| `warning`             | warning   | solid                                                                   |
+| `info`                | info      | solid                                                                   |
+| `dark`                | secondary | solid                                                                   |
+| `light`, `outline`    | secondary | outline: borde y fondo transparente                                     |
+| `ghost`               | secondary | outline sin borde (`border-0`) y fondo transparente                     |
+| `transparent`         | secondary | solid sin borde (`border-0`) y fondo transparente                       |
+| `link`                | secondary | link: sin padding horizontal, subrayado al pasar el cursor/pulsar       |
+| Cualquier otro string | secondary | solid, u outline con `outline`                                          |
 
 El prop `outline` convierte cualquier variante, salvo `link`, a la
 presentacion outline conservando su color: por ejemplo,
@@ -314,7 +314,8 @@ un formulario dentro puede perder estado local. No usarlo como router ni
 esperar que preserve todas las pantallas.
 Las cabeceras tienen rol `tab` con estado `selected` dentro de un `tablist`.
 Los colores usan tokens del tema y siguen el modo claro/oscuro: fondo
-`background-0`, texto e indicador activos `typography-950`, texto inactivo
+`background-0`; la tab activa usa fondo `primary-50`, indicador `primary-500`
+y texto `primary-700`; texto inactivo
 `typography-600` y borde inferior `outline-100`. No implementa flechas de
 teclado ni scroll de cabecera; comprobar muchas tabs antes de reutilizarlo.
 

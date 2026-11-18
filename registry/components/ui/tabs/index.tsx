@@ -37,7 +37,7 @@ const TabItem = ({
       accessibilityState={{ selected: isActive }}
       className={cn(
         'flex-row items-center gap-2 px-4 py-3 border-b-2',
-        isActive ? 'border-typography-950' : 'border-transparent',
+        isActive ? 'bg-primary-50 border-primary-500' : 'border-transparent',
       )}
     >
       {tab.leftIcon}
@@ -45,7 +45,7 @@ const TabItem = ({
         className={cn(
           'text-sm',
           isActive
-            ? 'font-semibold text-typography-950'
+            ? 'font-medium text-primary-700'
             : 'font-normal text-typography-600',
         )}
       >

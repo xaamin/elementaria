@@ -33,7 +33,7 @@ el `Appearance` global.
 2. `@source inline(...)`: equivale al antiguo `safelist`, para clases que se
    componen en tiempo de ejecucion (`bg-${color}-500`).
 3. `@layer theme`: variables crudas en RGB separado por espacios
-   (`--primary-500: 51 51 51`), por modo:
+   (`--primary-500: 17 132 163`), por modo:
    - `:root`: claro por defecto;
    - `@media (prefers-color-scheme: dark)`: oscuro; NativeWind lo resuelve
      con `Appearance` en nativo;
@@ -53,19 +53,37 @@ definia, asi que el texto ya heredaba la fuente.
 
 ## Correspondencia de tokens
 
-Cada token copia, en el mismo modo, el valor de la variable v3 indicada en el
-comentario junto a su declaracion:
+La paleta parte de la propuesta de shadcn: `primary` (azul petróleo),
+`secondary` (rosa), `accent` (azul lavanda, en la escala v3 `tertiary`),
+`neutral` (para `typography`, `outline` y `background`) y los estados
+`success`, `warning`, `error` e `info`. Cada escala v3 va del paso `50` al
+`950` de la paleta en claro; el paso `0` es la mezcla al 50 % del paso `50`
+con blanco (`background-0` es blanco). En oscuro, cada escala se invierte
+(`0` ↔ `950`, `50` ↔ `900`, `100` ↔ `800`...), por lo que las clases v3 fijas
+mantienen el contraste.
 
-| Token                                                    | Variable v3                                         |
-| -------------------------------------------------------- | --------------------------------------------------- |
-| `background`, `card`, `popover`                          | `background-0`                                      |
-| `foreground` y `card-`/`popover-`/`secondary-foreground` | `typography-900`                                    |
-| `primary` / `primary-foreground`                         | `primary-500` / `typography-0`                      |
-| `secondary`                                              | `secondary-100`                                     |
-| `muted` / `muted-foreground`                             | `background-muted` / `typography-500`               |
-| `accent` / `accent-foreground`                           | `background-50` / `typography-800`                  |
-| `destructive` / `destructive-foreground`                 | `error-500` / `typography-0`                        |
-| `border` / `input` / `ring`                              | `outline-200` / `outline-300` / `indicator-primary` |
+Cada token copia, en el mismo modo, el valor de la variable v3 indicada en el
+comentario junto a su declaracion. Como los tokens reproducen los valores de
+shadcn y las escalas se invierten, algunos cambian de variable segun el modo:
+
+| Token                                       | Claro                                 | Oscuro                                |
+| ------------------------------------------- | ------------------------------------- | ------------------------------------- |
+| `background`                                | `background-50`                       | `background-0`                        |
+| `card`, `popover`                           | `background-50`                       | `background-50`                       |
+| `foreground` y `card-`/`popover-foreground` | `typography-950`                      | `typography-900`                      |
+| `primary` / `primary-foreground`            | `primary-600` / `primary-50`          | `primary-400` / `primary-900`         |
+| `secondary` / `secondary-foreground`        | `secondary-100` / `secondary-900`     | `secondary-100` / `secondary-900`     |
+| `muted` / `muted-foreground`                | `background-muted` / `typography-500` | `background-muted` / `typography-500` |
+| `accent` / `accent-foreground`              | `tertiary-100` / `tertiary-900`       | `tertiary-100` / `tertiary-900`       |
+| `destructive` / `destructive-foreground`    | `error-600` / `error-50`              | `error-400` / `error-900`             |
+| `border` / `input`                          | `outline-200`                         | `outline-100`                         |
+| `ring`                                      | `indicator-primary`                   | `indicator-primary`                   |
+
+Variables sin escala: `background-muted` es `neutral-100` en claro y
+`neutral-800` en oscuro; `background-error`/`-warning`/`-success`/`-info` usan
+el paso `0` en claro y el paso `800` de la paleta clara en oscuro;
+`indicator-primary` es `primary-600` (claro) / `primary-500` (oscuro),
+`indicator-info` `info-400` / `info-700` e `indicator-error` `error-600`.
 
 Para cambiar un color, editarlo en los cuatro bloques de `@layer theme` (dos
 por modo) y en los tokens que lo copian.
@@ -105,8 +123,18 @@ cambiar la apariencia:
 - Excepcion: `Button` con `outline` (y `link`/`ghost`) refuerza la paleta v3,
   cuyos bordes `-300` y textos `-500` apenas se veian: bordes `-400`/`-500`
   (`outline-400` en `secondary`), texto e icono del color de la accion en
-  `-600` (`typography-800` en `secondary`). El `secondary` solido usa borde
-  `outline-300`.
+  `-600` (`typography-800` en `secondary`).
+- Recetas del tema: las clases siguen las recetas del generador de la paleta,
+  traducidas a escalas invertidas (sin `dark:`). Todos los botones usan
+  `rounded-lg`; el `primary` enfoca con `ring-primary-300`; el `secondary`
+  solido es un tinte primario (`primary-50`, borde `primary-200`, texto
+  `primary-700`) y el resto de la accion `secondary` (`dark`, por defecto) usa
+  las escalas neutras (`background-200`, borde `outline-100`), porque la
+  escala `secondary` es el rosa de la marca. `Alert` usa fondo `-50`, borde
+  `-200` y texto `-800`; `Badge`, fondo `-100`, borde `-200`, texto `-700` en
+  negrita, y sin color usa `tertiary` (el acento). Los campos de texto
+  (`InputRoot`) usan `rounded-lg`, fondo `background-0`, borde `outline-300` y
+  foco `primary-500` con anillo `primary-200`.
 - Excepcion: el `Toast` por defecto (`solid`/`muted`) conserva el estilo claro
   de la plantilla v5 (`bg-popover`); las demas acciones y `outline` usan v3.
 

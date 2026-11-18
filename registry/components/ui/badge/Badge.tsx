@@ -84,8 +84,8 @@ const BadgeStyleContext = createContext<{
   size: BadgeSize;
 }>({ size: 'md' });
 
-// v3 badge text: the v5 template uses medium uppercase text.
-const TEXT_CLASSES = 'font-normal normal-case text-typography-700';
+// Bold text without the uppercase of the v5 template.
+const TEXT_CLASSES = 'font-bold normal-case text-typography-700';
 
 const BadgeText = forwardRef<
   ComponentRef<typeof Text>,
@@ -159,26 +159,24 @@ export interface BadgeProps {
 
 type BadgeColor = 'error' | 'warning' | 'success' | 'info' | 'muted';
 
-// The v5 primitive no longer has `action`; semantic colors keep the v3
-// palette through classes on top of its neutral `secondary` variant, whose
-// classes have no `dark:` modifiers left over after merging.
+// The v5 primitive no longer has `action`; colors are set through classes on
+// top of its neutral `secondary` variant, whose classes have no `dark:`
+// modifiers left over after merging. They follow the theme recipe (`-100`
+// background, `-700` text); the default badge uses the accent (`tertiary`).
 const COLOR_CLASSES: Record<BadgeColor, { root: string; text: string }> = {
-  error: {
-    root: 'bg-background-error border-error-300',
-    text: 'text-error-600',
-  },
+  error: { root: 'bg-error-100 border-error-200', text: 'text-error-700' },
   warning: {
-    root: 'bg-background-warning border-warning-300',
-    text: 'text-warning-600',
+    root: 'bg-warning-100 border-warning-200',
+    text: 'text-warning-700',
   },
   success: {
-    root: 'bg-background-success border-success-300',
-    text: 'text-success-600',
+    root: 'bg-success-100 border-success-200',
+    text: 'text-success-700',
   },
-  info: { root: 'bg-background-info border-info-300', text: 'text-info-600' },
+  info: { root: 'bg-info-100 border-info-200', text: 'text-info-700' },
   muted: {
-    root: 'bg-background-muted border-background-300',
-    text: 'text-background-800',
+    root: 'bg-tertiary-100 border-tertiary-200',
+    text: 'text-tertiary-700',
   },
 };
 

@@ -27,6 +27,11 @@ const SIZE_CLASSES: Record<string, string> = {
   xl: 'h-12',
 };
 
+// Theme recipe: surface background, `outline-300` border and a primary focus
+// ring. The scales invert in dark mode.
+const BASE_CLASSES =
+  'rounded-lg border-outline-300 bg-background-0 data-[focus=true]:border-primary-500 data-[focus=true]:web:ring-2 data-[focus=true]:web:ring-primary-200';
+
 const VARIANT_CLASSES: Record<string, string> = {
   underlined: 'rounded-none border-0 border-b px-0',
   rounded: 'rounded-full px-4',
@@ -49,6 +54,7 @@ const InputRoot = forwardRef<
       {...props}
       ref={ref}
       className={cn(
+        BASE_CLASSES,
         SIZE_CLASSES[String(size)],
         VARIANT_CLASSES[String(variant)],
         className,

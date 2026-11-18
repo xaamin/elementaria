@@ -385,7 +385,8 @@ Fuente: [Badge.tsx](../badge/Badge.tsx).
 
 Mapeo real de color: `success`, `warning`, `info` conservan su accion;
 `danger` y `error` usan `error` (rojo); `primary`, `secondary`, `light`,
-`dark` y `outline` caen en `muted`. Para borde usar el booleano `outline`,
+`dark` y `outline` caen en `muted`, que usa la escala de acento
+(`tertiary`). Para borde usar el booleano `outline`,
 no `variant="outline"`: el borde se suma al fondo claro de la accion, no lo
 reemplaza.
 

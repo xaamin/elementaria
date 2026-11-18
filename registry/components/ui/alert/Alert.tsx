@@ -72,17 +72,29 @@ const AlertDescription = forwardRef<VStackRef, AlertDescriptionProps>(
 type AlertColor = 'error' | 'warning' | 'success' | 'info' | 'muted';
 
 // The v5 primitive only distinguishes default/destructive; every semantic
-// color keeps the v3 `action` palette through classes over `default`.
+// color is set through classes over `default`, following the theme recipes
+// (`-50` background, `-200` border, `-800` text). The scales invert in dark
+// mode, so the same classes keep the contrast without `dark:`.
 const COLOR_CLASSES: Record<AlertColor, { root: string; text: string }> = {
-  error: { root: 'bg-background-error', text: 'text-error-800' },
-  warning: { root: 'bg-background-warning', text: 'text-warning-800' },
-  success: { root: 'bg-background-success', text: 'text-success-800' },
-  info: { root: 'bg-background-info', text: 'text-info-800' },
-  muted: { root: 'bg-background-muted', text: 'text-background-800' },
+  error: { root: 'bg-error-50 border-error-200', text: 'text-error-800' },
+  warning: {
+    root: 'bg-warning-50 border-warning-200',
+    text: 'text-warning-800',
+  },
+  success: {
+    root: 'bg-success-50 border-success-200',
+    text: 'text-success-800',
+  },
+  info: { root: 'bg-info-50 border-info-200', text: 'text-info-800' },
+  muted: {
+    root: 'bg-background-muted border-outline-200',
+    text: 'text-background-800',
+  },
 };
 
-// v3 `variant`: `solid` had no border; `outline` used the outline palette.
-const SOLID_CLASSES = 'border-0';
+// `solid` keeps the colored border of the recipes; `outline` uses the
+// outline palette over the surface.
+const SOLID_CLASSES = 'border';
 
 const OUTLINE_CLASSES = 'border border-outline-100 bg-background-0';
 

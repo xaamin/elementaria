@@ -119,12 +119,14 @@ type ButtonStyle = { text: string; icon: string };
 const ButtonStyleContext = createContext<ButtonStyle | undefined>(undefined);
 
 // Palette of the v3 template (`action` x `variant`). The v5 template only has
-// a neutral `variant`, so the wrapper reapplies these classes over it.
+// a neutral `variant`, so the wrapper reapplies these classes over it. The
+// `secondary` action uses the neutral scales: the `secondary` scale is now
+// the brand's pink.
 const ROOT_ACTION_CLASSES: Record<ButtonColor, string> = {
   primary:
-    'bg-primary-500 data-[hover=true]:bg-primary-600 data-[active=true]:bg-primary-700 border-primary-300 data-[hover=true]:border-primary-400 data-[active=true]:border-primary-500 data-[focus-visible=true]:web:ring-indicator-info',
+    'bg-primary-500 data-[hover=true]:bg-primary-600 data-[active=true]:bg-primary-700 border-primary-300 data-[hover=true]:border-primary-400 data-[active=true]:border-primary-500 data-[focus-visible=true]:web:ring-primary-300',
   secondary:
-    'bg-secondary-500 border-secondary-300 data-[hover=true]:bg-secondary-600 data-[hover=true]:border-secondary-400 data-[active=true]:bg-secondary-700 data-[active=true]:border-secondary-700 data-[focus-visible=true]:web:ring-indicator-info',
+    'bg-background-200 border-outline-100 data-[hover=true]:bg-background-300 data-[hover=true]:border-outline-200 data-[active=true]:bg-background-400 data-[active=true]:border-outline-300 data-[focus-visible=true]:web:ring-indicator-info',
   positive:
     'bg-success-500 border-success-300 data-[hover=true]:bg-success-600 data-[hover=true]:border-success-400 data-[active=true]:bg-success-700 data-[active=true]:border-success-500 data-[focus-visible=true]:web:ring-indicator-info',
   negative:
@@ -200,6 +202,13 @@ const OUTLINE_TEXT_CLASSES: Record<ButtonColor, string> = {
     'text-warning-600 data-[hover=true]:text-warning-700 data-[active=true]:text-warning-800',
   info: 'text-info-600 data-[hover=true]:text-info-700 data-[active=true]:text-info-800',
 };
+
+// Solid `secondary` variant: a primary tint, as in the theme recipes.
+const SECONDARY_SOLID_ROOT_CLASSES =
+  'bg-primary-50 data-[hover=true]:bg-primary-100 data-[active=true]:bg-primary-200 border border-primary-200 data-[hover=true]:border-primary-300 data-[active=true]:border-primary-300';
+
+const SECONDARY_SOLID_TEXT_CLASSES =
+  'text-primary-700 data-[hover=true]:text-primary-700 data-[active=true]:text-primary-800';
 
 const LINK_TEXT_CLASSES =
   'data-[hover=true]:underline data-[active=true]:underline';
@@ -328,16 +337,25 @@ const Button = (props: ButtonProps) => {
     newVariant = 'link';
   }
 
+  const isSecondarySolid = variant === 'secondary' && newVariant === 'solid';
+
+  let style = buttonStyle(color, newVariant);
+
+  if (isSecondarySolid) {
+    style = {
+      text: SECONDARY_SOLID_TEXT_CLASSES,
+      icon: SECONDARY_SOLID_TEXT_CLASSES,
+    };
+  }
+
   newClassName = cn(
+    'rounded-lg',
     ROOT_ACTION_CLASSES[color],
     ROOT_SHAPE_CLASSES[newVariant],
     newVariant === 'outline' && OUTLINE_BORDER_CLASSES[color],
+    isSecondarySolid && SECONDARY_SOLID_ROOT_CLASSES,
     newClassName,
   );
-
-  if (variant === 'secondary' && newVariant === 'solid') {
-    newClassName = `${newClassName} bg-secondary-100 data-[hover=true]:bg-secondary-200 data-[active=true]:bg-secondary-300 border border-outline-300 data-[hover=true]:border-outline-400 data-[hover=true]:bg-secondary-300 data-[active=true]:bg-secondary-300`;
-  }
 
   if (block) {
     newClassName = `${newClassName} w-full`;
@@ -417,7 +435,7 @@ const Button = (props: ButtonProps) => {
   };
 
   return (
-    <ButtonStyleContext.Provider value={buttonStyle(color, newVariant)}>
+    <ButtonStyleContext.Provider value={style}>
       <ButtonRoot {...newProps}>
         {indeterminate && <ButtonSpinner />}
         {renderChildren()}
