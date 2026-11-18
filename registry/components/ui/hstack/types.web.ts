@@ -1,7 +1,10 @@
 import type { ComponentPropsWithoutRef, RefAttributes } from 'react';
 
-export type HStackProps = ComponentPropsWithoutRef<'div'> & {
-  space?: string | number;
-  reversed?: string | number | boolean;
-  responsive?: boolean;
-} & RefAttributes<HTMLDivElement>;
+import type { NativeViewWebProps } from '../dom-view-props.types';
+
+export type HStackProps = ComponentPropsWithoutRef<'div'> &
+  NativeViewWebProps & {
+    space?: string | number;
+    reversed?: string | number | boolean;
+    responsive?: boolean;
+  } & RefAttributes<HTMLDivElement>;

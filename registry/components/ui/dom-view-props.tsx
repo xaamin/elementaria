@@ -33,3 +33,14 @@ export function withDomViewProps<Props>(
 
   return Adapted as unknown as ComponentType<Props>;
 }
+
+/**
+ * En nativo `Text` es el de React Native y entiende `numberOfLines`,
+ * `selectable` y las props `accessibility*`: se usa sin adaptar. La variante
+ * web traduce esas props al `span`.
+ */
+export function withDomTextProps<Props>(
+  primitive: ComponentType<Props>,
+): ComponentType<Props> {
+  return primitive;
+}

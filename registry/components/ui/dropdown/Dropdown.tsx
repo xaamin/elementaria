@@ -1,5 +1,4 @@
 import React, {
-  ElementType,
   isValidElement,
   ReactElement,
   ReactNode,
@@ -23,15 +22,10 @@ import type { DropdownItemProps } from './DropdownItem';
 import DropdownMenu from './DropdownMenu';
 import DropdownToggle from './DropdownToggle';
 import { MenuLayer } from './MenuLayer';
+import type { FocusFirstItem } from './MenuLayer';
 
-const Positions = ['up', 'left', 'right', 'down'];
-
-const Horizontal = ['left', 'right'];
-
-const Vertical = ['top', 'bottom'];
 export interface DropdownProps {
   children: ReactElement[];
-  as?: ElementType;
   placement?:
     | 'bottom'
     | 'top'
@@ -45,12 +39,8 @@ export interface DropdownProps {
     | 'right bottom'
     | 'left top'
     | 'left bottom';
-  drop?: (typeof Positions)[number];
-  horizontal?: (typeof Horizontal)[number];
-  vertical?: (typeof Vertical)[number];
   flip?: boolean;
-  focusFirstItemOnShow?: false | true | 'keyboard';
-  navbar?: boolean;
+  focusFirstItemOnShow?: FocusFirstItem;
   show?: boolean;
   className?: string;
   textValue?: string;
@@ -62,71 +52,14 @@ export interface DropdownProps {
 
 type DropdownChildProps = Omit<DropdownItemProps, 'children'> & {
   children?: ReactNode;
-  drop?: string;
 };
-
-type DropdownPlacement = NonNullable<DropdownProps['placement']>;
-
-type PlacementSide = 'top' | 'bottom' | 'left' | 'right';
-
-const DEFAULT_PLACEMENT: DropdownPlacement = 'bottom right';
-
-const DROP_SIDES: Record<string, PlacementSide> = {
-  up: 'top',
-  down: 'bottom',
-  left: 'left',
-  right: 'right',
-};
-
-/**
- * Resuelve la posicion del menu. `placement` explicito tiene prioridad; si no
- * se indica, `drop` (o `vertical`) elige el lado y `horizontal` (o `vertical`
- * en los lados izquierdo y derecho) la alineacion. Sin ninguno se usa
- * `'bottom right'`.
- */
-function resolvePlacement(
-  placement: DropdownPlacement | undefined,
-  drop: string | undefined,
-  horizontal: string | undefined,
-  vertical: string | undefined,
-): DropdownPlacement {
-  if (placement) {
-    return placement;
-  }
-
-  let side: PlacementSide = 'bottom';
-
-  if (drop && DROP_SIDES[drop]) {
-    side = DROP_SIDES[drop];
-  } else if (vertical === 'top' || vertical === 'bottom') {
-    side = vertical;
-  } else if (!horizontal) {
-    return DEFAULT_PLACEMENT;
-  }
-
-  if (side === 'left' || side === 'right') {
-    if (vertical === 'top' || vertical === 'bottom') {
-      return `${side} ${vertical}`;
-    }
-
-    return side;
-  }
-
-  if (horizontal === 'left') {
-    return `${side} left`;
-  }
-
-  return `${side} right`;
-}
 
 const DropdownBase = (props: DropdownProps) => {
   const {
     children: propChildren,
-    placement: placementProp,
-    drop,
+    placement = 'bottom right',
     show,
-    horizontal: horizontalProp,
-    vertical: verticalProp,
+    focusFirstItemOnShow = 'keyboard',
     ...rest
   } = props;
 
@@ -156,15 +89,6 @@ const DropdownBase = (props: DropdownProps) => {
   const children = React.Children.toArray(propChildren).filter(
     (child): child is ReactElement<DropdownChildProps> =>
       isValidElement<DropdownChildProps>(child),
-  );
-
-  // The v4 menu root is a ScrollView, whose boolean `horizontal` must not
-  // receive the dropdown alignment: the legacy props only resolve `placement`.
-  const placement = resolvePlacement(
-    placementProp,
-    drop ?? children[0]?.props.drop,
-    horizontalProp,
-    verticalProp,
   );
 
   const newProps = {
@@ -232,7 +156,10 @@ const DropdownBase = (props: DropdownProps) => {
   const isLayerOpen = visible ?? isMenuOpen;
 
   return (
-    <MenuLayer isOpen={isLayerOpen}>
+    <MenuLayer
+      isOpen={isLayerOpen}
+      focusFirstItem={focusFirstItemOnShow}
+    >
       {(isReady) => (
         <Menu
           offset={5}

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/components/cn';
 
 import { Button } from '../button';
-import { FormControl } from '../form-control';
+import { Input } from '../form';
 import { HStack } from '../hstack';
 import { VStack } from '../vstack';
 
@@ -70,7 +70,7 @@ const QuantityStepper = ({
         </Button.Text>
       </Button>
       <VStack>
-        <FormControl
+        <Input
           className={cn(
             'rounded-none w-24 text-center',
             size === 'sm' ? 'w-16' : 'w-24',

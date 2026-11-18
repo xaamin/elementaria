@@ -58,6 +58,7 @@ Es la composicion comun de `FormControl` de Gluestack, `Label`, hijos,
 | `isFieldDirty`                           | Junto con un `error` truthy activa invalidez.               |
 | `isInvalid`                              | Fuerza invalidez aunque no haya mensaje.                    |
 | `isRequired`, `isDisabled`, `isReadOnly` | Estado del contenedor de formulario.                        |
+| `required`                               | Alias de `isRequired`; ambos se combinan.                   |
 | `helperText`                             | Se representa si es distinto de `undefined`.                |
 | `size`                                   | Se transmite a la primitiva `FormControl`.                  |
 
@@ -81,11 +82,11 @@ No registra feedback ni genera `aria-describedby` en el control padre.
 El `message` superior de un objeto con `errors` no se representa: se muestran
 los mensajes de la lista.
 
-**No todos los wrappers transmiten `helperText`.** `Checkbox`, `Textarea`
-y `FileInput` (incluido `Input type="file"`) si lo hacen; `Input` de texto,
-`Select`, `SearchBox` y la rama de texto de `FormControl` no lo pasan a
-`InputWrapper`. No prometer ayuda visible
-solo porque una prop sea aceptada.
+Todos los controles que usan `InputWrapper` (`Input`, `Select`, `Checkbox`,
+`Textarea`, `SearchBox`, `DateInput` y `FileInput`) le transmiten
+`helperText` y convierten `required` en `isRequired`. El estado obligatorio
+se publica a la primitiva mediante el contexto del `FormControl`, que lo
+expone como `aria-required`; `Label` no dibuja un asterisco.
 
 ## Input
 
@@ -110,7 +111,7 @@ el valor a numero ni debe eliminar ceros iniciales.
 | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`                                                      | `text` por defecto; ver [efecto de cada tipo](#tipos-de-input).                                                                                                               |
 | `value`, `onChangeText`                                     | Campo controlado. Solo `undefined` se convierte a `''`; normalizar otros valores en el consumidor.                                                                            |
-| `label`, `error`, `isFieldDirty`, `isInvalid`, `isRequired` | Composicion de `InputWrapper`.                                                                                                                                                |
+| `label`, `error`, `isFieldDirty`, `isInvalid`, `isRequired` | Composicion de `InputWrapper`; `required` es alias de `isRequired`.                                                                                                           |
 | `isDisabled` / `disabled`                                   | Ambas se combinan para deshabilitar la primitiva Input; preferir `isDisabled`.                                                                                                |
 | `isReadOnly` / `readonly`                                   | Ambas se combinan para solo lectura.                                                                                                                                          |
 | `size`                                                      | Altura del contenedor: `sm` `h-9`, `md` `h-10` (defecto), `lg` `h-11`, `xl` `h-12`.                                                                                           |
@@ -118,7 +119,7 @@ el valor a numero ni debe eliminar ceros iniciales.
 | `inputClassName`                                            | Clase del borde/contenedor Input.                                                                                                                                             |
 | `className` y demas props de `InputField`                   | Se reenvian al campo, no al contenedor.                                                                                                                                       |
 | `variant`                                                   | Forma del borde del contenedor: `outline` (defecto, borde completo), `underlined` (solo borde inferior, sin esquinas ni padding horizontal) o `rounded` (esquinas completas). |
-| `helperText`                                                | Aceptada por el tipo, pero `Input` de texto no la muestra.                                                                                                                    |
+| `helperText`                                                | Texto de ayuda de `InputWrapper`.                                                                                                                                             |
 | `children`                                                  | Slot adicional dentro de Input, despues del campo.                                                                                                                            |
 
 ### Tipos de Input
@@ -266,11 +267,11 @@ el valor controlado de `isChecked`. El checkbox de cabecera de `DataTable`
 usa este estado cuando solo algunas filas visibles estan seleccionadas.
 
 - `children || label` forma el texto de `CheckboxLabel`.
-- `helperText`, `error`, `isFieldDirty`, `isInvalid`, `isRequired`, `size`
-  y `containerClassName` se usan en `InputWrapper`.
-- `disabled` se extrae y **no se utiliza**: no deshabilita la casilla. Usar
-  `isDisabled`, que se pasa al wrapper y bloquea la casilla mediante el
-  contexto del `FormControl` interno. `isReadOnly` sigue el mismo camino.
+- `helperText`, `error`, `isFieldDirty`, `isInvalid`, `isRequired`/`required`,
+  `size` y `containerClassName` se usan en `InputWrapper`.
+- `isDisabled` y su alias `disabled` se pasan al wrapper y bloquean la casilla
+  mediante el contexto del `FormControl` interno. `isReadOnly` sigue el
+  mismo camino.
 - `size` se pasa al wrapper, no explicitamente al Checkbox interior.
 
 Usar `bind('activo', { type: 'checkbox' })`: el hook considera seleccionado
@@ -283,7 +284,9 @@ Fuente: [Textarea.tsx](../form/Textarea.tsx).
 
 Usa `InputWrapper`, `TheTextarea` y `TextareaInput`. El enlace de texto es
 `value` + `onChangeText`, por lo que sirve `bind('notas')`.
-El wrapper recibe todas las props y admite `helperText`.
+El wrapper recibe todas las props y admite `helperText`; `required`,
+`disabled` y `readonly` se combinan con `isRequired`, `isDisabled` e
+`isReadOnly`.
 
 El bloqueo explicito de la raiz utiliza `disabled` y `readonly`; `isInvalid`
 tambien se pasa a la raiz. El `size="md"` inicial puede ser reemplazado por
@@ -419,19 +422,19 @@ El consumidor sigue siendo responsable de sincronizar otro registro al
 reutilizar una instancia montada y de presentar el error HTTP mediante
 `FormLayout.error`.
 
-| Miembro                               | Semantica                                                                                                                                                           |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bind(name)`                          | `value`, `onChangeText`, `onBlur`, `name`, `required`, `error`, `isFieldDirty` y `onSubmitEditing` que cierra teclado.                                              |
-| `bind(name, { type: 'password' })`    | Enlace de texto y `type`, sin el `onSubmitEditing` por defecto.                                                                                                     |
-| `bind(name, { type: 'checkbox' })`    | `onChange` booleano e `isChecked` estricto; tambien entrega `value`.                                                                                                |
-| `bind(name, { type: 'select' })`      | `onValueChange` y `onClose` para validar al cerrar el selector; mismo estado de error/dirty.                                                                        |
-| `handleSubmit(callback)`              | Devuelve callback sin argumentos: marca las claves de reglas, valida y llama al consumidor solo si pasa.                                                            |
-| `values`, `errors`, `isValid`         | Estado de valores y resultado de ValidatorJS. No indican estado HTTP.                                                                                               |
-| `set(values)`                         | Reinicia errores/campos y reemplaza los valores.                                                                                                                    |
-| `sync(values)` / `syncValues(values)` | Mezcla valores con los actuales; no equivale a reemplazar ni limpia errores/campos.                                                                                 |
-| `reset(onReset?)`                     | Limpia a `{}`, no restaura los valores iniciales.                                                                                                                   |
-| `handleOnChange(partial)`             | Mezcla, notifica `config.onChange` con el parcial y marca la primera clave modificada.                                                                              |
-| `handleOnBlur(callback?, name?)`      | Valida si esta configurado y ejecuta el callback. Marca el campo indicado como validado; sin nombre, marca las claves de reglas. `bind` lo conecta automaticamente. |
+| Miembro                               | Semantica                                                                                                                                                                   |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bind(name)`                          | `value`, `onChangeText`, `onBlur`, `name`, `required`, `error`, `isFieldDirty` y `onSubmitEditing` que cierra teclado. `name` no forma parte del contrato de los controles. |
+| `bind(name, { type: 'password' })`    | Enlace de texto y `type`, sin el `onSubmitEditing` por defecto.                                                                                                             |
+| `bind(name, { type: 'checkbox' })`    | `onChange` booleano e `isChecked` estricto; tambien entrega `value`.                                                                                                        |
+| `bind(name, { type: 'select' })`      | `onValueChange` y `onClose` para validar al cerrar el selector; mismo estado de error/dirty.                                                                                |
+| `handleSubmit(callback)`              | Devuelve callback sin argumentos: marca las claves de reglas, valida y llama al consumidor solo si pasa.                                                                    |
+| `values`, `errors`, `isValid`         | Estado de valores y resultado de ValidatorJS. No indican estado HTTP.                                                                                                       |
+| `set(values)`                         | Reinicia errores/campos y reemplaza los valores.                                                                                                                            |
+| `sync(values)` / `syncValues(values)` | Mezcla valores con los actuales; no equivale a reemplazar ni limpia errores/campos.                                                                                         |
+| `reset(onReset?)`                     | Limpia a `{}`, no restaura los valores iniciales.                                                                                                                           |
+| `handleOnChange(partial)`             | Mezcla, notifica `config.onChange` con el parcial y marca la primera clave modificada.                                                                                      |
+| `handleOnBlur(callback?, name?)`      | Valida si esta configurado y ejecuta el callback. Marca el campo indicado como validado; sin nombre, marca las claves de reglas. `bind` lo conecta automaticamente.         |
 
 Consideraciones importantes:
 
@@ -452,8 +455,9 @@ Consideraciones importantes:
    `onBlurValidation: false` desactiva la validacion al salir y el filtro de
    errores por campo. Cambiar reglas recalcula la validez sin habilitar errores
    de campos aun no abandonados.
-4. `required` de `bind` no es `isRequired`. Para expresar ese estado visual,
-   pasar `isRequired` y verificar la etiqueta del wrapper.
+4. `bind` calcula `required` a partir de las reglas y los controles lo
+   convierten en `isRequired` (`aria-required`). No agrega un asterisco a
+   la etiqueta.
 5. Los valores se leen con `values[name]`, no recorriendo rutas. Para claves
    como `direccion.cp`, aplanar datos y reconstruir el DTO al enviar.
 6. No sustituir un callback enlazado sin actualizar el hook. Si se normaliza
@@ -472,12 +476,14 @@ Consideraciones importantes:
 
 Fuente: [SearchBox.tsx](../form/SearchBox.tsx). Importar directamente.
 
-Mantiene texto local inicialmente `''`. `onSearch(text)` es obligatorio.
-Enter busca si `error` es falsy; no busca en cada pulsacion.
+Sin `value` mantiene texto local, inicialmente `''`; con `value` el campo es
+controlado. `onSearch(text)` es obligatorio. Enter busca si `error` es falsy;
+no busca en cada pulsacion.
 
-- La prop `value` externa se extrae pero no controla el estado.
-- El `onChangeText` interno sustituye al prop recibido; no es un campo
-  ordinario enlazable con `bind`.
+- `onChangeText` recibe cada cambio, incluida la limpieza con X (`''`).
+- `onKeyPress` se invoca antes de evaluar Enter.
+- `helperText` y `required` se transmiten a `InputWrapper`; `children` es un
+  slot dentro del campo, como en `Input`.
 - Sin texto no blanco muestra lupa ("Buscar"); pulsarla busca el valor actual.
   Con texto muestra X ("Limpiar"), que limpia el campo **sin** llamar a
   `onSearch('')`. Ambos botones se bloquean junto con el campo.
@@ -522,7 +528,7 @@ Muestra los nombres de la ultima seleccion valida separados por comas, pero
 no permite quitarlos; para listas editables usar
 [FileUploader](datos-y-archivos.md#fileuploader). Mientras el selector esta
 abierto la zona queda ocupada (`busy`) e ignora nuevas pulsaciones. No acepta
-`value` ni `onChangeText`; `name` se acepta pero no se reenvia.
+`value` ni `onChangeText`.
 
 ## FixedAutocomplete
 

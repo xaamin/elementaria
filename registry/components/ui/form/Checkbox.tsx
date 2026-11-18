@@ -54,6 +54,7 @@ const Checkbox = (props: CheckboxProps) => {
     disabled,
     isInvalid,
     isRequired,
+    required,
     isDisabled,
     isReadOnly,
     size,
@@ -74,7 +75,8 @@ const Checkbox = (props: CheckboxProps) => {
       error={error}
       isInvalid={isInvalid}
       isRequired={isRequired}
-      isDisabled={isDisabled}
+      required={required}
+      isDisabled={isDisabled || disabled}
       isReadOnly={isReadOnly}
       size={size}
       containerClassName={containerClassName}

@@ -21,14 +21,25 @@ export interface SearchBoxProps
 }
 
 const SearchBox = (props: SearchBoxProps) => {
-  const [value, setValue] = useState('');
+  const {
+    inputClassName,
+    containerClassName,
+    onSearch,
+    value: controlledValue,
+    onChangeText,
+    onKeyPress,
+    required,
+    helperText,
+    ...rest
+  } = props;
 
-  const { inputClassName, containerClassName, onSearch, ...rest } = props;
+  const [internalValue, setInternalValue] = useState('');
+
+  const value = controlledValue ?? internalValue;
 
   const {
     label,
     error,
-    value: propValue,
     size,
     children,
     isInvalid,
@@ -42,7 +53,15 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const ariaLabel = accessibleName(rest, label);
 
+  const handleChangeText = (text: string) => {
+    setInternalValue(text);
+
+    onChangeText?.(text);
+  };
+
   const handleKeyPress: NonNullable<SearchBoxProps['onKeyPress']> = (e) => {
+    onKeyPress?.(e);
+
     if (e.nativeEvent.key === 'Enter' && !error) {
       onSearch(value);
     }
@@ -54,11 +73,13 @@ const SearchBox = (props: SearchBoxProps) => {
       error={error}
       isInvalid={isInvalid}
       isRequired={isRequired}
-      isDisabled={isDisabled}
+      required={required}
+      isDisabled={isDisabled || disabled}
       isReadOnly={isReadOnly || readonly}
       size={size}
       containerClassName={containerClassName}
       isFieldDirty={isFieldDirty}
+      helperText={helperText}
     >
       <InputRoot
         size={size}
@@ -70,10 +91,11 @@ const SearchBox = (props: SearchBoxProps) => {
           {...rest}
           children={undefined}
           aria-label={ariaLabel}
-          value={value === undefined ? '' : value}
+          value={value}
           onKeyPress={handleKeyPress}
-          onChangeText={setValue}
+          onChangeText={handleChangeText}
         />
+        {children}
 
         {!value.trim() && (
           <Pressable
@@ -88,7 +110,7 @@ const SearchBox = (props: SearchBoxProps) => {
         )}
         {!!value.trim() && (
           <Pressable
-            onPress={() => setValue('')}
+            onPress={() => handleChangeText('')}
             className="p-3"
             accessibilityRole="button"
             accessibilityLabel="Limpiar"

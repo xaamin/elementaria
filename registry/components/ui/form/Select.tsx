@@ -65,7 +65,7 @@ export type SelectProps = Omit<
   SelectPrimitiveProps,
   keyof InputWrapperProps | 'selectedValue' | 'onValueChange'
 > &
-  InputWrapperProps & {
+  Omit<InputWrapperProps, 'children'> & {
     value?: string;
     options?: SelectOption[];
     placeholder?: string;
@@ -84,13 +84,14 @@ const Select = (props: SelectProps) => {
     onValueChange,
     label,
     containerClassName,
-    children,
     isFieldDirty,
     isInvalid,
     isRequired,
+    required,
     isDisabled,
     isReadOnly,
     error,
+    helperText,
     size,
     ...remaining
   } = props;
@@ -129,11 +130,13 @@ const Select = (props: SelectProps) => {
       error={error}
       isInvalid={isInvalid}
       isRequired={isRequired}
+      required={required}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       size={size}
       containerClassName={containerClassName}
       isFieldDirty={isFieldDirty}
+      helperText={helperText}
     >
       <TheSelect
         {...remaining}

@@ -69,7 +69,7 @@ por ejemplo `ButtonTextProps`, `ModalBodyProps` y `DrawerHeaderProps`.
 | `preview-controls`  | `PreviewControlsProps`                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `quantity-stepper`  | `QuantityStepperProps`                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `safe-area-view`    | `SafeAreaViewProps`                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `scroll-view`       | `ScrollViewProps`                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `scroll-view`       | `ScrollViewProps`, `ScrollViewRef`                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `spinner`           | `SpinnerProps`                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `stats`             | `StatsProps`, `Stat`                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `stepper`           | `StepperProps`, `Step`, `StepperOrientation`, `StepperMobileIndicator`, `StepperLabelPlacement`                                                                                                                                                                                                                                                                                                                                     |
@@ -80,7 +80,7 @@ por ejemplo `ButtonTextProps`, `ModalBodyProps` y `DrawerHeaderProps`.
 | `toast`             | `ToastProps`, `ToastTitleProps`, `ToastDescriptionProps`, `ToastController`, `ToastShowOptions`                                                                                                                                                                                                                                                                                                                                     |
 | `tooltip`           | `TooltipProps`, `TooltipContentProps`, `TooltipTextProps`                                                                                                                                                                                                                                                                                                                                                                           |
 | `view`              | `ViewProps`                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `vstack`            | `VStackProps`                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `vstack`            | `VStackProps`, `VStackRef`                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 `InputWrapper`, `Error`, `SearchBox`, `FileInput`, `FixedAutocomplete`,
 `form/Text` y `UploadFileList` mantienen sus imports de **valor** directos;
@@ -146,8 +146,18 @@ con los valores que acepta hoy cada variante (`size`, `variant`, `action`,
   `div` (`accessibilityLabel` → `aria-label`, `accessibilityRole` → `role`,
   `testID` → `data-testid`, `accessibilityElementsHidden` → `aria-hidden`,
   `pointerEvents` `auto`/`none` → estilo) y descarta las que no tienen
-  equivalente (`accessible`, `onLayout`, `hitSlop`…), para que React DOM no
-  las publique como atributos desconocidos.
+  equivalente (`accessible`, `hitSlop`…), para que React DOM no
+  las publique como atributos desconocidos. `onLayout` se emula con
+  `ResizeObserver` ([useDomLayout](../../hooks/useDomLayout.ts)): se invoca
+  al montar y cada vez que cambia el tamano, con
+  `nativeEvent.layout` (`x`/`y` relativos al padre, `width`/`height` sin
+  transformaciones). A diferencia de nativo, un cambio solo de posicion no
+  lo dispara. Sus `types.web.ts` declaran esas
+  props con `NativeViewWebProps`
+  ([dom-view-props.types.ts](../dom-view-props.types.ts)), por lo que tambien
+  compilan con la resolucion web. `Text` usa `withDomTextProps` y
+  `NativeTextWebProps`, que agregan `numberOfLines` (recorte de lineas) y
+  `selectable` (`user-select`).
 - La accesibilidad se escribe una sola vez con `aria-*` (web) o con las
   props `accessibility*` (React Native):
   [platformAccessibilityProps](../accessibility/index.ts) las convierte al
@@ -178,6 +188,11 @@ con los valores que acepta hoy cada variante (`size`, `variant`, `action`,
   `InputWrapperProps.error`. Un tipo derivado no debe ocultar todo como `any`.
 - `InputRef` describe el TextInput real para foco/medicion; tambien sirve
   al ref de `Autocomplete`, sin importar tipos de la primitiva.
+- `ScrollViewRef` es la instancia de `ScrollView` de React Native 0.88
+  (`scrollToEnd`, `scrollTo`); `ScrollView` es un componente funcion, asi
+  que no debe usarse como tipo del ref. `VStackRef` es el elemento al que
+  apunta el ref de `VStack`: la instancia de `View` en nativo y
+  `HTMLDivElement` en web.
 - `InputFieldProps` adapta las declaraciones de tipo/ref dentro de
   `components/ui`, compartidas por `Input`, `Control` y `FormControl`.
   Se construye sobre `InputFieldPrimitiveProps`, el contrato congelado del
@@ -247,11 +262,12 @@ Agregar los tipos de componentes nuevos y miembros compuestos al barrel
 correspondiente; mantener este indice y las guias de comportamiento.
 Los tests deben ser archivos hermanos del archivo o componente probado, en la
 misma carpeta; no los coloques en carpetas `__tests__`.
-Todos los tests de componentes, layouts y demos usan TypeScript y Jest/Expo:
+Todos los tests de componentes, layouts y documentacion interactiva usan
+TypeScript y Jest/Expo:
 
 ```sh
 npm test -- --runInBand
-npm test -- --runInBand components/ui core/layout pages/demo
+npm test -- --runInBand components/ui core/layout pages/docs
 npm run typecheck
 npm run typecheck:tests
 npm run typecheck:tests:web
@@ -304,8 +320,8 @@ sin desactivarlos ni sustituir contratos por `any`.
 La migracion completa conserva las comprobaciones y regresiones locales,
 incluidas expectativas previamente fallidas: un fallo del contrato no se
 convierte en un test omitido ni en una correccion incidental del componente.
-No quedan tests `.cjs` en UI, `core/layout` ni `pages/demo`.
-`generate-snippets.cjs` sigue siendo el generador de las demos, no un test.
+No quedan tests `.cjs` en UI, `core/layout` ni `pages/docs`.
+`pages/docs/generate-api.cjs` es el generador de la referencia, no un test.
 
 La comprobacion de tipos publicos revisa todas las carpetas, los tipos
 exportados por sus implementaciones, contratos de callbacks y que las

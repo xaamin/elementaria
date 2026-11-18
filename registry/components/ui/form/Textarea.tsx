@@ -49,11 +49,24 @@ export type TextareaProps = Omit<
   };
 
 const Textarea = (props: TextareaProps) => {
-  const { label, error, isFieldDirty, disabled, readonly, isInvalid, ...rest } =
-    props;
+  const {
+    label,
+    error,
+    isFieldDirty,
+    disabled,
+    readonly,
+    isInvalid,
+    required,
+    helperText,
+    ...rest
+  } = props;
 
   return (
-    <InputWrapper {...props}>
+    <InputWrapper
+      {...props}
+      isDisabled={props.isDisabled || disabled}
+      isReadOnly={props.isReadOnly || readonly}
+    >
       <TheTextarea
         size="md"
         isReadOnly={readonly}

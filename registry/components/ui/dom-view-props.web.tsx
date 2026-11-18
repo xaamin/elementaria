@@ -1,7 +1,9 @@
 import type { ComponentType, CSSProperties, Ref } from 'react';
-import { forwardRef } from 'react';
+import { forwardRef, useCallback } from 'react';
+import type { LayoutChangeEvent } from 'react-native';
 import { StyleSheet } from 'react-native';
 
+import { useDomLayout } from '../hooks/useDomLayout';
 import { platformAccessibilityProps } from './accessibility';
 
 type ViewProps = Record<string, unknown>;
@@ -23,6 +25,7 @@ const NATIVE_ONLY_PROPS = [
   'onAccessibilityAction',
   'onAccessibilityEscape',
   'onAccessibilityTap',
+  // `adapt` la emula con `ResizeObserver` antes de descartarla.
   'onLayout',
   'onMagicTap',
   'removeClippedSubviews',
@@ -79,23 +82,78 @@ function toDomProps(props: ViewProps): ViewProps {
   return dom;
 }
 
-/**
- * En web las plantillas de Gluestack renderizan un `div`, pero el contrato
- * de UI acepta las props de `View`. Traduce esas props a atributos DOM
- * (`accessibilityLabel` → `aria-label`, `testID` → `data-testid`, etc.)
- * y descarta las que no tienen equivalente.
- */
-export function withDomViewProps<Props>(
+// Atributos de `Text` de React Native que se traducen a estilos CSS.
+function textStyle(props: ViewProps): CSSProperties | undefined {
+  const { numberOfLines, selectable } = props;
+
+  const style: CSSProperties = {};
+
+  let styled = false;
+
+  // `numberOfLines` recorta a N lineas con puntos suspensivos, como en nativo.
+  if (typeof numberOfLines === 'number' && numberOfLines > 0) {
+    style.display = '-webkit-box';
+    style.WebkitBoxOrient = 'vertical';
+    style.WebkitLineClamp = numberOfLines;
+    style.overflow = 'hidden';
+    styled = true;
+  }
+
+  if (typeof selectable === 'boolean') {
+    style.userSelect = selectable ? 'text' : 'none';
+    styled = true;
+  }
+
+  return styled ? style : undefined;
+}
+
+function toDomTextProps(props: ViewProps): ViewProps {
+  const { numberOfLines, selectable, ...rest } = props;
+
+  const dom = toDomProps(rest);
+
+  const nativeStyle = textStyle({ numberOfLines, selectable });
+
+  if (nativeStyle) {
+    // El estilo explicito prevalece sobre el derivado de las props nativas.
+    dom.style = { ...nativeStyle, ...(dom.style as CSSProperties) };
+  }
+
+  return dom;
+}
+
+function assignRef(ref: Ref<unknown> | undefined, instance: unknown) {
+  if (typeof ref === 'function') {
+    ref(instance);
+  } else if (ref) {
+    ref.current = instance;
+  }
+}
+
+function adapt<Props>(
   primitive: ComponentType<Props>,
+  translate: (props: ViewProps) => ViewProps,
 ): ComponentType<Props> {
   const Primitive = primitive as ComponentType<ViewProps>;
 
   const Adapted = forwardRef<unknown, ViewProps>(
     function DomViewProps(props, ref) {
+      const layoutRef = useDomLayout(
+        props.onLayout as ((event: LayoutChangeEvent) => void) | undefined,
+      );
+
+      const setRef = useCallback(
+        (instance: unknown) => {
+          layoutRef(instance);
+          assignRef(ref as Ref<unknown>, instance);
+        },
+        [layoutRef, ref],
+      );
+
       return (
         <Primitive
-          {...toDomProps(props)}
-          ref={ref as Ref<unknown>}
+          {...translate(props)}
+          ref={setRef}
         />
       );
     },
@@ -104,4 +162,27 @@ export function withDomViewProps<Props>(
   Adapted.displayName = primitive.displayName ?? primitive.name;
 
   return Adapted as unknown as ComponentType<Props>;
+}
+
+/**
+ * En web las plantillas de Gluestack renderizan un `div`, pero el contrato
+ * de UI acepta las props de `View`. Traduce esas props a atributos DOM
+ * (`accessibilityLabel` → `aria-label`, `testID` → `data-testid`, etc.),
+ * emula `onLayout` con `ResizeObserver` y descarta las que no tienen
+ * equivalente.
+ */
+export function withDomViewProps<Props>(
+  primitive: ComponentType<Props>,
+): ComponentType<Props> {
+  return adapt(primitive, toDomProps);
+}
+
+/**
+ * Igual que `withDomViewProps` para el `span` de `Text`, y ademas traduce
+ * `numberOfLines` a un recorte de lineas y `selectable` a `user-select`.
+ */
+export function withDomTextProps<Props>(
+  primitive: ComponentType<Props>,
+): ComponentType<Props> {
+  return adapt(primitive, toDomTextProps);
 }

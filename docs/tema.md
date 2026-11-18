@@ -23,7 +23,7 @@ editar `components/z`.
 
 En web, `UIThemeProvider` restaura el modo previo de `<html>` al desmontarse o
 cambiar de modo. Por eso se puede anidar para tematizar una pantalla montada
-dentro de la app: `/demos` lo usa para su boton _Modo oscuro_ / _Modo claro_
+dentro de la app: `/docs` lo usa para su boton _Modo oscuro_ / _Modo claro_
 y, al salir, la app recupera su modo. En nativo no se anida: el proveedor fija
 el `Appearance` global.
 

@@ -238,20 +238,16 @@ nuevo debe proveer ese contexto si puede contener menus.
 | `onOpen`, `onClose`                  | Se invocan al abrir y cerrar el menu; combinarlos con `show` para mantenerlo controlado.                                 |
 | `className`                          | Llega al contenedor del menu (la lista desplegada), no al trigger. El spread final la aplica tal cual y reemplaza `p-0`. |
 | `onSelect`, `onToggle` y otras props | Se reenvian al Menu sin adaptacion; usar `onPress` en cada item y `onOpen`/`onClose` en la raiz.                         |
-| `drop`, `horizontal`, `vertical`     | Compatibilidad heredada; solo aplican sin `placement` explicito. Ver la tabla siguiente.                                 |
+| `focusFirstItemOnShow`               | Foco inicial en web; ver abajo. En nativo no se aplica.                                                                  |
 
-Sin `placement`, las props heredadas se traducen a `placement` (tambien
-`drop` del primer hijo); si no se indica ninguna se conserva `'bottom right'`:
+`focusFirstItemOnShow` ajusta solo el foco inicial al abrir el menu en web
+(`MenuLayer.web.tsx`); despues React Aria gestiona la navegacion:
 
-| Props heredadas                        | Placement resultante                                    |
-| -------------------------------------- | ------------------------------------------------------- |
-| `drop="up"` / `drop="down"`            | Lado `top` / `bottom`, alineado segun `horizontal`.     |
-| `drop="left"` / `drop="right"`         | Lado `left` / `right`; `vertical` agrega la alineacion. |
-| `vertical="top"` / `vertical="bottom"` | Lado `top` / `bottom` cuando no hay `drop`.             |
-| `horizontal="left"` / `"right"`        | Alineacion `left` / `right` (por defecto `right`).      |
-
-Por ejemplo, `horizontal="left" vertical="top"` equivale a `'top left'` y
-`drop="left" vertical="bottom"` a `'left bottom'`.
+| Valor                  | Clic                    | Teclado                                                                       |
+| ---------------------- | ----------------------- | ----------------------------------------------------------------------------- |
+| `'keyboard'` (defecto) | Foco en la lista.       | Foco en el primer item habilitado.                                            |
+| `true`                 | Primer item habilitado. | Primer item habilitado.                                                       |
+| `false`                | Foco en la lista.       | Foco en la lista; la primera flecha va al primer o al ultimo item habilitado. |
 
 El trigger `Dropdown.Toggle` se transforma en `Button` con las props que
 proporciona Gluestack para abrir el menu. Su valor por defecto es size sm;
@@ -284,9 +280,8 @@ devuelven sus hijos. El menu no reenvia sus `className`, `align`,
 Para ancho, usar `className` de la raiz (que reemplaza `p-0`) o de los
 items; no confiar en `Dropdown.Menu className="w-52"`.
 
-Referencias: [demo Dropdowns](../../../pages/demo/Dropdowns.tsx),
+Referencias: [ejemplos de Dropdown](../../../pages/docs/dropdown/examples),
 [listado de clientes](../../../apps/finanzas/clientes/ListClientesPage.tsx).
-Contrastar sus props heredadas con estas limitaciones.
 
 ## Tabs
 
@@ -356,24 +351,26 @@ compacto. Con `labelPlacement="active-bottom"` los circulos van en una fila
 con conectores que se colorean al completar pasos, y debajo solo se muestra
 el titulo del paso activo.
 
-El ejemplo [Steppers.tsx](../../../pages/demo/Steppers.tsx), disponible en
-`/demos#demo-Steppers`, incluye uso basico, registro controlado con validacion
-real mediante `useValidator` y contenido personalizado en vertical. Su snippet
-incluye imports, estado y callbacks, y se genera desde ese mismo archivo.
+El ejemplo [StepperRequest.tsx](../../../pages/docs/stepper/examples/StepperRequest.tsx),
+disponible en `/docs/stepper`, combina un registro controlado con validacion
+real por paso mediante `useValidator` y una peticion antes de avanzar. Su
+codigo se muestra desde ese mismo archivo, con imports, estado y callbacks.
 
-En cada ejemplo, `onBeforeNext` consulta `https://jsonplaceholder.typicode.com/posts/n`
+Tras validar el paso, `onBeforeNext` consulta `https://jsonplaceholder.typicode.com/posts/n`
 para el paso n (`/posts/1`, `/posts/2` y `/posts/3`). El Stepper espera la
 respuesta y bloquea la navegacion, pero no muestra ningun indicador de carga:
 el spinner, el texto `Consultando JSONPlaceholder /posts/n...` y la barra de
-solicitudes completadas pertenecen a la demo. Una espera minima de 800ms hace
+solicitudes completadas pertenecen al ejemplo
+([useStepRequest](../../../pages/docs/stepper/hooks/useStepRequest.ts)). Una espera minima de 800ms hace
 visible la carga incluso con respuestas rapidas.
 Los errores HTTP, de red, de formato o de timeout impiden avanzar y permiten
 reintentar desde el mismo paso. La solicitud se cancela al desmontar el ejemplo.
 
-Son GET publicos sin datos del formulario, cookies ni referrer. Estas demos usan
+Son GET publicos sin datos del formulario, cookies ni referrer. El ejemplo usa
 `fetch` anonimo para no pasar por credenciales ni interceptores de autenticacion
-del cliente HTTP de negocio. Los encabezados se deshabilitan en las demos para
-que cada avance pase por la consulta; el ejemplo controlado valida antes de llamar.
+del cliente HTTP de negocio. Los encabezados se deshabilitan
+(`allowStepSelect={false}`) para que cada avance pase por la validacion y la
+consulta.
 
 Solo se monta el `content` del paso activo, identificado por `step.id` para no
 reutilizar el estado interno de otro paso. Mantener los valores fuera de ese

@@ -17,7 +17,6 @@ export type InputWrapperProps = {
   isReadOnly?: boolean;
   size?: string | number;
   children?: ReactNode;
-  name?: string;
   required?: boolean;
   label?: ReactNode;
   containerClassName?: string;
@@ -46,6 +45,7 @@ const InputWrapper = (props: InputWrapperProps) => {
     isFieldDirty,
     isInvalid,
     isRequired,
+    required,
     isDisabled,
     isReadOnly,
     error,
@@ -63,7 +63,7 @@ const InputWrapper = (props: InputWrapperProps) => {
     <FormControlRoot
       id={id}
       isInvalid={hasError || isInvalid}
-      isRequired={isRequired}
+      isRequired={isRequired || required}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       size={size}

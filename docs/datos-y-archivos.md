@@ -210,9 +210,10 @@ No confundir con `form/FixedAutocomplete`: este hace **busqueda asincrona**.
 | `onShowResults`                                               | Notifica la visibilidad del panel, tambien durante carga, vacio y error.                                                                                        |
 | `onStartShouldSetResponderCapture`                            | Se asigna al contenedor de resultados; default retorna false.                                                                                                   |
 
-Por compatibilidad, el tipo mezcla props de `TextInput` y parte de `FlatList`.
-Para props adicionales de la lista usar `listProps`: no todas las props
-heredadas de FlatList se reenvian desde el nivel superior.
+El tipo combina props de `TextInput` con las props de `FlatList` de esta
+tabla (`renderItem`, `keyExtractor`, `keyboardShouldPersistTaps`,
+`onEndReached` y `onEndReachedThreshold`). Las demas props de la lista
+(cabeceras, vacio, separadores, etc.) van en `listProps`.
 
 ```tsx
 import { Autocomplete } from '@/components/ui/autocomplete';
@@ -411,7 +412,7 @@ para nativo usar [`Input type="file"`](#archivos-con-input-typefile) o
 | `hideOnSelectFiles`      | `false`; tiene una discrepancia de render descrita abajo.                                            |
 | `label`                  | `'Haz click para subir archivos'`.                                                                   |
 | `containerClassName`     | Clases combinadas con `p-4 gap-4`.                                                                   |
-| Resto de props           | Se pasan al input oculto; por ejemplo `multiple` y `accept`.                                         |
+| Resto de props           | Se pasan al input oculto; por ejemplo `multiple` y `accept`. No acepta `className` ni `style`.       |
 
 Al seleccionar concatena existentes y nuevos, llama a `onChange` y limpia
 el valor del input para permitir reseleccionar el mismo archivo. No deduplica,

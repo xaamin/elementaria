@@ -1,13 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { forwardRef } from 'react';
 import type {
   ComponentProps,
   ComponentRef,
   PropsWithChildren,
   RefAttributes,
 } from 'react';
-import { Platform } from 'react-native';
-import type { Pressable, ScrollView, View } from 'react-native';
+import type {
+  Pressable,
+  ScrollView,
+  ScrollViewInstance,
+  View,
+} from 'react-native';
 
+import { cn } from '@/components/cn';
+import { useEscapeCloseGuard } from '@/components/hooks/useEscapeCloseGuard';
 import { useMounted } from '@/components/hooks/useMounted';
 import {
   AlertDialogBackdrop,
@@ -50,8 +56,22 @@ const AlertDialogRoot = withFrozenProps<AlertDialogProps, 'size'>(
 const AlertDialogHeader =
   withFrozenProps<AlertDialogHeaderProps>(TheAlertDialogHeader);
 
-const AlertDialogBody =
+const ScrollableAlertDialogBody =
   withFrozenProps<AlertDialogBodyProps>(TheAlertDialogBody);
+
+const AlertDialogBody = forwardRef<ScrollViewInstance, AlertDialogBodyProps>(
+  (props, ref) => {
+    return (
+      <ScrollableAlertDialogBody
+        {...props}
+        ref={ref}
+        className={cn('py-4', props.className)}
+      />
+    );
+  },
+);
+
+AlertDialogBody.displayName = 'AlertDialogBody';
 
 const AlertDialogFooter =
   withFrozenProps<AlertDialogFooterProps>(TheAlertDialogFooter);
@@ -68,44 +88,17 @@ const AlertDialog = ({
   isKeyboardDismissable,
   ...rest
 }: PropsWithChildren<AlertDialogProps>) => {
-  const ignoreEscapeRef = useRef(false);
-
   // With @gluestack-ui/core 5 an overlay first rendered open never unmounts
   // after closing (its exit animation no longer resets the overlay state), so
   // it is always mounted closed and opened after the first render.
   const mounted = useMounted();
 
-  const keepOpenOnEscape =
-    Platform.OS === 'web' && isOpen === true && isKeyboardDismissable === false;
-
-  // On web the primitive listens for Escape even when keyboard dismissal is
-  // disabled, so the close request caused by that key is ignored here.
-  useEffect(() => {
-    if (!keepOpenOnEscape) {
-      return;
-    }
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') {
-        return;
-      }
-
-      ignoreEscapeRef.current = true;
-
-      setTimeout(() => {
-        ignoreEscapeRef.current = false;
-      }, 0);
-    };
-
-    window.addEventListener('keyup', handleKeyUp, true);
-
-    return () => {
-      window.removeEventListener('keyup', handleKeyUp, true);
-    };
-  }, [keepOpenOnEscape]);
+  const isEscapeClose = useEscapeCloseGuard(
+    isOpen === true && isKeyboardDismissable === false,
+  );
 
   const handleClose = () => {
-    if (ignoreEscapeRef.current) {
+    if (isEscapeClose()) {
       return;
     }
 

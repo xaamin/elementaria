@@ -107,6 +107,8 @@
         "components/hooks/useClientOnlyValue.web.ts",
         "components/hooks/useColorScheme.ts",
         "components/hooks/useColorScheme.web.ts",
+        "components/hooks/useDomLayout.ts",
+        "components/hooks/useEscapeCloseGuard.ts",
         "components/hooks/useMounted.ts",
         "components/lib/formatBytes.ts",
         "components/ui/accessibility/accessibleName.ts",
@@ -114,6 +116,7 @@
         "components/ui/accessibility/convert.web.ts",
         "components/ui/accessibility/index.ts",
         "components/ui/dom-view-props.tsx",
+        "components/ui/dom-view-props.types.ts",
         "components/ui/dom-view-props.web.tsx",
         "components/ui/primitive.ts"
       ],
@@ -343,7 +346,6 @@
       "registryDependencies": [
         "button",
         "form",
-        "form-control",
         "hstack",
         "pressable",
         "text",
@@ -611,9 +613,9 @@
       ],
       "registryDependencies": [
         "base",
+        "box",
         "dropdown",
         "heading",
-        "pressable",
         "z/icon",
         "z/modal"
       ],
@@ -689,7 +691,7 @@
       "registryDependencies": [
         "base",
         "button",
-        "form-control",
+        "form",
         "hstack",
         "vstack"
       ],

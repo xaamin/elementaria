@@ -168,7 +168,7 @@ En [nativo](../../z/grid/index.tsx) la malla mide su ancho con `onLayout`
 y no renderiza las columnas hasta tenerlo. Un `onLayout` del consumidor se
 reenvia despues y **reemplaza esa medicion**, de modo que las columnas nunca
 se muestran; no pasar `onLayout` a `Grid` ni `Row`. En web `onLayout` se
-descarta al traducir las props a atributos DOM.
+emula con `ResizeObserver` y no interfiere con la malla.
 
 Las clases de spans y gap se construyen en tiempo de ejecucion
 (`gap-${gap}`, `md:col-span-${n}`, `xl:col-span-${n}`, `2xl:col-span-${n}`).
@@ -182,8 +182,8 @@ en nativo usa una fila con `flex-wrap` y calcula el ancho de cada columna con
 contexto, breakpoints de la ventana y el ancho medido. No inferir paridad
 entre ambas implementaciones; comprobar la plataforma de destino.
 
-Consumidor de composicion: [demo Grids](../../../pages/demo/Grids.tsx).
-Las demos muestran estructura, no garantizan todos los estados de produccion.
+Ejemplos de composicion: [Grid en /docs](../../../pages/docs/grid/examples).
+Los ejemplos muestran estructura, no garantizan todos los estados de produccion.
 
 ## Divider
 
@@ -241,8 +241,13 @@ Fuentes: [Text](../../z/text/index.tsx),
 En nativo `isTruncated` no trunca: usar `numberOfLines`.
 En nativo conserva props/ref de `RNText`; en
 [web](../../z/text/index.web.tsx) representa un span y conserva sus
-atributos/eventos DOM. No pasar `numberOfLines` al span esperando la
-semantica nativa.
+atributos/eventos DOM. En web `withDomTextProps`
+([dom-view-props.web.tsx](../dom-view-props.web.tsx)) traduce ademas
+`numberOfLines` a un recorte de N lineas con puntos suspensivos
+(`-webkit-line-clamp`), `selectable` a `user-select: text`/`none`, `testID`
+a `data-testid` y las props `accessibility*` a ARIA; el `style` explicito
+prevalece sobre el derivado. Otras props exclusivas de `RNText` (`onPress`,
+`ellipsizeMode`, `onTextLayout`...) no forman parte del contrato web.
 
 `Heading` utiliza encabezados de `@expo/html-elements` en nativo y
 [h1-h6 DOM en web](../../z/heading/index.web.tsx).

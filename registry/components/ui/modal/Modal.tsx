@@ -2,13 +2,15 @@ import React, {
   ComponentProps,
   ComponentRef,
   PropsWithChildren,
+  RefObject,
   forwardRef,
   useEffect,
   useState,
 } from 'react';
-import type { ScrollView, View } from 'react-native';
+import type { ScrollView, ScrollViewInstance, View } from 'react-native';
 
 import { cn } from '@/components/cn';
+import { useEscapeCloseGuard } from '@/components/hooks/useEscapeCloseGuard';
 import { useMounted } from '@/components/hooks/useMounted';
 import { CloseIcon, Icon } from '@/components/z/icon';
 import {
@@ -21,45 +23,30 @@ import {
   ModalBody as TheModalBody,
 } from '@/components/z/modal';
 
+import { Box } from '../box';
 import {
   MENU_LAYER_DIALOG,
   MenuLayerContext,
 } from '../dropdown/menuLayerContext';
 import { Heading, type HeadingProps } from '../heading';
-import { Pressable } from '../pressable';
 import { withFrozenProps } from '../primitive';
 
 export type ModalProps = PropsWithChildren & {
-  animation?: boolean;
-  autoFocus?: boolean;
-  backdrop?: 'static' | boolean;
   isOpen?: boolean;
-  responsive?: boolean;
-  keyboard?: boolean;
-  centered?: boolean;
-  closable?: boolean;
-  contentClassName?: string;
-  dialogClassName?: string;
-  enforceFocus?: boolean;
-  fullscreen?:
-    true | 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
-  manager?: object;
-  scrollable?: boolean;
+  onClose?: () => void;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  onEnter?: (event?: unknown) => void;
-  onEntered?: (event?: unknown) => void;
-  onEscapeKeyDown?: (event?: unknown) => void;
-  onExit?: (event?: unknown) => void;
-  onExited?: (event?: unknown) => void;
-  onExiting?: (event?: unknown) => void;
-  onHide?: (event?: unknown) => void;
-  onShow?: (event?: unknown) => void;
-  onClose?: (event?: unknown) => void;
+  className?: string;
+  backdrop?: boolean;
+  closable?: boolean;
+  avoidKeyboard?: boolean;
+  closeOnOverlayClick?: boolean;
+  isKeyboardDismissable?: boolean;
+  initialFocusRef?: RefObject<unknown>;
+  finalFocusRef?: RefObject<unknown>;
 };
 
-type ModalRootProps = Omit<ModalProps, 'backdrop'> & {
-  backdrop?: boolean;
-} & React.RefAttributes<React.ComponentRef<typeof TheModal>>;
+type ModalRootProps = Omit<ModalProps, 'className' | 'backdrop' | 'closable'> &
+  React.RefAttributes<React.ComponentRef<typeof TheModal>>;
 
 const ModalRoot = withFrozenProps<ModalRootProps, 'size'>(TheModal);
 
@@ -72,13 +59,19 @@ const ModalBase = forwardRef<React.ComponentRef<typeof TheModal>, ModalProps>(
     const {
       children,
       isOpen: show = false,
-      responsive,
+      onClose,
+      className,
       backdrop = true,
       closable = false,
+      isKeyboardDismissable,
       ...rest
     } = props;
 
     const mounted = useMounted();
+
+    const isEscapeClose = useEscapeCloseGuard(
+      isOpen && isKeyboardDismissable === false,
+    );
 
     useEffect(() => {
       if (show !== isOpen) {
@@ -87,20 +80,13 @@ const ModalBase = forwardRef<React.ComponentRef<typeof TheModal>, ModalProps>(
     }, [show]);
 
     const handleClose = () => {
+      if (isEscapeClose()) {
+        return;
+      }
+
       setIsOpen(false);
 
-      props.onClose && props.onClose();
-    };
-
-    // With @gluestack-ui/core 5 an overlay first rendered open never unmounts
-    // after closing (its exit animation no longer resets the overlay state), so
-    // it is always mounted closed and opened after the first render.
-    const newProps = {
-      ...rest,
-      isOpen: mounted && isOpen,
-      responsive: responsive,
-      backdrop: backdrop === true,
-      onClose: handleClose,
+      onClose?.();
     };
 
     const newChildren = React.Children.map(children, (child) => {
@@ -117,15 +103,24 @@ const ModalBase = forwardRef<React.ComponentRef<typeof TheModal>, ModalProps>(
       });
     });
 
+    // With @gluestack-ui/core 5 an overlay first rendered open never unmounts
+    // after closing (its exit animation no longer resets the overlay state), so
+    // it is always mounted closed and opened after the first render.
     return (
       <ModalRoot
-        {...newProps}
+        {...rest}
         ref={ref}
+        isOpen={mounted && isOpen}
+        isKeyboardDismissable={isKeyboardDismissable}
+        onClose={handleClose}
       >
         {backdrop && <ModalBackdrop />}
 
         <ModalContent
-          className={props.size === 'xl' ? XL_CONTENT_CLASS_NAME : undefined}
+          className={cn(
+            props.size === 'xl' && XL_CONTENT_CLASS_NAME,
+            className,
+          )}
         >
           <MenuLayerContext.Provider value={MENU_LAYER_DIALOG}>
             {newChildren}
@@ -145,15 +140,11 @@ const ModalFooter = withFrozenProps<ModalSectionProps>(TheModalFooter);
 
 export type ModalHeaderProps = ModalSectionProps & {
   closable?: boolean;
-  onClose?: () => void;
 };
 
 const ModalHeader = (props: ModalHeaderProps) => {
   const { closable, ...rest } = props;
 
-  const handleClose = () => {
-    props.onClose && props.onClose();
-  };
   return (
     <ModalHeading {...rest}>
       {typeof props.children === 'string' && (
@@ -163,10 +154,7 @@ const ModalHeader = (props: ModalHeaderProps) => {
       {typeof props.children !== 'string' && props.children}
 
       {closable && (
-        <Pressable
-          onPress={handleClose}
-          className="z-10 flex flex-row justify-end"
-        >
+        <Box className="z-10 flex flex-row justify-end">
           <ModalCloseButton accessibilityLabel="Cerrar">
             <Icon
               as={CloseIcon}
@@ -174,7 +162,7 @@ const ModalHeader = (props: ModalHeaderProps) => {
               className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
             />
           </ModalCloseButton>
-        </Pressable>
+        </Box>
       )}
     </ModalHeading>
   );
@@ -195,21 +183,24 @@ const ModalTitle = (props: ModalTitleProps) => {
 };
 
 export type ModalBodyProps = Omit<ComponentProps<typeof ScrollView>, 'ref'> &
-  React.RefAttributes<ScrollView>;
+  React.RefAttributes<ScrollViewInstance>;
 
 const ScrollableModalBody = TheModalBody as React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<ModalBodyProps> & React.RefAttributes<ScrollView>
+  React.PropsWithoutRef<ModalBodyProps> &
+    React.RefAttributes<ScrollViewInstance>
 >;
 
-const ModalBody = forwardRef<ScrollView, ModalBodyProps>((props, ref) => {
-  return (
-    <ScrollableModalBody
-      {...props}
-      ref={ref}
-      className={cn('mb-0', props.className)}
-    />
-  );
-});
+const ModalBody = forwardRef<ScrollViewInstance, ModalBodyProps>(
+  (props, ref) => {
+    return (
+      <ScrollableModalBody
+        {...props}
+        ref={ref}
+        className={cn('my-0 py-4', props.className)}
+      />
+    );
+  },
+);
 
 export type ModalActionsProps = ModalSectionProps;
 export type ModalFooterProps = ModalActionsProps;
@@ -220,7 +211,7 @@ const ModalActions = (props: ModalActionsProps) => {
   return (
     <ModalFooter
       {...rest}
-      className={cn('pt-6 pb-0', className)}
+      className={className}
     />
   );
 };

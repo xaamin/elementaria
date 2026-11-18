@@ -34,7 +34,7 @@ function applyMode(mode: ModeType) {
  * Proveedor de tema de la aplicación en web. Compone los proveedores de
  * overlays y toasts de Gluestack y agrega la clase del modo (`light`/`dark`)
  * a `<html>`. Al desmontarse o cambiar de modo restaura el modo previo, de
- * modo que un proveedor anidado (p. ej. en `/demos`) no deja su modo en el
+ * modo que un proveedor anidado (p. ej. en `/docs`) no deja su modo en el
  * resto de la aplicación. Las variables de la paleta v3 y los tokens de las plantillas se
  * declaran en `global.css`.
  *

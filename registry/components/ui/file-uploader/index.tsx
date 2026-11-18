@@ -13,7 +13,7 @@ import type { UploadFileCollection } from './UploadFileList';
 
 export interface FileUploaderProps extends Omit<
   ComponentPropsWithoutRef<'input'>,
-  'onChange' | 'value' | 'type' | 'children'
+  'onChange' | 'value' | 'type' | 'children' | 'className' | 'style'
 > {
   showSelectedFilesList?: boolean;
   label?: ReactNode;
@@ -81,8 +81,8 @@ const FileUploader = ({
                 type="file"
                 aria-label={accessibleName}
                 ref={hiddenFileInput}
-                style={{ display: 'none' }}
                 {...rest}
+                style={{ display: 'none' }}
                 onChange={handleChange}
               />
               <FilePlus2Icon className="text-typography-300 h-10 w-10" />

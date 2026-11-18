@@ -104,7 +104,15 @@ const Input = (props: InputProps) => {
     return <FileInput {...fileProps} />;
   }
 
-  const { type, variant, inputClassName, containerClassName, ...rest } = props;
+  const {
+    type,
+    variant,
+    inputClassName,
+    containerClassName,
+    required,
+    helperText,
+    ...rest
+  } = props;
 
   const {
     label,
@@ -139,11 +147,13 @@ const Input = (props: InputProps) => {
       error={error}
       isInvalid={isInvalid}
       isRequired={isRequired}
-      isDisabled={isDisabled}
+      required={required}
+      isDisabled={isDisabled || disabled}
       isReadOnly={isReadOnly || readonly}
       size={size}
       containerClassName={containerClassName}
       isFieldDirty={isFieldDirty}
+      helperText={helperText}
     >
       <InputRoot
         size={size}

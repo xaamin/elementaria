@@ -296,7 +296,8 @@ en `false`. En web su contenido termina con rol `dialog` (no `alertdialog`):
 
 Siempre compone backdrop y content. La raiz usa
 `className="relative flex flex-1"`. Miembros:
-`AlertDialog.Header`, `.Body`, `.Footer`, `.Close`.
+`AlertDialog.Header`, `.Body`, `.Footer`, `.Close`. Body combina `py-4` con
+sus clases.
 La implementacion tambien exporta `Header`, `Body`, `Footer` y una funcion
 nombrada `AlertDialog`; no confundir ese import directo con la version
 compuesta default que reexporta el barrel.
@@ -349,14 +350,23 @@ Importar `Modal` desde la carpeta; miembros `.Header`, `.Title`, `.Body`,
 de props se exportan desde la carpeta, incluido `ModalFooterProps` como
 alias de `ModalActionsProps`.
 
-| Prop                   | Comportamiento real                                                                                                                                                  |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `isOpen`               | `false` por defecto; sincroniza un estado local de apertura.                                                                                                         |
-| `backdrop`             | `true` por defecto; cualquier valor truthy representa backdrop.                                                                                                      |
-| `closable`             | `false` por defecto; se inyecta a los hijos directos que sean exactamente `ModalHeader` y muestra el boton "Cerrar".                                                 |
-| `onClose`              | Al cerrar con backdrop, Escape (web), atras (Android) o el boton de `closable`, el modal se oculta y despues llama `onClose`.                                        |
-| `size`                 | `md` por defecto: `xs` 360px, `sm` 420px, `md` 510px, `lg` 640px y `xl` 800px de ancho maximo (`xl` lo agrega el wrapper con `w-[95%]`); `full` ocupa todo el ancho. |
-| Otras props declaradas | Se reenvian sin una implementacion local completa; ver limites siguientes.                                                                                           |
+| Prop                               | Comportamiento real                                                                                                                                                  |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`                           | `false` por defecto; sincroniza un estado local de apertura.                                                                                                         |
+| `backdrop`                         | `true` por defecto; con `false` no hay fondo ni cierre al pulsar fuera.                                                                                              |
+| `closable`                         | `false` por defecto; se inyecta a los hijos directos que sean exactamente `ModalHeader` y muestra el boton "Cerrar".                                                 |
+| `onClose`                          | Al cerrar con backdrop, Escape (web), atras (Android) o el boton de `closable`, el modal se oculta y despues llama `onClose`.                                        |
+| `size`                             | `md` por defecto: `xs` 360px, `sm` 420px, `md` 510px, `lg` 640px y `xl` 800px de ancho maximo (`xl` lo agrega el wrapper con `w-[95%]`); `full` ocupa todo el ancho. |
+| `className`                        | Se aplica a `ModalContent` y se combina con la clase del `size`.                                                                                                     |
+| `closeOnOverlayClick`              | `true` por defecto; con `false` pulsar el backdrop no cierra.                                                                                                        |
+| `isKeyboardDismissable`            | `true` por defecto; con `false`, en web se ignora la solicitud de cierre que la primitiva emite al soltar Escape (mismo arreglo que `AlertDialog`).                  |
+| `avoidKeyboard`                    | Se reenvia a la primitiva; agrega un espaciador del alto del teclado.                                                                                                |
+| `initialFocusRef`, `finalFocusRef` | Foco al abrir y al cerrar; sin ellos la primitiva enfoca el primer elemento del contenido y restaura el foco previo.                                                 |
+
+El contrato sigue los nombres de `Modal` de `@gluestack-ui/core` 5.0.15 y los
+de `AlertDialog`. No declara `defaultIsOpen`, `useRNModal` ni
+`animationPreset`: el wrapper controla el montaje y la capa del
+`OverlayProvider`.
 
 ```tsx
 import { Button } from '@/components/ui/button';
@@ -384,7 +394,8 @@ import { Text } from '@/components/ui/text';
 ```
 
 Un string en `Modal.Header` se convierte en `Modal.Title`. Body combina
-`mb-0` con sus clases; Footer representa `ModalFooter`.
+`my-0 py-4` con sus clases y Footer representa `ModalFooter` sin padding
+propio, con el mismo espaciado que `AlertDialog`.
 
 `Modal.Body` reenvia su `ref` a una instancia de `ScrollView` de React Native.
 Permite desplazamiento programatico con `scrollTo` y `scrollToEnd` tanto en
@@ -396,17 +407,8 @@ web como en nativo.
   (`onClose: handleClose`) aunque el padre mantenga `isOpen`. El consumidor
   debe poner `isOpen` en `false` en `onClose`; si queda en `true`, no podra
   reabrirlo.
-- `backdrop="static"` es truthy y crea backdrop, pero no se transforma en
-  una configuracion explicita que impida cierre al pulsarlo.
-- `animation`, `keyboard`, `centered`, `enforceFocus`, `fullscreen`,
-  `scrollable`, callbacks de transicion, etc. vienen de una API heredada.
-  Declararlos/reenviarlos no demuestra que la primitiva los implemente.
-- `contentClassName` y `dialogClassName` no se aplican explicitamente al
-  `ModalContent`, que se crea sin clases personalizadas.
 - `closable` agrega icono/cierre en Header. Su `ModalCloseButton` usa el
-  cierre del propio modal; la raiz solo inyecta `closable`, no un callback,
-  por lo que `ModalHeaderProps.onClose` en la practica nunca se invoca.
-  Escuchar `onClose` en la raiz.
+  cierre del propio modal; escuchar `onClose` en la raiz.
 - Header envuelto en otro elemento no recibe la inyeccion de `closable`.
   Preferir hijos directos como en el ejemplo.
 

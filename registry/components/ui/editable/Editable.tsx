@@ -1,9 +1,9 @@
 import { Check, PencilIcon, X } from 'lucide-react-native';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { Button } from '../button';
 import type { InputTextProps } from '../form';
-import { FormControl } from '../form-control';
+import { Input } from '../form';
 import { HStack } from '../hstack';
 import { Pressable } from '../pressable';
 import { Text } from '../text';
@@ -32,18 +32,6 @@ const Editable = ({
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState<string>(`${initialValue ?? ''}`);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (value !== undefined) {
-      const validationError = validateField(value);
-
-      if (validationError) {
-        setError(validationError);
-      } else {
-        setError('');
-      }
-    }
-  }, [value]);
 
   const handleEdit = () => {
     setError(validateField(value) || '');
@@ -84,11 +72,7 @@ const Editable = ({
 
   const handlevalueChange = (newValue: string) => {
     setValue(newValue);
-
-    // Clear error when user starts typing
-    if (error) {
-      setError('');
-    }
+    setError(validateField(newValue) || '');
   };
 
   const handleKeyPress: NonNullable<InputTextProps['onKeyPress']> = (e) => {
@@ -107,7 +91,7 @@ const Editable = ({
       {isEditing && (
         <HStack className="gap-2 grow">
           <VStack className="grow">
-            <FormControl
+            <Input
               inputClassName="h-14"
               size="lg"
               value={value}

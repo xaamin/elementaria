@@ -1,4 +1,4 @@
-import { ElementType, PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
 import { MenuItem } from '@/components/z/menu';
 
@@ -6,7 +6,6 @@ export interface DropdownItemProps {
   children: ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   active?: boolean;
-  as?: ElementType;
   disabled?: boolean;
   eventKey?: string | number;
   onClick?: (event: any) => void;

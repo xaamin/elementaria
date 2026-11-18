@@ -1,10 +1,7 @@
 import { ChevronDown, ChevronUp, Search, X } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
 import type { ComponentRef } from 'react';
-import type {
-  NativeSyntheticEvent,
-  TextInputFocusEventData,
-} from 'react-native';
+import type { TextInputBlurEvent } from 'react-native';
 import { Platform } from 'react-native';
 
 import { cn } from '@/components/cn';
@@ -149,19 +146,20 @@ const FixedAutocomplete = ({
     }
   };
 
-  const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+  const handleBlur = (e: TextInputBlurEvent) => {
     // Check if the blur event is caused by clicking on a suggestion
     const relatedTarget =
       ('relatedTarget' in e && e.relatedTarget) ||
       ('explicitOriginalTarget' in e.nativeEvent &&
         e.nativeEvent.explicitOriginalTarget);
+    // On web the dropdown ref is a DOM element; native has no DOM `Node`.
+    const dropdown: unknown = dropdownRef.current;
+
     if (
       typeof Node !== 'undefined' &&
       relatedTarget instanceof Node &&
-      dropdownRef.current &&
-      'contains' in dropdownRef.current &&
-      typeof dropdownRef.current.contains === 'function' &&
-      dropdownRef.current.contains(relatedTarget)
+      dropdown instanceof Node &&
+      dropdown.contains(relatedTarget)
     ) {
       return; // Don't close if clicking inside dropdown
     }

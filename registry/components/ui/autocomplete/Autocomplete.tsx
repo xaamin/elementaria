@@ -23,7 +23,16 @@ export type AutocompleteSearchResult<Item> =
     };
 
 export type AutocompleteInputProps<Item = unknown> = TextInputProps &
-  Partial<Omit<FlatListProps<Item>, 'data' | 'ref'>> & {
+  Partial<
+    Pick<
+      FlatListProps<Item>,
+      | 'keyExtractor'
+      | 'renderItem'
+      | 'onEndReached'
+      | 'onEndReachedThreshold'
+      | 'keyboardShouldPersistTaps'
+    >
+  > & {
     containerStyle?: StyleProp<ViewStyle>;
     hideResults?: boolean;
     searchOnEmpty?: boolean;

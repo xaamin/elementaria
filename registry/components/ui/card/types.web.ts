@@ -1,6 +1,9 @@
 import type { ComponentPropsWithoutRef, RefAttributes } from 'react';
 
-export type CardPrimitiveProps = ComponentPropsWithoutRef<'div'> & {
-  variant?: string | number;
-  size?: string | number;
-} & RefAttributes<HTMLDivElement>;
+import type { NativeViewWebProps } from '../dom-view-props.types';
+
+export type CardPrimitiveProps = ComponentPropsWithoutRef<'div'> &
+  NativeViewWebProps & {
+    variant?: string | number;
+    size?: string | number;
+  } & RefAttributes<HTMLDivElement>;

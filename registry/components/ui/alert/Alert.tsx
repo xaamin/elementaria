@@ -13,6 +13,7 @@ import { Heading } from '../heading';
 import { CloseIcon, Icon } from '../icon';
 import { Pressable } from '../pressable';
 import { VStack } from '../vstack';
+import type { VStackRef } from '../vstack';
 
 const Variant = [
   'primary',
@@ -54,20 +55,19 @@ const AlertHeading = forwardRef<
   );
 });
 
-const AlertDescription = forwardRef<
-  ComponentRef<typeof VStack>,
-  AlertDescriptionProps
->(({ className, children, ...rest }, ref) => {
-  return (
-    <VStack
-      ref={ref}
-      className={twMerge('mb-2', className)}
-      {...rest}
-    >
-      {children}
-    </VStack>
-  );
-});
+const AlertDescription = forwardRef<VStackRef, AlertDescriptionProps>(
+  ({ className, children, ...rest }, ref) => {
+    return (
+      <VStack
+        ref={ref}
+        className={twMerge('mb-2', className)}
+        {...rest}
+      >
+        {children}
+      </VStack>
+    );
+  },
+);
 
 type AlertColor = 'error' | 'warning' | 'success' | 'info' | 'muted';
 

@@ -1,5 +1,3 @@
-import { ElementType } from 'react';
-
 import type { ButtonProps } from '../button';
 
 const colors = [
@@ -17,9 +15,7 @@ const colors = [
 export type ComponentColor = (typeof colors)[number];
 
 export interface DropdownToggleProps extends ButtonProps {
-  as?: ElementType;
   id?: string;
-  split?: boolean;
   variant?: ComponentColor;
   className?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
