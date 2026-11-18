@@ -61,7 +61,10 @@ la propuesta, que se confundia con `error`: en OKLCH usa el tono de
 `primary-500` (222.8°), la luminosidad de cada paso de `neutral` y un croma
 de 0.006 a 0.036 (maximo en `500`). Cada escala v3 va del paso `50` al
 `950` de la paleta en claro; el paso `0` es la mezcla al 50 % del paso `50`
-con blanco (`background-0` es blanco). En oscuro, cada escala se invierte
+con blanco (`background-0` es blanco). `info` es un azul propio que se
+distingue de `primary`: conserva la luminosidad y la saturacion HSL de cada
+paso de la escala `info` de la propuesta, con el tono en 218° (la propuesta
+quedaba a unos 10° de `primary`). En oscuro, cada escala se invierte
 (`0` ↔ `950`, `50` ↔ `900`, `100` ↔ `800`...), por lo que las clases v3 fijas
 mantienen el contraste.
 
@@ -125,28 +128,42 @@ cambiar la apariencia:
   usa `solid`/`muted`; `Accordion` usa `filled`.
 - Excepcion: `Button` con `outline` (y `link`/`ghost`) refuerza la paleta v3,
   cuyos bordes `-300` y textos `-500` apenas se veian: bordes `-400`/`-500`
-  (`outline-400` en `secondary`), texto e icono del color de la accion en
-  `-600` (`typography-800` en `secondary`).
+  (`outline-400` en `neutral`), texto e icono del color de la accion en
+  `-600` (`typography-800` en `neutral`).
 - Recetas del tema: las clases siguen las recetas del generador de la paleta,
   traducidas a escalas invertidas (sin `dark:`). Todos los botones usan
-  `rounded-lg`; el `primary` enfoca con `ring-primary-300`; el `secondary`
-  solido es un tinte primario (`primary-50`, borde `primary-200`, texto
-  `primary-700`) y el resto de la accion `secondary` (`dark`, por defecto) usa
-  las escalas neutras (`background-200`, borde `outline-100`). `Alert` usa fondo `-50`, borde
-  `-200` y texto `-800`; `Badge`, fondo `-100`, borde `-200`, texto `-700` en
-  negrita, y sin color usa `tertiary` (el acento). Los campos de texto
+  `rounded-lg`; el `primary` enfoca con `ring-primary-300`. Button solido,
+  Alert y Badge comparten los colores de Badge: fondo `-100` y texto `-700`.
+  Button solido y Alert llevan siempre borde `-300` para que se distinga
+  sobre el fondo tintado (Badge usa `-200` y solo lo muestra con `outline`);
+  Button oscurece un paso fondo, borde y texto al pasar el cursor y al pulsar.
+  Excepcion: el `primary` de los tres usa el relleno `-500` con borde del
+  mismo color y texto `typography-0` (en Button, `-600`/`-700` al pasar el
+  cursor y pulsar; en Alert, tambien el titulo). El `secondary` usa la escala
+  pizarra y la accion `neutral` (`outline`, `ghost`, `transparent`, `link` y
+  por defecto) usa las escalas neutras (`background-100`, borde `outline-300`, texto
+  `typography-700`). El texto de `Badge` va en negrita y, sin color, usa
+  `tertiary` (el acento). La variante `neutral` de los tres componentes
+  usa las escalas neutras.
+- Superficies fijas: las variantes `dark` y `light` de Button, Badge y Alert
+  usan los colores `fixed-dark` y `fixed-light` (con `-hover`, `-active`,
+  `-foreground` y, en `light`, `-border`/`-border-hover`), declarados en el
+  bloque `@theme` con los valores claros de la escala neutral. No se
+  invierten, asi que `dark` es oscuro y `light` claro en ambos modos. No usar
+  `dark:`: en web Tailwind lo resuelve con `prefers-color-scheme` y no sigue la
+  clase `.dark` que aplica el proveedor. Los campos de texto
   (`InputRoot`) usan `rounded-lg`, fondo `background-0`, borde `outline-300` y
   foco `primary-500` con anillo `primary-200`.
 - Excepcion: el `Toast` por defecto (`solid`/`muted`) conserva el estilo claro
   de la plantilla v5 (`bg-popover`); las demas acciones y `outline` usan v3.
 
-| Componente | `variant` publico                                     | Paleta v3                                                                       |
-| ---------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Button     | `primary`, `success`, `danger`; resto `secondary`     | `action` `primary`/`positive`/`negative`/`secondary` × `solid`/`outline`/`link` |
-| Badge      | `success`, `warning`, `info`, `danger`; resto `muted` | `action` `success`/`warning`/`info`/`error`/`muted`                             |
-| Alert      | `success`, `warning`, `info`, `danger`; resto `muted` | `action` `success`/`warning`/`info`/`error`/`muted`; `outline` claro            |
-| Toast      | `success`, `warning`, `info`, `danger`; resto `muted` | Solid relleno por `action`, salvo `muted` (claro de v5); `outline` claro        |
-| Link       | —                                                     | Texto `info-700`                                                                |
+| Componente | `variant` publico                                                                                                | Paleta v3                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Button     | `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `dark`, `neutral`; resto `neutral`               | Clases por `variant` × `solid`/`outline`/`link`; `light` fijo            |
+| Badge      | `primary`, `secondary`, `success`, `warning`, `info`, `danger`, `light`, `dark`, `neutral`; sin valor `tertiary` | Clases por `variant`; `light`/`dark` fijos                               |
+| Alert      | `primary`, `secondary`, `success`, `warning`, `info`, `danger`, `light`, `dark`, `neutral`; resto `neutral`      | Clases por `variant`; `light`/`dark` fijos; `outline` claro              |
+| Toast      | `success`, `warning`, `info`, `danger`; resto `muted`                                                            | Solid relleno por `action`, salvo `muted` (claro de v5); `outline` claro |
+| Link       | —                                                                                                                | Texto `info-700`                                                         |
 
 ## Actualizar las plantillas
 

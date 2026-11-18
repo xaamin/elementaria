@@ -143,12 +143,11 @@ export interface BadgeProps {
     | 'secondary'
     | 'success'
     | 'danger'
-    | 'error'
     | 'warning'
     | 'info'
     | 'light'
     | 'dark'
-    | 'outline';
+    | 'neutral';
   outline?: boolean;
   pill?: boolean;
   size?: BaseBadgeProps['size'];
@@ -157,14 +156,28 @@ export interface BadgeProps {
   containerClassName?: string;
 }
 
-type BadgeColor = 'error' | 'warning' | 'success' | 'info' | 'muted';
+type BadgeVariant = NonNullable<BadgeProps['variant']>;
+
+type BadgeColorClasses = { root: string; text: string };
 
 // The v5 primitive no longer has `action`; colors are set through classes on
 // top of its neutral `secondary` variant, whose classes have no `dark:`
 // modifiers left over after merging. They follow the theme recipe (`-100`
-// background, `-700` text); the default badge uses the accent (`tertiary`).
-const COLOR_CLASSES: Record<BadgeColor, { root: string; text: string }> = {
-  error: { root: 'bg-error-100 border-error-200', text: 'text-error-700' },
+// background, `-700` text), except `primary`, which uses the solid fill of
+// the Button (`-500` with `typography-0` text); `neutral` uses the neutral
+// scales. `light` and
+// `dark` use the fixed surfaces of the theme, which keep their color in dark
+// mode.
+const COLOR_CLASSES: Record<BadgeVariant, BadgeColorClasses> = {
+  primary: {
+    root: 'bg-primary-500 border-primary-500',
+    text: 'text-typography-0',
+  },
+  secondary: {
+    root: 'bg-secondary-100 border-secondary-200',
+    text: 'text-secondary-700',
+  },
+  danger: { root: 'bg-error-100 border-error-200', text: 'text-error-700' },
   warning: {
     root: 'bg-warning-100 border-warning-200',
     text: 'text-warning-700',
@@ -174,10 +187,24 @@ const COLOR_CLASSES: Record<BadgeColor, { root: string; text: string }> = {
     text: 'text-success-700',
   },
   info: { root: 'bg-info-100 border-info-200', text: 'text-info-700' },
-  muted: {
-    root: 'bg-tertiary-100 border-tertiary-200',
-    text: 'text-tertiary-700',
+  light: {
+    root: 'bg-fixed-light border border-fixed-light-border',
+    text: 'text-fixed-light-foreground',
   },
+  dark: {
+    root: 'bg-fixed-dark border-fixed-dark-hover',
+    text: 'text-fixed-dark-foreground',
+  },
+  neutral: {
+    root: 'bg-background-100 border-outline-200',
+    text: 'text-typography-700',
+  },
+};
+
+// Without `variant` the badge uses the accent (`tertiary`), as v3 did.
+const DEFAULT_COLOR_CLASSES: BadgeColorClasses = {
+  root: 'bg-tertiary-100 border-tertiary-200',
+  text: 'text-tertiary-700',
 };
 
 const Badge: React.FC<BadgeProps> = (props) => {
@@ -193,25 +220,12 @@ const Badge: React.FC<BadgeProps> = (props) => {
 
   const badgeSize = resolveSize(size, 'md');
 
-  let color: BadgeColor;
+  let colorClasses = DEFAULT_COLOR_CLASSES;
 
-  switch (variant) {
-    case 'warning':
-    case 'info':
-    case 'success':
-      color = variant;
-      break;
-    case 'danger':
-    case 'error':
-      color = 'error';
-      break;
-    default:
-      // v3 defaulted `action` to `muted`.
-      color = 'muted';
-      break;
+  // A value outside the type (from untyped data) keeps the default colors.
+  if (variant && COLOR_CLASSES[variant]) {
+    colorClasses = COLOR_CLASSES[variant];
   }
-
-  const colorClasses = COLOR_CLASSES[color];
 
   const styleContext = { color: colorClasses.text, size: badgeSize };
 

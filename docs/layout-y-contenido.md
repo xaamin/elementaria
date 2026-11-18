@@ -373,22 +373,25 @@ y en las clases generadas.
 
 Fuente: [Badge.tsx](../badge/Badge.tsx).
 
-| Prop                 | Contrato                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `variant`            | Declara `primary`, `secondary`, `success`, `danger`, `error`, `warning`, `info`, `light`, `dark`, `outline`. |
-| `outline`            | Booleano que agrega `border` del color de la accion; conserva el fondo claro.                                |
-| `pill`               | `rounded-full`; de lo contrario `rounded-sm`.                                                                |
-| `size`               | `sm`, `md` (defecto) o `lg`; escala texto, padding e icono. Otro valor usa `md`.                             |
-| `className`          | Clase del badge interior.                                                                                    |
-| `containerClassName` | Clase del Box exterior, con `flex-row`.                                                                      |
-| `children`           | Un string se envuelve en `BadgeText`; el resto se usa directamente.                                          |
+| Prop                 | Contrato                                                                                                                                                                                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`            | `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark` o `neutral`; el tipo no admite otros valores. `primary` usa el relleno `primary-500` con texto `typography-0`; las demás de color, fondo `-100`, borde `-200` y texto `-700`. |
+| `outline`            | Booleano que agrega `border` del color de la accion; conserva el fondo claro.                                                                                                                                                                                 |
+| `pill`               | `rounded-full`; de lo contrario `rounded-sm`.                                                                                                                                                                                                                 |
+| `size`               | `sm`, `md` (defecto) o `lg`; escala texto, padding e icono. Otro valor usa `md`.                                                                                                                                                                              |
+| `className`          | Clase del badge interior.                                                                                                                                                                                                                                     |
+| `containerClassName` | Clase del Box exterior, con `flex-row`.                                                                                                                                                                                                                       |
+| `children`           | Un string se envuelve en `BadgeText`; el resto se usa directamente.                                                                                                                                                                                           |
 
-Mapeo real de color: `success`, `warning`, `info` conservan su accion;
-`danger` y `error` usan `error` (rojo); `primary`, `secondary`, `light`,
-`dark` y `outline` caen en `muted`, que usa la escala de acento
-(`tertiary`). Para borde usar el booleano `outline`,
-no `variant="outline"`: el borde se suma al fondo claro de la accion, no lo
-reemplaza.
+Mapeo real de color: `primary`, `secondary`, `success`, `warning` e `info`
+usan su escala (fondo `-100`, borde `-200`, texto `-700`); `danger` usa
+`error` (rojo); `light` y `dark` usan las superficies fijas `fixed-light`
+(siempre con borde) y `fixed-dark`, que no se invierten en modo oscuro;
+`neutral` usa las escalas neutras (`background-100`, borde `outline-200`,
+texto `typography-700`); sin valor, o con uno fuera del tipo, usa la escala
+de acento (`tertiary`). Para borde
+usar el booleano `outline`: el borde se suma al fondo claro de la accion, no
+lo reemplaza.
 
 La plantilla v5 no define variante de tamano, asi que `ui/badge` aplica la
 escala:

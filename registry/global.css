@@ -103,16 +103,16 @@
     --warning-900: 33 34 34;
     --warning-950: 11 15 24;
 
-    --info-0: 246 251 255;
-    --info-50: 236 247 255;
-    --info-100: 210 236 255;
-    --info-200: 170 219 255;
-    --info-300: 101 193 255;
-    --info-400: 68 161 221;
-    --info-500: 43 127 178;
-    --info-600: 30 97 137;
-    --info-700: 30 73 101;
-    --info-800: 34 53 67;
+    --info-0: 246 249 255;
+    --info-50: 236 243 255;
+    --info-100: 210 226 255;
+    --info-200: 170 201 255;
+    --info-300: 101 157 255;
+    --info-400: 68 124 221;
+    --info-500: 43 93 178;
+    --info-600: 30 69 137;
+    --info-700: 30 56 101;
+    --info-800: 34 46 67;
     --info-900: 34 33 33;
     --info-950: 23 13 6;
 
@@ -158,10 +158,10 @@
     --background-warning: 255 250 238;
     --background-success: 240 255 240;
     --background-muted: 229 232 234;
-    --background-info: 246 251 255;
+    --background-info: 246 249 255;
 
     --indicator-primary: 8 101 125;
-    --indicator-info: 68 161 221;
+    --indicator-info: 68 124 221;
     --indicator-error: 141 64 59;
 
     --background: 242 246 247; /* --background-50 */
@@ -267,16 +267,16 @@
 
       --info-0: 23 13 6;
       --info-50: 34 33 33;
-      --info-100: 34 53 67;
-      --info-200: 30 73 101;
-      --info-300: 30 97 137;
-      --info-400: 43 127 178;
-      --info-500: 68 161 221;
-      --info-600: 101 193 255;
-      --info-700: 170 219 255;
-      --info-800: 210 236 255;
-      --info-900: 236 247 255;
-      --info-950: 246 251 255;
+      --info-100: 34 46 67;
+      --info-200: 30 56 101;
+      --info-300: 30 69 137;
+      --info-400: 43 93 178;
+      --info-500: 68 124 221;
+      --info-600: 101 157 255;
+      --info-700: 170 201 255;
+      --info-800: 210 226 255;
+      --info-900: 236 243 255;
+      --info-950: 246 249 255;
 
       --typography-0: 16 15 15;
       --typography-50: 34 34 34;
@@ -320,10 +320,10 @@
       --background-warning: 58 50 32;
       --background-success: 37 56 38;
       --background-muted: 50 51 51;
-      --background-info: 34 53 67;
+      --background-info: 34 46 67;
 
       --indicator-primary: 47 167 203;
-      --indicator-info: 170 219 255;
+      --indicator-info: 170 201 255;
       --indicator-error: 255 149 141;
 
       --background: 16 15 15; /* --background-0 */
@@ -429,16 +429,16 @@
 
     --info-0: 23 13 6;
     --info-50: 34 33 33;
-    --info-100: 34 53 67;
-    --info-200: 30 73 101;
-    --info-300: 30 97 137;
-    --info-400: 43 127 178;
-    --info-500: 68 161 221;
-    --info-600: 101 193 255;
-    --info-700: 170 219 255;
-    --info-800: 210 236 255;
-    --info-900: 236 247 255;
-    --info-950: 246 251 255;
+    --info-100: 34 46 67;
+    --info-200: 30 56 101;
+    --info-300: 30 69 137;
+    --info-400: 43 93 178;
+    --info-500: 68 124 221;
+    --info-600: 101 157 255;
+    --info-700: 170 201 255;
+    --info-800: 210 226 255;
+    --info-900: 236 243 255;
+    --info-950: 246 249 255;
 
     --typography-0: 16 15 15;
     --typography-50: 34 34 34;
@@ -482,10 +482,10 @@
     --background-warning: 58 50 32;
     --background-success: 37 56 38;
     --background-muted: 50 51 51;
-    --background-info: 34 53 67;
+    --background-info: 34 46 67;
 
     --indicator-primary: 47 167 203;
-    --indicator-info: 170 219 255;
+    --indicator-info: 170 201 255;
     --indicator-error: 255 149 141;
 
     --background: 16 15 15; /* --background-0 */
@@ -588,16 +588,16 @@
     --warning-900: 33 34 34;
     --warning-950: 11 15 24;
 
-    --info-0: 246 251 255;
-    --info-50: 236 247 255;
-    --info-100: 210 236 255;
-    --info-200: 170 219 255;
-    --info-300: 101 193 255;
-    --info-400: 68 161 221;
-    --info-500: 43 127 178;
-    --info-600: 30 97 137;
-    --info-700: 30 73 101;
-    --info-800: 34 53 67;
+    --info-0: 246 249 255;
+    --info-50: 236 243 255;
+    --info-100: 210 226 255;
+    --info-200: 170 201 255;
+    --info-300: 101 157 255;
+    --info-400: 68 124 221;
+    --info-500: 43 93 178;
+    --info-600: 30 69 137;
+    --info-700: 30 56 101;
+    --info-800: 34 46 67;
     --info-900: 34 33 33;
     --info-950: 23 13 6;
 
@@ -643,10 +643,10 @@
     --background-warning: 255 250 238;
     --background-success: 240 255 240;
     --background-muted: 229 232 234;
-    --background-info: 246 251 255;
+    --background-info: 246 249 255;
 
     --indicator-primary: 8 101 125;
-    --indicator-info: 68 161 221;
+    --indicator-info: 68 124 221;
     --indicator-error: 141 64 59;
 
     --background: 242 246 247; /* --background-50 */
@@ -829,6 +829,19 @@
   --color-typography-black: #181718;
   --color-background-light: #fbfbfb;
   --color-background-dark: #181719;
+
+  /* Superficies fijas de las variantes `dark` y `light`: no se invierten en
+     modo oscuro. Valores de la escala neutral en modo claro. */
+  --color-fixed-dark: rgb(34 34 34); /* neutral-900 */
+  --color-fixed-dark-hover: rgb(50 51 51); /* neutral-800 */
+  --color-fixed-dark-active: rgb(68 69 70); /* neutral-700 */
+  --color-fixed-dark-foreground: rgb(248 250 251); /* neutral-0 */
+  --color-fixed-light: rgb(255 255 255); /* blanco */
+  --color-fixed-light-hover: rgb(242 246 247); /* neutral-50 */
+  --color-fixed-light-active: rgb(229 232 234); /* neutral-100 */
+  --color-fixed-light-border: rgb(209 213 214); /* neutral-200 */
+  --color-fixed-light-border-hover: rgb(180 184 185); /* neutral-300 */
+  --color-fixed-light-foreground: rgb(50 51 51); /* neutral-800 */
 
   --font-weight-extrablack: 950;
 

@@ -30,30 +30,35 @@ y `ButtonIconProps`.
 
 ### Variantes y tamanos reales
 
-| `variant`             | Color     | Presentacion                                                            |
-| --------------------- | --------- | ----------------------------------------------------------------------- |
-| `primary`             | primary   | solid                                                                   |
-| `secondary`           | secondary | solid con fondo `primary-50`, borde `primary-200` y texto `primary-700` |
-| `success`             | positive  | solid                                                                   |
-| `danger`              | negative  | solid                                                                   |
-| `warning`             | warning   | solid                                                                   |
-| `info`                | info      | solid                                                                   |
-| `dark`                | secondary | solid                                                                   |
-| `light`, `outline`    | secondary | outline: borde y fondo transparente                                     |
-| `ghost`               | secondary | outline sin borde (`border-0`) y fondo transparente                     |
-| `transparent`         | secondary | solid sin borde (`border-0`) y fondo transparente                       |
-| `link`                | secondary | link: sin padding horizontal, subrayado al pasar el cursor/pulsar       |
-| Cualquier otro string | secondary | solid, u outline con `outline`                                          |
+| `variant`             | Color     | Presentacion                                                                                                      |
+| --------------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
+| `primary`             | primary   | solid relleno (`primary-500`, borde del mismo color, texto `typography-0`)                                        |
+| `secondary`           | secondary | solid con la escala pizarra (`secondary-100`, borde `-300`, texto `-700`)                                         |
+| `success`             | success   | solid                                                                                                             |
+| `danger`              | danger    | solid                                                                                                             |
+| `warning`             | warning   | solid                                                                                                             |
+| `info`                | info      | solid                                                                                                             |
+| `dark`                | dark      | solid con la superficie fija `fixed-dark`, que no se invierte en modo oscuro                                      |
+| `neutral`             | neutral   | solid con las escalas neutras (`background-100`, borde `outline-300`, texto `typography-700`)                     |
+| `light`               | neutral   | solid con la superficie fija `fixed-light` y borde suave `fixed-light-border`; con `outline`, borde `outline-200` |
+| `outline`             | neutral   | outline: borde y fondo transparente                                                                               |
+| `ghost`               | neutral   | outline sin borde (`border-0`) y fondo transparente                                                               |
+| `transparent`         | neutral   | solid sin borde (`border-0`) y fondo transparente                                                                 |
+| `link`                | neutral   | link: sin padding horizontal, subrayado al pasar el cursor/pulsar                                                 |
+| Cualquier otro string | neutral   | solid, u outline con `outline`                                                                                    |
 
 El prop `outline` convierte cualquier variante, salvo `link`, a la
 presentacion outline conservando su color: por ejemplo,
 `variant="danger" outline` usa borde y texto de error. Con `ghost` y
 `transparent` se mantiene `border-0`, por lo que no se ve borde.
 No existen variantes `outline-*`; un string como `outline-primary` cae en el
-caso por defecto (secundario solid).
+caso por defecto (neutro solid). Las clases de color se indexan directamente
+por la variante (`primary` a `neutral`); las variantes de presentacion
+(`light`, `outline`, `ghost`, `transparent`, `link`) y cualquier otro string
+usan las de `neutral`.
 
 El arreglo `Variants` lista `primary`, `secondary`, `success`, `danger`,
-`warning`, `info`, `dark`, `light`, `link`, `ghost`, `outline` y
+`warning`, `info`, `dark`, `light`, `neutral`, `link`, `ghost`, `outline` y
 `transparent`, pero no es una tupla `as const`, por lo que el tipo de
 `variant` es `string` y no restringe realmente a sus entradas. No interpretar
 un string aceptado por TypeScript como una variante visual implementada.
