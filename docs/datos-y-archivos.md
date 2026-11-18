@@ -312,7 +312,7 @@ Fuente: [Editable.tsx](../editable/Editable.tsx).
 | `onSave(value)`   | Obligatorio; recibe string.                                      |
 | `required`        | `false`; valida texto no vacio usando trim.                      |
 | `validate(value)` | Retorna mensaje string o void; con error bloquea Guardar.        |
-| `type`            | `'text'` por defecto, usado por FormControl.                     |
+| `type`            | `'text'` por defecto; se pasa al `Input` de edicion.             |
 | `placeholder`     | `'Escribe un valor...'` por defecto; al campo solo si es string. |
 
 Muestra `label || placeholder` junto al lapiz; no representa automaticamente

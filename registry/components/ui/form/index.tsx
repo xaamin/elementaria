@@ -7,7 +7,6 @@ import type { VStackProps } from '@/components/ui/vstack';
 
 import { Check } from './Check';
 import { Checkbox } from './Checkbox';
-import { Control } from './Control';
 import { DateInput } from './DateInput';
 import { Group } from './Group';
 import { HelperText } from './HelperText';
@@ -53,7 +52,6 @@ const Form = Object.assign(FormWrapper, {
   Label,
   Input,
   Check,
-  Control,
   DateInput,
   Radio,
   HelperText,
@@ -63,7 +61,6 @@ const Form = Object.assign(FormWrapper, {
 export {
   Check,
   Checkbox,
-  Control,
   DateInput,
   Form,
   Group,
@@ -77,7 +74,6 @@ export {
 
 export type { CheckProps } from './Check';
 export type { CheckboxProps } from './Checkbox';
-export type { ControlProps } from './Control';
 export type { DateInputProps } from './DateInput.types';
 export type { ErrorItem, ErrorProps } from './Error';
 export type { FileInputAsset, FileInputProps } from './FileInput';

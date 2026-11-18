@@ -5,7 +5,7 @@
 ## Exports y composicion
 
 El barrel [form/index.tsx](../form/index.tsx) exporta `Form`, `Input`, `Select`,
-`DateInput`, `Checkbox`, `Textarea`, `Check`, `Radio`, `Control`, `Group`, `Label` y
+`DateInput`, `Checkbox`, `Textarea`, `Check`, `Radio`, `Group`, `Label` y
 `HelperText`. Todos los controles de esa lista tambien existen como miembros
 de `Form`, por ejemplo `Form.Input` y `Form.Group`.
 
@@ -19,7 +19,6 @@ Importaciones directas, **no** incluidas en el barrel:
 | `form/SearchBox`                   | `SearchBox`                                             |
 | `form/FileInput`                   | `FileInput` (preferir `Input type="file"`)              |
 | `form/FixedAutocomplete`           | `FixedAutocomplete`                                     |
-| `form-control`                     | `FormControl` y su alias `FormInput`                    |
 | `checkbox`                         | El mismo `Checkbox` de `form/Checkbox`, no otro control |
 | `switch`                           | `Switch`                                                |
 
@@ -46,8 +45,7 @@ y no de un envio del formulario.
 Fuente: [InputWrapper.tsx](../form/InputWrapper.tsx).
 
 Es la composicion comun de `FormControl` de Gluestack, `Label`, hijos,
-`HelperText` y `Error`. No confundirla con el selector de controles
-`@/components/ui/form-control`.
+`HelperText` y `Error`.
 
 | Prop                                     | Efecto                                                      |
 | ---------------------------------------- | ----------------------------------------------------------- |
@@ -312,38 +310,19 @@ Para seleccion exclusiva multiple, revisar la composicion de
 [las primitivas Radio](../../z/radio/index.tsx) en vez de copiar una
 agrupacion que no controla el valor.
 
-## FormControl y Control
+## Controles especificos
 
-Fuentes: [FormControl](../form-control/FormControl.tsx),
-[Control](../form/Control.tsx).
+No existe un selector generico de controles: importar directamente `Input`
+(o `Input type="file"`), `Select`, `Checkbox`, `Radio` o `Textarea` desde
+`@/components/ui/form`. Cada uno ya compone `InputWrapper` con etiqueta,
+ayuda y error, y se enlaza a `useValidator` con `bind(name)`.
+Para mensajes generales usar `Alert`, sin montar un proveedor de formulario.
 
-Son dos APIs distintas:
-
-Esta seccion describe componentes existentes, no la opcion recomendada para
-pantallas nuevas. Evitar el `FormControl` generico e importar directamente
-`Input` (o `Input type="file"`), `Select`, `Checkbox` o `Textarea` desde
-`components/ui`.
-Para mensajes generales usar `Alert`, sin montar un proveedor `FormControl`.
-
-| Componente                      | Selector                                               | Resultado                                                         |
-| ------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------- |
-| `FormControl` de `form-control` | `type="select"`, `"checkbox"`, `"radio"`, `"textarea"` | Delega al control correspondiente de `form`.                      |
-| `FormControl`                   | `type="file"`                                          | Delega a `FileInput`; `onChange` recibe `FileInputAsset[]`.       |
-| `FormControl`                   | Otro `type`                                            | Campo de texto con `InputWrapper` y toggle de password.           |
-| `Control` de `form`             | `as="select"` / `as="textarea"`                        | Delega a `Select` / `Textarea`.                                   |
-| `Control`                       | Cualquier otro `as`                                    | Input de primitiva; `as` no elige un componente React arbitrario. |
-
-En las ramas delegadas de `FormControl` se pasa explicitamente
-`isInvalid={hasError || isInvalid}`, donde `hasError` es `!!error && isFieldDirty`.
-`inputClassName` se extrae y no se reenvia a ninguna rama delegada;
-`containerClassName` tampoco llega a select, checkbox, radio ni textarea,
-pero si a la rama file. La rama de texto acepta `disabled`/`isDisabled` y
-`readonly`/`isReadOnly`, como `Input`. `FormInput` es el mismo componente.
-
-`Control` no incluye por si mismo etiqueta, ayuda ni error para su rama
-de texto. Usa `variant="outline"` por defecto y mapea `disabled`,
-`readonly`, `isInvalid`. Para nuevos formularios ordinarios, preferir los
-controles dedicados de `form`, que hacen explicito el contrato.
+`Input type="file"` renderiza [FileInput](../form/FileInput.tsx), que abre
+`expo-document-picker` en web, Android e iOS y entrega
+`onChange(assets: FileInputAsset[])`. En web cada asset incluye `file`
+(`File`); en nativo, `uri`, `name` y `mimeType`, que se envian en un
+`FormData` como `{ uri, name, type }`.
 
 ## Auxiliares de formulario
 

@@ -413,7 +413,6 @@
       "files": [
         "components/ui/form/Check.tsx",
         "components/ui/form/Checkbox.tsx",
-        "components/ui/form/Control.tsx",
         "components/ui/form/DateInput.tsx",
         "components/ui/form/DateInput.types.ts",
         "components/ui/form/Error.tsx",
@@ -467,22 +466,6 @@
       "expo": [
         "expo-document-picker"
       ]
-    },
-    "form-control": {
-      "type": "component",
-      "files": [
-        "components/ui/form-control/FormControl.tsx",
-        "components/ui/form-control/index.tsx"
-      ],
-      "registryDependencies": [
-        "base",
-        "form",
-        "icon",
-        "z/input"
-      ],
-      "dependencies": {},
-      "devDependencies": {},
-      "expo": []
     },
     "grid": {
       "type": "component",
