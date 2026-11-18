@@ -12,14 +12,16 @@ Exports: `DataTable`, tipos `Column<T>`, `PaginationChange`,
 La tabla recibe datos ya preparados; no consulta, filtra, ordena ni pagina
 en memoria. Usa un ScrollView y representa todas las filas recibidas,
 con cabecera sticky web y una fila espaciadora tras cada fila de datos.
+La cabecera, las filas sin franja y las espaciadoras tienen fondo
+transparente: muestran la superficie que contiene la tabla.
 
 | Prop                 | Contrato                                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `columns`            | `Column<T>[]`, obligatoria.                                                                                                                       |
 | `data`               | `T[]`, obligatoria. Pasar `[]` durante la inicializacion, no `undefined`.                                                                         |
 | `className`          | Clase de la tabla, no del ScrollView.                                                                                                             |
-| `stripped`           | Booleano; este es el nombre implementado, no `striped`. Aplica fondo a las filas de indice par (0, 2, ...).                                       |
-| `hoverable`          | `true` por defecto; agrega fondo hover.                                                                                                           |
+| `stripped`           | Booleano; este es el nombre implementado, no `striped`. Aplica fondo `muted` a las filas de indice par (0, 2, ...); las demas son transparentes.  |
+| `hoverable`          | `true` por defecto; agrega fondo hover `muted`.                                                                                                   |
 | `onRow(item, index)` | Devuelve props dinamicas para la fila. Con `onPress` u `onClick` agrega `cursor-pointer`.                                                         |
 | `rowKey`             | Nombre del campo de clave o `(item: T) => string \| number`; obligatorio con `rowSelection`. Sin seleccion es opcional y usa indices si se omite. |
 | `rowSelection`       | Seleccion controlada con `selectedRowKeys` y `onChange({ selectedRowKeys, selectedRows })`. Agrega checkboxes de cabecera y filas.                |

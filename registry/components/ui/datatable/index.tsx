@@ -147,7 +147,7 @@ const TableHeading = <T extends object>(props: TableHeadingProps<T>) => {
 
   return (
     <TableHeader className="sticky top-0 z-10">
-      <TableRow>{cells}</TableRow>
+      <TableRow className="bg-transparent">{cells}</TableRow>
     </TableHeader>
   );
 };
@@ -240,10 +240,10 @@ const TableRows = <T extends object & { [key: string]: any }>(
     }
 
     let className =
-      index % 2 === 0 && stripped ? 'border-b-0 bg-background-50' : '';
+      index % 2 === 0 && stripped ? 'border-b-0 bg-muted' : 'bg-transparent';
 
     if (hoverable) {
-      className = `${className} hover:bg-background-50`;
+      className = `${className} hover:bg-muted`;
     }
 
     const rowProps = !!onRow ? onRow(item, index) : undefined;
@@ -264,7 +264,7 @@ const TableRows = <T extends object & { [key: string]: any }>(
         >
           {cells}
         </TableRow>
-        <TableRow className="h-2 border-none"></TableRow>
+        <TableRow className="h-2 border-none bg-transparent"></TableRow>
       </Fragment>
     );
   };
