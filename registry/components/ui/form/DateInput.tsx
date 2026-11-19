@@ -3,7 +3,12 @@ import {
   fromDateId,
   toDateId,
 } from '@marceloterreiro/flash-calendar';
-import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react-native';
+import {
+  CalendarDays,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react-native';
 import type { ComponentRef } from 'react';
 import { useId, useRef, useState } from 'react';
 import { Platform, useWindowDimensions } from 'react-native';
@@ -29,6 +34,22 @@ import { InputWrapper } from './InputWrapper';
 
 export type { DateInputProps } from './DateInput.types';
 
+type CalendarView = 'days' | 'years' | 'months';
+
+const YEARS_PER_PAGE = 12;
+
+const MONTHS = Array.from({ length: 12 }, (_, month) => month);
+
+const hiddenMonthRow = {
+  rowMonth: { container: { display: 'none' as const } },
+};
+
+const navigationLabels: Record<CalendarView, [string, string]> = {
+  days: ['Mes anterior', 'Mes siguiente'],
+  years: ['Años anteriores', 'Años siguientes'],
+  months: ['Año anterior', 'Año siguiente'],
+};
+
 export function DateInput({
   value = '',
   onChangeText,
@@ -46,6 +67,9 @@ export function DateInput({
   isInvalid,
   presentation = 'modal',
   showPanelLabel = false,
+  minDate,
+  maxDate,
+  allowYearNavigation = false,
   ...rest
 }: DateInputProps) {
   const colorScheme = useColorScheme();
@@ -54,6 +78,7 @@ export function DateInput({
   const triggerRef = useRef<ComponentRef<typeof Pressable>>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [monthId, setMonthId] = useState(() => toDateId(new Date()));
+  const [view, setView] = useState<CalendarView>('days');
 
   const blocked = disabled || isDisabled || readonly || isReadOnly;
   const invalid = isInvalid || (!!error && isFieldDirty);
@@ -62,13 +87,44 @@ export function DateInput({
     presentation === 'auto' && Platform.OS === 'web' && width >= 768;
   const fieldLabel =
     accessibilityLabel ?? (typeof label === 'string' ? label : 'Fecha');
+  const viewDate = fromDateId(monthId);
+  const viewYear = viewDate.getFullYear();
+  const viewMonth = viewDate.getMonth();
+  const firstYear = viewYear - (viewYear % YEARS_PER_PAGE);
+  const years = Array.from(
+    { length: YEARS_PER_PAGE },
+    (_, index) => firstYear + index,
+  );
+  const [previousLabel, nextLabel] = navigationLabels[view];
+  const title = viewTitle(view, viewDate, firstYear);
+  const minDay = validDay(minDate ?? '');
+  const maxDay = validDay(maxDate ?? '');
+  const minKey = minDay ? monthKey(fromDateId(minDay)) : -Infinity;
+  const maxKey = maxDay ? monthKey(fromDateId(maxDay)) : Infinity;
+  const minYear = Math.floor(minKey / 12);
+  const maxYear = Math.floor(maxKey / 12);
+  const todayId = toDateId(new Date());
+  const todayAllowed = isInRange(todayId, minDay, maxDay);
+  let canGoBack = monthKey(viewDate) > minKey;
+  let canGoForward = monthKey(viewDate) < maxKey;
+
+  if (view === 'years') {
+    canGoBack = firstYear > minYear;
+    canGoForward = firstYear + YEARS_PER_PAGE - 1 < maxYear;
+  } else if (view === 'months') {
+    canGoBack = viewYear > minYear;
+    canGoForward = viewYear < maxYear;
+  }
 
   const openCalendar = () => {
     if (blocked) {
       return;
     }
 
-    setMonthId(selectedDay || toDateId(new Date()));
+    const date = fromDateId(selectedDay || todayId);
+
+    showMonth(date.getFullYear(), date.getMonth());
+    setView('days');
     setIsOpen(true);
   };
 
@@ -83,7 +139,7 @@ export function DateInput({
   };
 
   const selectDay = (day: string) => {
-    if (blocked) {
+    if (blocked || (day && !isInRange(day, minDay, maxDay))) {
       return;
     }
 
@@ -91,12 +147,40 @@ export function DateInput({
     closeCalendar();
   };
 
-  const moveMonth = (offset: number) => {
-    const date = fromDateId(monthId);
+  const showMonth = (year: number, month: number) => {
+    const key = Math.min(Math.max(year * 12 + month, minKey), maxKey);
 
-    date.setDate(1);
-    date.setMonth(date.getMonth() + offset);
-    setMonthId(toDateId(date));
+    setMonthId(toDateId(new Date(Math.floor(key / 12), key % 12, 1)));
+  };
+
+  const navigate = (direction: number) => {
+    if (view === 'years') {
+      showMonth(viewYear + direction * YEARS_PER_PAGE, viewMonth);
+    } else if (view === 'months') {
+      showMonth(viewYear + direction, viewMonth);
+    } else {
+      showMonth(viewYear, viewMonth + direction);
+    }
+  };
+
+  const toggleView = () => {
+    if (view === 'days') {
+      setView('years');
+    } else if (view === 'years') {
+      setView('days');
+    } else {
+      setView('years');
+    }
+  };
+
+  const selectYear = (year: number) => {
+    showMonth(year, viewMonth);
+    setView('months');
+  };
+
+  const selectMonth = (month: number) => {
+    showMonth(viewYear, month);
+    setView('days');
   };
 
   const renderTrigger = (triggerProps: Partial<PressableProps> = {}) => (
@@ -146,39 +230,109 @@ export function DateInput({
 
   const calendarContent = (
     <>
-      <Box className="mb-2 flex-row justify-between">
+      <Box className="mb-2 flex-row items-center justify-between">
         <Button
           icon
           size="xs"
           variant="ghost"
-          accessibilityLabel="Mes anterior"
-          onPress={() => moveMonth(-1)}
+          accessibilityLabel={previousLabel}
+          disabled={!canGoBack}
+          onPress={() => navigate(-1)}
         >
           <Icon as={ChevronLeft} />
         </Button>
+        {allowYearNavigation && (
+          <Button
+            size="xs"
+            variant="ghost"
+            accessibilityLabel="Cambiar mes y año"
+            onPress={toggleView}
+          >
+            <Text className="font-semibold text-typography-900">{title}</Text>
+            <Icon
+              as={ChevronDown}
+              className="h-4 w-4 text-typography-500"
+            />
+          </Button>
+        )}
+        {!allowYearNavigation && (
+          <Text className="font-semibold text-typography-900">{title}</Text>
+        )}
         <Button
           icon
           size="xs"
           variant="ghost"
-          accessibilityLabel="Mes siguiente"
-          onPress={() => moveMonth(1)}
+          accessibilityLabel={nextLabel}
+          disabled={!canGoForward}
+          onPress={() => navigate(1)}
         >
           <Icon as={ChevronRight} />
         </Button>
       </Box>
       <Box className="min-h-[350px] w-full">
-        <Calendar
-          calendarInstanceId={calendarInstanceId}
-          calendarMonthId={monthId}
-          calendarFormatLocale="es-MX"
-          calendarFirstDayOfWeek="monday"
-          calendarColorScheme={colorScheme === 'dark' ? 'dark' : 'light'}
-          calendarDayHeight={40}
-          calendarActiveDateRanges={
-            selectedDay ? [{ startId: selectedDay, endId: selectedDay }] : []
-          }
-          onCalendarDayPress={selectDay}
-        />
+        {view === 'days' && (
+          <Calendar
+            calendarInstanceId={calendarInstanceId}
+            calendarMonthId={monthId}
+            calendarFormatLocale="es-MX"
+            calendarFirstDayOfWeek="monday"
+            calendarColorScheme={colorScheme === 'dark' ? 'dark' : 'light'}
+            calendarDayHeight={40}
+            calendarMonthHeaderHeight={0}
+            calendarMinDateId={minDay || undefined}
+            calendarMaxDateId={maxDay || undefined}
+            calendarActiveDateRanges={
+              selectedDay ? [{ startId: selectedDay, endId: selectedDay }] : []
+            }
+            getCalendarMonthFormat={emptyMonthTitle}
+            theme={hiddenMonthRow}
+            onCalendarDayPress={selectDay}
+          />
+        )}
+        {view === 'years' && (
+          <Box className="flex-row flex-wrap">
+            {years.map((year) => (
+              <Box
+                key={year}
+                className="w-1/4 p-1"
+              >
+                <Button
+                  block
+                  size="sm"
+                  variant={year === viewYear ? 'primary' : 'ghost'}
+                  disabled={year < minYear || year > maxYear}
+                  onPress={() => selectYear(year)}
+                >
+                  {String(year)}
+                </Button>
+              </Box>
+            ))}
+          </Box>
+        )}
+        {view === 'months' && (
+          <Box className="flex-row flex-wrap">
+            {MONTHS.map((month) => (
+              <Box
+                key={month}
+                className="w-1/4 p-1"
+              >
+                <Button
+                  block
+                  size="sm"
+                  variant={month === viewMonth ? 'primary' : 'ghost'}
+                  disabled={
+                    viewYear * 12 + month < minKey ||
+                    viewYear * 12 + month > maxKey
+                  }
+                  accessibilityLabel={monthName(month, 'long')}
+                  onPress={() => selectMonth(month)}
+                >
+                  {monthName(month, 'short')}
+                </Button>
+              </Box>
+            ))}
+          </Box>
+        )}
       </Box>
     </>
   );
@@ -201,7 +355,8 @@ export function DateInput({
       </Button>
       <Button
         size="xs"
-        onPress={() => selectDay(toDateId(new Date()))}
+        disabled={!todayAllowed}
+        onPress={() => selectDay(todayId)}
       >
         Hoy
       </Button>
@@ -278,4 +433,42 @@ function validDay(value: string) {
   return Number.isFinite(date.getTime()) && toDateId(date) === value
     ? value
     : '';
+}
+
+function monthKey(date: Date) {
+  return date.getFullYear() * 12 + date.getMonth();
+}
+
+function isInRange(day: string, minDay: string, maxDay: string) {
+  return (!minDay || day >= minDay) && (!maxDay || day <= maxDay);
+}
+
+function emptyMonthTitle() {
+  return '';
+}
+
+function viewTitle(view: CalendarView, date: Date, firstYear: number) {
+  if (view === 'years') {
+    return `${firstYear} – ${firstYear + YEARS_PER_PAGE - 1}`;
+  }
+
+  if (view === 'months') {
+    return String(date.getFullYear());
+  }
+
+  return capitalize(
+    date.toLocaleDateString('es-MX', { month: 'long', year: 'numeric' }),
+  );
+}
+
+function monthName(month: number, format: 'long' | 'short') {
+  return capitalize(
+    new Date(2000, month, 1)
+      .toLocaleDateString('es-MX', { month: format })
+      .replace('.', ''),
+  );
+}
+
+function capitalize(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }

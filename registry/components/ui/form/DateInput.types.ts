@@ -12,4 +12,10 @@ export interface DateInputProps extends Omit<
   inputClassName?: string;
   presentation?: 'modal' | 'auto';
   showPanelLabel?: boolean;
+  /** First selectable day (`AAAA-MM-DD`, inclusive); invalid values are ignored. */
+  minDate?: string;
+  /** Last selectable day (`AAAA-MM-DD`, inclusive); invalid values are ignored. */
+  maxDate?: string;
+  /** Makes the month title open year and month grids. */
+  allowYearNavigation?: boolean;
 }

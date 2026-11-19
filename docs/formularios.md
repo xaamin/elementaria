@@ -187,7 +187,30 @@ calendario identico a iOS y Android: una unica implementacion compartida con
 `@marceloterreiro/flash-calendar`, sin controles de fecha del navegador ni de
 SwiftUI. El campo abre un modal con el mes seleccionado (o el actual si esta
 vacio o es invalido), navegacion mensual y calendario en espanol, con semanas
-desde el lunes y tema claro/oscuro de NativeWind. Seleccionar un dia o pulsar
+desde el lunes y tema claro/oscuro de NativeWind. Con `allowYearNavigation`
+(desactivado por defecto) el titulo del mes («Cambiar mes y año») abre una
+cuadricula de 12 años (las flechas paginan de 12 en 12); elegir un año muestra
+sus meses (las flechas cambian de año) y elegir un mes vuelve a los dias. Cada
+apertura empieza en la vista de dias.
+
+`minDate` y `maxDate` (`AAAA-MM-DD`, inclusivos; los valores invalidos se
+ignoran) deshabilitan los dias, meses y años fuera del rango, las flechas que
+saldrian de el y Hoy si la fecha actual queda fuera. El calendario abre en el
+mes permitido mas cercano al valor. Un `value` fuera del rango se muestra tal
+cual: el componente no lo corrige ni lo valida; usa `useValidator` para ello.
+
+```tsx
+<DateInput
+  label="Fecha de emisión"
+  minDate="2026-01-01"
+  maxDate="2026-12-31"
+  allowYearNavigation
+  value={fecha}
+  onChangeText={setFecha}
+/>
+```
+
+Seleccionar un dia o pulsar
 Hoy emite el dia ISO y cierra; Limpiar emite `''`; Cancelar, Escape, atras o
 cerrar el modal no cambian el valor. No incluye horas ni convierte zonas horarias.
 Cada campo aisla su seleccion mediante un identificador de calendario propio.
