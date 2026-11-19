@@ -137,8 +137,11 @@ cambiar la apariencia:
     modo claro); `danger` con la superficie fija `fixed-danger`, un rojo
     atardecer vivo (`#d92d20`, `-hover`, `-active` y texto blanco, 4.8:1) que
     la escala `error`, desaturada, no ofrece.
-  - `OUTLINE_CLASSES`: superficie base con borde `-400` y texto `-600`
-    (`outline-400`/`typography-800` en `neutral`).
+  - `OUTLINE_CLASSES`: superficie base con borde `-500` y texto `-600`
+    (`light` usa `outline-500`/`typography-600` y `neutral`,
+    `outline-600`/`typography-800`, para distinguirse entre si). Como el borde es el unico limite visible, supera 3:1 (WCAG
+    1.4.11) sobre `background-0` y `background-50` en ambos modos; `-400`
+    quedaba por debajo.
   - `FOCUS_RING_CLASSES`: anillo de foco `indicator-primary` (mas de 6:1 con
     la superficie base) en todas las variantes.
 - Enfasis: Button usa el relleno solido en `primary` y `danger`, las acciones

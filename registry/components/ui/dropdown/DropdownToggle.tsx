@@ -1,22 +1,10 @@
-import type { ButtonProps } from '../button';
+import type { ButtonProps, ButtonVariant } from '../button';
 
-const colors = [
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-  'light',
-  'dark',
-  'outline',
-];
-
-export type ComponentColor = (typeof colors)[number];
+/** Alias de `ButtonVariant`, que el toggle acepta tal cual. */
+export type ComponentColor = ButtonVariant;
 
 export interface DropdownToggleProps extends ButtonProps {
   id?: string;
-  variant?: ComponentColor;
   className?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }

@@ -30,38 +30,37 @@ y `ButtonIconProps`.
 
 ### Variantes y tamanos reales
 
-| `variant`             | Color     | Presentacion                                                                                         |
-| --------------------- | --------- | ---------------------------------------------------------------------------------------------------- |
-| `primary`             | primary   | relleno solido (`primary-600`, borde del mismo color, texto `typography-0`)                          |
-| `secondary`           | secondary | tintado con la escala pizarra (`secondary-100`, borde `-300`, texto `-700`)                          |
-| `success`             | success   | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
-| `danger`              | danger    | relleno solido rojo vivo `fixed-danger` (no se invierte, texto blanco) para acciones destructivas    |
-| `warning`             | warning   | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
-| `info`                | info      | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
-| `dark`                | dark      | superficie fija `fixed-dark`, que no se invierte en modo oscuro                                      |
-| `neutral`             | neutral   | tintado con las escalas neutras (`background-100`, borde `outline-300`, texto `typography-700`)      |
-| `light`               | neutral   | superficie fija `fixed-light` y borde suave `fixed-light-border`; con `outline`, borde `outline-200` |
-| `outline`             | neutral   | outline: borde y fondo transparente                                                                  |
-| `ghost`               | neutral   | outline sin borde (`border-0`) y fondo transparente                                                  |
-| `transparent`         | neutral   | solid sin borde (`border-0`) y fondo transparente                                                    |
-| `link`                | neutral   | link: sin padding horizontal, subrayado al pasar el cursor/pulsar                                    |
-| Cualquier otro string | neutral   | solid, u outline con `outline`                                                                       |
+| `variant`   | Color     | Presentacion                                                                                         |
+| ----------- | --------- | ---------------------------------------------------------------------------------------------------- |
+| `primary`   | primary   | relleno solido (`primary-600`, borde del mismo color, texto `typography-0`)                          |
+| `secondary` | secondary | tintado con la escala pizarra (`secondary-100`, borde `-300`, texto `-700`)                          |
+| `success`   | success   | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
+| `danger`    | danger    | relleno solido rojo vivo `fixed-danger` (no se invierte, texto blanco) para acciones destructivas    |
+| `warning`   | warning   | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
+| `info`      | info      | tintado (`-100`, borde `-300`, texto `-700`)                                                         |
+| `dark`      | dark      | superficie fija `fixed-dark`, que no se invierte en modo oscuro                                      |
+| `neutral`   | neutral   | tintado con las escalas neutras (`background-100`, borde `outline-300`, texto `typography-700`)      |
+| `light`     | neutral   | superficie fija `fixed-light` y borde suave `fixed-light-border`; con `outline`, borde `outline-500` |
+| `outline`   | neutral   | outline: borde y fondo transparente                                                                  |
+| `ghost`     | neutral   | outline sin borde (`border-0`) y fondo transparente que se tinta al pasar el cursor                  |
+| `link`      | neutral   | link: sin padding horizontal, subrayado al pasar el cursor/pulsar                                    |
 
 El prop `outline` convierte cualquier variante, salvo `link`, a la
 presentacion outline conservando su color: por ejemplo,
-`variant="danger" outline` usa borde y texto de error. Con `ghost` y
-`transparent` se mantiene `border-0`, por lo que no se ve borde.
-No existen variantes `outline-*`; un string como `outline-primary` cae en el
-caso por defecto (neutro solid). Las clases de color se indexan directamente
-por la variante (`primary` a `neutral`); las variantes de presentacion
-(`light`, `outline`, `ghost`, `transparent`, `link`) y cualquier otro string
-usan las de `neutral`.
+`variant="danger" outline` usa borde y texto de error. Con `ghost` se
+mantiene `border-0`, por lo que no se ve borde.
+Las clases de color se indexan directamente por la variante (`primary` a
+`neutral`); las variantes de presentacion (`light`, `outline`, `ghost`,
+`link`) usan las de `neutral`.
 
-El arreglo `Variants` lista `primary`, `secondary`, `success`, `danger`,
-`warning`, `info`, `dark`, `light`, `neutral`, `link`, `ghost`, `outline` y
-`transparent`, pero no es una tupla `as const`, por lo que el tipo de
-`variant` es `string` y no restringe realmente a sus entradas. No interpretar
-un string aceptado por TypeScript como una variante visual implementada.
+`variant` tiene el tipo `ButtonVariant`, la union literal de `primary`,
+`secondary`, `success`, `danger`, `warning`, `info`, `dark`, `light`,
+`neutral`, `link`, `ghost` y `outline`; TypeScript rechaza cualquier otro
+string. No existen variantes `outline-*` ni `transparent` (combinada con
+`ghost`): usa `variant="danger" outline` o `variant="ghost"`. En runtime, un
+valor fuera de la union (por ejemplo, desde JavaScript) se ve neutro solid.
+`Dropdown.Toggle` (`ComponentColor`, alias de `ButtonVariant`) y
+`EmptyState.buttonVariant` usan el mismo tipo.
 
 Las clases de altura son xs `h-10`, sm `h-12`, md `h-14`, lg `h-16`,
 xl `h-[72px]`. Con `rounded`, los anchos respectivos son `w-10`, `w-12`,

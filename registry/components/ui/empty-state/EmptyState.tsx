@@ -1,6 +1,6 @@
 import { cn } from '@/components/cn';
 
-import { Button } from '../button';
+import { Button, type ButtonVariant } from '../button';
 import { Image } from '../image';
 import { Text } from '../text';
 import { VStack } from '../vstack';
@@ -13,7 +13,7 @@ export interface EmptyStateProps {
   image?: string;
   imageClassName?: string;
   buttonText?: string;
-  buttonVariant?: string;
+  buttonVariant?: ButtonVariant;
   buttonAction?: () => void;
 }
 

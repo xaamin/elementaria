@@ -54,8 +54,9 @@ const Variants = [
   'link',
   'ghost',
   'outline',
-  'transparent',
-];
+] as const;
+
+export type ButtonVariant = (typeof Variants)[number];
 
 export interface ButtonProps {
   accessibilityLabel?: string;
@@ -69,7 +70,7 @@ export interface ButtonProps {
   icon?: boolean;
   href?: string;
   type?: 'button' | 'reset' | 'submit';
-  variant?: (typeof Variants)[number];
+  variant?: ButtonVariant;
   indeterminate?: boolean;
   children: ReactNode;
   onPress?: () => void;
@@ -180,32 +181,32 @@ const SOLID_STATE_CLASSES: Record<SolidVariant, string> = {
 const OUTLINE_STATE_CLASSES: Record<ToneVariant, OutlineClasses> = {
   primary: {
     border:
-      'data-[hover=true]:border-primary-500 data-[active=true]:border-primary-600',
+      'data-[hover=true]:border-primary-600 data-[active=true]:border-primary-700',
     text: 'data-[hover=true]:text-primary-700 data-[active=true]:text-primary-800',
   },
   secondary: {
     border:
-      'data-[hover=true]:border-secondary-500 data-[active=true]:border-secondary-600',
+      'data-[hover=true]:border-secondary-600 data-[active=true]:border-secondary-700',
     text: 'data-[hover=true]:text-secondary-700 data-[active=true]:text-secondary-800',
   },
   success: {
     border:
-      'data-[hover=true]:border-success-500 data-[active=true]:border-success-600',
+      'data-[hover=true]:border-success-600 data-[active=true]:border-success-700',
     text: 'data-[hover=true]:text-success-700 data-[active=true]:text-success-800',
   },
   danger: {
     border:
-      'data-[hover=true]:border-error-500 data-[active=true]:border-error-600',
+      'data-[hover=true]:border-error-600 data-[active=true]:border-error-700',
     text: 'data-[hover=true]:text-error-700 data-[active=true]:text-error-800',
   },
   warning: {
     border:
-      'data-[hover=true]:border-warning-500 data-[active=true]:border-warning-600',
+      'data-[hover=true]:border-warning-600 data-[active=true]:border-warning-700',
     text: 'data-[hover=true]:text-warning-700 data-[active=true]:text-warning-800',
   },
   info: {
     border:
-      'data-[hover=true]:border-info-500 data-[active=true]:border-info-600',
+      'data-[hover=true]:border-info-600 data-[active=true]:border-info-700',
     text: 'data-[hover=true]:text-info-700 data-[active=true]:text-info-800',
   },
   dark: {
@@ -215,12 +216,12 @@ const OUTLINE_STATE_CLASSES: Record<ToneVariant, OutlineClasses> = {
   },
   light: {
     border:
-      'data-[hover=true]:border-outline-300 data-[active=true]:border-outline-400',
-    text: 'data-[hover=true]:text-typography-800 data-[active=true]:text-typography-800',
+      'data-[hover=true]:border-outline-600 data-[active=true]:border-outline-700',
+    text: 'data-[hover=true]:text-typography-700 data-[active=true]:text-typography-700',
   },
   neutral: {
     border:
-      'data-[hover=true]:border-outline-500 data-[active=true]:border-outline-600',
+      'data-[hover=true]:border-outline-700 data-[active=true]:border-outline-800',
     text: 'data-[hover=true]:text-typography-900 data-[active=true]:text-typography-900',
   },
 };
@@ -332,13 +333,12 @@ const Button = (props: ButtonProps) => {
     color = variant;
   }
 
-  const transparentClassName =
-    'border-0 bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-transparent';
-
   let newClassName = `self-start ${className}`;
 
-  if (variant === 'ghost' || variant === 'transparent') {
-    newClassName = `${newClassName} ${transparentClassName}`;
+  // `ghost` is the outline shape without a border: transparent background
+  // that tints on hover. Inside `cn` so `border-0` replaces `border`.
+  if (variant === 'ghost') {
+    newClassName = `border-0 ${newClassName}`;
   }
 
   const outlined = variant === 'outline' || variant === 'ghost';
@@ -366,10 +366,6 @@ const Button = (props: ButtonProps) => {
 
   if (block) {
     newClassName = `${newClassName} w-full`;
-  }
-
-  if (variant === 'ghost') {
-    newClassName = `${newClassName} border-0`;
   }
 
   switch (size) {

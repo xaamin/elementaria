@@ -1,11 +1,9 @@
 import { ChevronDown, ChevronUp, Search, X } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
-import type { ComponentRef } from 'react';
 import type { TextInputBlurEvent } from 'react-native';
 import { Platform } from 'react-native';
 
 import { cn } from '@/components/cn';
-import { Box } from '@/components/z/box';
 import {
   FormControl,
   FormControlLabel,
@@ -17,6 +15,7 @@ import { Pressable } from '@/components/z/pressable';
 import { ScrollView } from '@/components/z/scroll-view';
 import { Text } from '@/components/z/text';
 
+import { Box, type BoxRef } from '../box';
 import { VStack } from '../vstack';
 import { InputField } from './Input';
 import type { InputFieldProps, InputRef } from './Input';
@@ -61,7 +60,7 @@ const FixedAutocomplete = ({
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<InputRef | null>(null);
-  const dropdownRef = useRef<ComponentRef<typeof Box> | null>(null);
+  const dropdownRef = useRef<BoxRef | null>(null);
 
   // Filter suggestions based on input value
   useEffect(() => {

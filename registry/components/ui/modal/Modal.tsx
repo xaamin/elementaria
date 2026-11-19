@@ -46,14 +46,14 @@ export type ModalProps = PropsWithChildren & {
 };
 
 type ModalRootProps = Omit<ModalProps, 'className' | 'backdrop' | 'closable'> &
-  React.RefAttributes<React.ComponentRef<typeof TheModal>>;
+  React.RefAttributes<ComponentRef<typeof View>>;
 
 const ModalRoot = withFrozenProps<ModalRootProps, 'size'>(TheModal);
 
 // The template only sizes xs..lg and full; `xl` continues its scale here.
 const XL_CONTENT_CLASS_NAME = 'w-[95%] max-w-[800px]';
 
-const ModalBase = forwardRef<React.ComponentRef<typeof TheModal>, ModalProps>(
+const ModalBase = forwardRef<ComponentRef<typeof View>, ModalProps>(
   (props, ref) => {
     const [isOpen, setIsOpen] = useState(() => props.isOpen === true);
     const {

@@ -445,7 +445,6 @@
         "scroll-view",
         "text",
         "vstack",
-        "z/box",
         "z/checkbox",
         "z/form-control",
         "z/icon",

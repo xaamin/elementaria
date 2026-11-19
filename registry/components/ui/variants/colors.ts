@@ -105,19 +105,25 @@ export const SOLID_CLASSES: Record<SolidVariant, ToneClasses> = {
 };
 
 /**
- * Contorno sobre la superficie base: borde `-400` y texto `-600`; los pasos
- * mas oscuros quedan casi negros sobre la superficie en modo oscuro.
+ * Contorno sobre la superficie base: borde `-500` y texto `-600`. En esta
+ * receta el borde es el unico limite visible del componente, asi que supera
+ * 3:1 (WCAG 1.4.11) sobre `background-0` y `background-50` en ambos modos;
+ * `-400` no llegaba a 3:1. El texto supera 6:1; los pasos mas oscuros quedan
+ * casi negros sobre la superficie en modo oscuro. Las variantes neutras forman
+ * una escala para distinguirse: `light` (borde `outline-500`, texto
+ * `typography-600`), `neutral` (`outline-600`, `typography-800`) y `dark`
+ * (`background-800`, `typography-900`).
  */
 export const OUTLINE_CLASSES: Record<ToneVariant, OutlineClasses> = {
-  primary: { border: 'border-primary-400', text: 'text-primary-600' },
-  secondary: { border: 'border-secondary-400', text: 'text-secondary-600' },
-  success: { border: 'border-success-400', text: 'text-success-600' },
-  danger: { border: 'border-error-400', text: 'text-error-600' },
-  warning: { border: 'border-warning-400', text: 'text-warning-600' },
-  info: { border: 'border-info-400', text: 'text-info-600' },
+  primary: { border: 'border-primary-500', text: 'text-primary-600' },
+  secondary: { border: 'border-secondary-500', text: 'text-secondary-600' },
+  success: { border: 'border-success-500', text: 'text-success-600' },
+  danger: { border: 'border-error-500', text: 'text-error-600' },
+  warning: { border: 'border-warning-500', text: 'text-warning-600' },
+  info: { border: 'border-info-500', text: 'text-info-600' },
   dark: { border: 'border-background-800', text: 'text-typography-900' },
-  light: { border: 'border-outline-200', text: 'text-typography-700' },
-  neutral: { border: 'border-outline-400', text: 'text-typography-800' },
+  light: { border: 'border-outline-500', text: 'text-typography-600' },
+  neutral: { border: 'border-outline-600', text: 'text-typography-800' },
 };
 
 /**
